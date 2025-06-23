@@ -1,6 +1,7 @@
+"""Streamlit application for interacting with a LangChain-based helper chatbot."""
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv()  # Load environment variables from .env file
 from typing import Set
 
 import streamlit as st
@@ -21,20 +22,18 @@ from io import BytesIO
 
 
 def create_sources_string(source_urls: Set[str]) -> str:
+    """Convert a set of source URLs into a formatted, numbered list string."""
     if not source_urls:
         return ""
-    sources_list = list(source_urls)
-    sources_list.sort()
+    sources_list = sorted(source_urls)
     sources_string = "sources:\n"
-    for i, source in enumerate(sources_list):
-        sources_string += f"{i+1}. {source}\n"
+    for i, source in enumerate(sources_list, start=1):
+        sources_string += f"{i}. {source}\n"
     return sources_string
 
 
-# Add this function to get a profile picture
 def get_profile_picture(email):
-    # This uses Gravatar to get a profile picture based on email
-    # You can replace this with a different service or use a default image
+    """Retrieve a profile picture from Gravatar based on the user's email."""
     gravatar_url = f"https://www.gravatar.com/avatar/{hash(email)}?d=identicon&s=200"
     response = requests.get(gravatar_url)
     img = Image.open(BytesIO(response.content))

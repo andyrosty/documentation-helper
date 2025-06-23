@@ -1,0 +1,2735 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Upgrade Notes :: Spring AI Reference</title>
+    <link rel="canonical" href="upgrade-notes.html">
+    <link rel="prev" href="api/cloud-bindings.html">
+    <link rel="next" href="api/tools-migration.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.6">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/site.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="v0.4.17"> 
+    <meta name="version" content="1.0.0">
+    <meta name="component" content="ai">
+    <meta name="latest-version" content="true">
+    <link rel="icon" href="https://docs.spring.io/spring-ai/reference/_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img id="springlogo" class="block" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring"/>
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="upgrade-notes.html#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/why-spring">Overview</a>
+            <a class="navbar-item" href="https://spring.io/microservices">Microservices</a>
+            <a class="navbar-item" href="https://spring.io/reactive">Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event
+              Driven</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web
+              Applications</a>
+            <a class="navbar-item" href="https://spring.io/serverless">Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="upgrade-notes.html#">Learn</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/learn">Overview</a>
+            <a class="navbar-item" href="https://spring.io/quickstart">Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="upgrade-notes.html#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://spring.io/projects">Overview</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-boot">Spring Boot</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-framework">Spring Framework</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud">Spring Cloud</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud-dataflow">Spring Cloud Data Flow</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-data">Spring Data</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-integration">Spring Integration</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-batch">Spring Batch</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-security">Spring Security</a>
+            <a class="navbar-item navbar-item-special" href="https://spring.io/projects">View all projects</a>
+            <li class="navbar-item navbar-item-special-3">DEVELOPMENT TOOLS</li>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools 4</a>
+            <a class="navbar-item navbar-item-special-2" href="https://start.spring.io">Spring Initializr
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg></a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="upgrade-notes.html#">Academy</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.academy/courses">Courses</a>
+            <a class="navbar-item" href="https://spring.academy/learning-path">Get Certified</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="upgrade-notes.html#">Solutions</a>
+          <div class="navbar-dropdown lg">
+            <a class="navbar-item" href="https://spring.io/solutions">Overview</a>
+            <a class="navbar-item" href="https://spring.io/support">Spring Runtime</a>
+            <a class="navbar-item" href="https://spring.io/consulting">Spring Consulting</a>
+            <a class="navbar-item" href="https://spring.academy/teams">Spring Academy For Teams</a>
+            <a class="navbar-item" href="https://spring.io/security">Security Advisories</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-community">
+          <a class="navbar-link" href="upgrade-notes.html#">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/community">Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/team">Team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox"/>
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="ai" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring AI</span>
+  <span class="version">1.0.0</span>
+  <button class="browse-version" id="browse-version">
+    <svg height="24px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="24px" xml:space="preserve"><g><path d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"></path><path d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"></path><path d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"></path></g></svg>
+  </button>
+  <div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Overview</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="concepts.html">AI Concepts</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/chatclient.html">Chat Client API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/advisors.html">Advisors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/prompt.html">Prompts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/structured-output-converter.html">Structured Output</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/multimodality.html">Multimodality</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/index.html">Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/chatmodel.html">Chat Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/comparison.html">Chat Models Comparison</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/bedrock-converse.html">Amazon Bedrock Converse</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/anthropic-chat.html">Anthropic 3</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/azure-openai-chat.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/deepseek-chat.html">DeepSeek</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/dmr-chat.html">Docker Model Runner</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/chat/google-vertexai.html">Google VertexAI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/chat/vertexai-gemini-chat.html">VertexAI Gemini</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/groq-chat.html">Groq</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/huggingface.html">Hugging Face</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/mistralai-chat.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/minimax-chat.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/moonshot-chat.html">Moonshot AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/nvidia-chat.html">NVIDIA</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/ollama-chat.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/perplexity-chat.html">Perplexity AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">OCI Generative AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/chat/oci-genai/cohere-chat.html">Cohere</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/openai-chat.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/qianfan-chat.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/chat/zhipuai-chat.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/embeddings.html">Embedding Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/bedrock.html">Amazon Bedrock</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/embeddings/bedrock-cohere-embedding.html">Cohere</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/embeddings/bedrock-titan-embedding.html">Titan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/azure-openai-embeddings.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/mistralai-embeddings.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/minimax-embeddings.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/oci-genai-embeddings.html">OCI GenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/ollama-embeddings.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/onnx.html">(ONNX) Transformers</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/openai-embeddings.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/postgresml-embeddings.html">PostgresML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/qianfan-embeddings.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">VertexAI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/embeddings/vertexai-embeddings-text.html">Text Embedding</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/embeddings/vertexai-embeddings-multimodal.html">Multimodal Embedding</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/embeddings/zhipuai-embeddings.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/imageclient.html">Image Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/image/azure-openai-image.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/image/openai-image.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/image/stabilityai-image.html">Stability</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/image/zhipuai-image.html">ZhiPuAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/image/qianfan-image.html">QianFan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="upgrade-notes.html#api/audio">Audio Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/audio/transcriptions.html">Transcription API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/audio/transcriptions/azure-openai-transcriptions.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/audio/transcriptions/openai-transcriptions.html">OpenAI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/audio/speech.html">Text-To-Speech (TTS) API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="api/audio/speech/openai-speech.html">OpenAI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="upgrade-notes.html#api/moderation">Moderation Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/moderation/openai-moderation.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="api/moderation/mistral-ai-moderation.html">Mistral AI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/chat-memory.html">Chat Memory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/tools.html">Tool Calling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/mcp/mcp-overview.html">Model Context Protocol (MCP)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/mcp/mcp-client-boot-starter-docs.html">MCP Client Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/mcp/mcp-server-boot-starter-docs.html">MCP Server Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/mcp/mcp-helpers.html">MCP Utilities</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/retrieval-augmented-generation.html">Retrieval Augmented Generation (RAG)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/etl-pipeline.html">ETL Pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/testing.html">Model Evaluation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="api/vectordbs.html">Vector Databases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/azure.html">Azure AI Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/azure-cosmos-db.html">Azure Cosmos DB</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/apache-cassandra.html">Apache Cassandra Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/chroma.html">Chroma</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/couchbase.html">Couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/elasticsearch.html">Elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/gemfire.html">GemFire</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/mariadb.html">MariaDB Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/milvus.html">Milvus</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/mongodb.html">MongoDB Atlas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/neo4j.html">Neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/opensearch.html">OpenSearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/oracle.html">Oracle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/pgvector.html">PGvector</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/pinecone.html">Pinecone</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/qdrant.html">Qdrant</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/redis.html">Redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/hana.html">SAP Hana</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/typesense.html">Typesense</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/vectordbs/weaviate.html">Weaviate</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="observability/index.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/docker-compose.html">Development-time Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="api/testcontainers.html">Testcontainers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://github.com/spring-ai-community/awesome-spring-ai">Awesome Spring AI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/chat/prompt-engineering-patterns.html">Prompt Engineering Patterns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/effective-agents.html">Building Effective Agents</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/cloud-bindings.html">Deploying to the Cloud</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="upgrade-notes.html">Upgrade Notes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="api/tools-migration.html">Migrating FunctionCallback to ToolCallback API</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="toc" data-title="Upgrade Notes" data-levels="2">
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/spring-projects/spring-ai/blob/v1.0.0/spring-ai-docs/src/main/antora/modules/ROOT/pages/upgrade-notes.adoc">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/spring-projects/spring-ai" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" height="512px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="512px"><style type="text/css"><![CDATA[
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path class="st0" d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"></path></g></svg>
+          GitHub Project
+        </a>
+        <a href="https://stackoverflow.com/questions/tagged/spring">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"></path></svg>
+          Stack Overflow
+        </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="index.html">Spring AI</a></li>
+      <li><a href="upgrade-notes.html">Upgrade Notes</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Upgrade Notes</h1>
+<div class="sect1">
+<h2 id="upgrading-to-1-0-0-snapshot"><a class="anchor" href="upgrade-notes.html#upgrading-to-1-0-0-snapshot"></a>Upgrading to 1.0.0-SNAPSHOT</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview"><a class="anchor" href="upgrade-notes.html#_overview"></a>Overview</h3>
+<div class="paragraph">
+<p>The 1.0.0-SNAPSHOT version includes significant changes to artifact IDs, package names, and module structure. This section provides guidance specific to using the SNAPSHOT version.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_snapshot_repositories"><a class="anchor" href="upgrade-notes.html#_add_snapshot_repositories"></a>Add Snapshot Repositories</h3>
+<div class="paragraph">
+<p>To use the 1.0.0-SNAPSHOT version, you need to add the snapshot repositories to your build file.
+For detailed instructions, refer to the <a href="getting-started.html#snapshots-add-snapshot-repositories" class="xref page">Snapshots - Add Snapshot Repositories</a> section in the Getting Started guide.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_update_dependency_management"><a class="anchor" href="upgrade-notes.html#_update_dependency_management"></a>Update Dependency Management</h3>
+<div class="paragraph">
+<p>Update your Spring AI BOM version to <code>1.0.0-SNAPSHOT</code> in your build configuration.
+For detailed instructions on configuring dependency management, refer to the <a href="getting-started.html#dependency-management" class="xref page">Dependency Management</a> section in the Getting Started guide.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_artifact_id_package_and_module_changes"><a class="anchor" href="upgrade-notes.html#_artifact_id_package_and_module_changes"></a>Artifact ID, Package, and Module Changes</h3>
+<div class="paragraph">
+<p>The 1.0.0-SNAPSHOT includes changes to artifact IDs, package names, and module structure.</p>
+</div>
+<div class="paragraph">
+<p>For details, refer to:
+- <a href="upgrade-notes.html#common-artifact-id-changes">Common Artifact ID Changes</a>
+- <a href="upgrade-notes.html#common-package-changes">Common Package Changes</a>
+- <a href="upgrade-notes.html#common-module-structure">Common Module Structure</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="upgrading-to-1-0-0-RC1"><a class="anchor" href="upgrade-notes.html#upgrading-to-1-0-0-RC1"></a>Upgrading to 1.0.0-RC1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can automate the upgrade process to 1.0.0-RC1 using an OpenRewrite recipe.
+This recipe helps apply many of the necessary code changes for this version.
+Find the recipe and usage instructions at <a href="https://github.com/arconia-io/arconia-migrations/blob/main/docs/spring-ai.md">Arconia Spring AI Migrations</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_breaking_changes"><a class="anchor" href="upgrade-notes.html#_breaking_changes"></a>Breaking Changes</h3>
+<div class="sect3">
+<h4 id="_chat_client_and_advisors"><a class="anchor" href="upgrade-notes.html#_chat_client_and_advisors"></a>Chat Client and Advisors</h4>
+<div class="paragraph">
+<p>The main changes that impact end user code are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In <code>VectorStoreChatMemoryAdvisor</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The constant <code>CHAT_MEMORY_RETRIEVE_SIZE_KEY</code> has been renamed to <code>TOP_K</code>.</p>
+</li>
+<li>
+<p>The constant <code>DEFAULT_CHAT_MEMORY_RESPONSE_SIZE</code> (value: 100) has been renamed to <code>DEFAULT_TOP_K</code> with a new default value of 20.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The constant <code>CHAT_MEMORY_CONVERSATION_ID_KEY</code> has been renamed to <code>CONVERSATION_ID</code> and moved from <code>AbstractChatMemoryAdvisor</code> to the <code>ChatMemory</code> interface. Update your imports to use <code>org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_self_contained_templates_in_advisors"><a class="anchor" href="upgrade-notes.html#_self_contained_templates_in_advisors"></a>Self-contained Templates in Advisors</h5>
+<div class="paragraph">
+<p>The built-in advisors that perform prompt augmentation have been updated to use self-contained templates. The goal is for each advisor to be able to perform templating operations without affecting nor being affected by templating and prompt decisions in other advisors.</p>
+</div>
+<div class="paragraph">
+<p><strong>If you were providing custom templates for the following advisors, you&#8217;ll need to update them to ensure all expected placeholders are included.</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>QuestionAnswerAdvisor</code> expects a template with the following placeholders (see <a href="api/retrieval-augmented-generation.html#_questionansweradvisor" class="xref page">more details</a>):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>a <code>query</code> placeholder to receive the user question.</p>
+</li>
+<li>
+<p>a <code>question_answer_context</code> placeholder to receive the retrieved context.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The <code>PromptChatMemoryAdvisor</code> expects a template with the following placeholders (see <a href="api/chat-memory.html#_promptchatmemoryadvisor" class="xref page">more details</a>):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>an <code>instructions</code> placeholder to receive the original system message.</p>
+</li>
+<li>
+<p>a <code>memory</code> placeholder to receive the retrieved conversation memory.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The <code>VectorStoreChatMemoryAdvisor</code> expects a template with the following placeholders (see <a href="api/chat-memory.html#_vectorstorechatmemoryadvisor" class="xref page">more details</a>):</p>
+<div class="ulist">
+<ul>
+<li>
+<p>an <code>instructions</code> placeholder to receive the original system message.</p>
+</li>
+<li>
+<p>a <code>long_term_memory</code> placeholder to receive the retrieved conversation memory.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_observability"><a class="anchor" href="upgrade-notes.html#_observability"></a>Observability</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Refactored content observation to use logging instead of tracing (<a href="https://github.com/spring-projects/spring-ai/commit/ca843e85887aa1da6300c77550c379c103500897">ca843e8</a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Replaced content observation filters with logging handlers</p>
+</li>
+<li>
+<p>Renamed configuration properties to better reflect their purpose:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>include-prompt</code> → <code>log-prompt</code></p>
+</li>
+<li>
+<p><code>include-completion</code> → <code>log-completion</code></p>
+</li>
+<li>
+<p><code>include-query-response</code> → <code>log-query-response</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Added <code>TracingAwareLoggingObservationHandler</code> for trace-aware logging</p>
+</li>
+<li>
+<p>Replaced <code>micrometer-tracing-bridge-otel</code> with <code>micrometer-tracing</code></p>
+</li>
+<li>
+<p>Removed event-based tracing in favor of direct logging</p>
+</li>
+<li>
+<p>Removed direct dependency on the OTel SDK</p>
+</li>
+<li>
+<p>Renamed <code>includePrompt</code> to <code>logPrompt</code> in observation properties (in <code>ChatClientBuilderProperties</code>, <code>ChatObservationProperties</code>, and <code>ImageObservationProperties</code>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_chat_memory_repository_module_and_autoconfiguration_renaming"><a class="anchor" href="upgrade-notes.html#_chat_memory_repository_module_and_autoconfiguration_renaming"></a>Chat Memory Repository Module and Autoconfiguration Renaming</h4>
+<div class="paragraph">
+<p>We&#8217;ve standardized the naming pattern for chat memory components by adding the repository suffix throughout the codebase. This change affects Cassandra, JDBC, and Neo4j implementations, impacting artifact IDs, Java package names, and class names for clarity.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_artifact_ids"><a class="anchor" href="upgrade-notes.html#_artifact_ids"></a>Artifact IDs</h4>
+<div class="paragraph">
+<p>All memory-related artifacts now follow a consistent pattern:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>spring-ai-model-chat-memory-<strong></code> → <code>spring-ai-model-chat-memory-repository-</strong></code></p>
+</li>
+<li>
+<p><code>spring-ai-autoconfigure-model-chat-memory-<strong></code> → <code>spring-ai-autoconfigure-model-chat-memory-repository-</strong></code></p>
+</li>
+<li>
+<p><code>spring-ai-starter-model-chat-memory-<strong></code> → <code>spring-ai-starter-model-chat-memory-repository-</strong></code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_java_packages"><a class="anchor" href="upgrade-notes.html#_java_packages"></a>Java Packages</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Package paths now include <code>.repository.</code> segment</p>
+</li>
+<li>
+<p>Example: <code>org.springframework.ai.chat.memory.jdbc</code> → <code>org.springframework.ai.chat.memory.repository.jdbc</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuration_classes"><a class="anchor" href="upgrade-notes.html#_configuration_classes"></a>Configuration Classes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Main autoconfiguration classes now use the <code>Repository</code> suffix</p>
+</li>
+<li>
+<p>Example: <code>JdbcChatMemoryAutoConfiguration</code> → <code>JdbcChatMemoryRepositoryAutoConfiguration</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_properties"><a class="anchor" href="upgrade-notes.html#_properties"></a>Properties</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Configuration properties renamed from <code>spring.ai.chat.memory.&lt;storage&gt;&#8230;&#8203;</code> to <code>spring.ai.chat.memory.repository.&lt;storage&gt;&#8230;&#8203;</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Migration Required:</strong>
+- Update your Maven/Gradle dependencies to use the new artifact IDs.
+- Update any imports, class references, or configuration that used the old package or class names.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_message_aggregator_refactoring"><a class="anchor" href="upgrade-notes.html#_message_aggregator_refactoring"></a>Message Aggregator Refactoring</h4>
+<div class="sect4">
+<h5 id="_changes"><a class="anchor" href="upgrade-notes.html#_changes"></a>Changes</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>MessageAggregator</code> class has been moved from <code>org.springframework.ai.chat.model</code> package in the <code>spring-ai-client-chat</code> module to the <code>spring-ai-model</code> module (same package name)</p>
+</li>
+<li>
+<p>The <code>aggregateChatClientResponse</code> method has been removed from <code>MessageAggregator</code> and moved to a new class <code>ChatClientMessageAggregator</code> in the <code>org.springframework.ai.chat.client</code> package</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_migration_guide"><a class="anchor" href="upgrade-notes.html#_migration_guide"></a>Migration Guide</h5>
+<div class="paragraph">
+<p>If you were directly using the <code>aggregateChatClientResponse</code> method from <code>MessageAggregator</code>, you need to use the new <code>ChatClientMessageAggregator</code> class instead:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Before
+new MessageAggregator().aggregateChatClientResponse(chatClientResponses, aggregationHandler);
+
+// After
+new ChatClientMessageAggregator().aggregateChatClientResponse(chatClientResponses, aggregationHandler);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Don&#8217;t forget to add the appropriate import:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import org.springframework.ai.chat.client.ChatClientMessageAggregator;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_watson"><a class="anchor" href="upgrade-notes.html#_watson"></a>Watson</h4>
+<div class="paragraph">
+<p>The Watson AI model was removed as it was based on the older text generation that is considered outdated as there is a new chat generation model available.
+Hopefully Watson will reappear in a future version of Spring AI</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_moonshot_and_qianfan"><a class="anchor" href="upgrade-notes.html#_moonshot_and_qianfan"></a>MoonShot and QianFan</h4>
+<div class="paragraph">
+<p>Moonshot and Qianfan have been removed since they are not accessible from outside China.  These have been moved to the Spring AI Community repository.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_removed_vector_store"><a class="anchor" href="upgrade-notes.html#_removed_vector_store"></a>Removed Vector Store</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed HanaDB vector store autoconfiguration (<a href="https://github.com/spring-projects/spring-ai/commit/f3b46244942c5072c2e2fa89e62cde71c61bbf25">f3b4624</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_memory_management"><a class="anchor" href="upgrade-notes.html#_memory_management"></a>Memory Management</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed CassandraChatMemory implementation (<a href="https://github.com/spring-projects/spring-ai/commit/11e3c8f9a6636d77f203968b83625d3e5694c408">11e3c8f</a>)</p>
+</li>
+<li>
+<p>Simplified chat memory advisor hierarchy and removed deprecated API (<a href="https://github.com/spring-projects/spring-ai/commit/848a3fd31fadd07c9ba77f6dc30425389d095e9a">848a3fd</a>)</p>
+</li>
+<li>
+<p>Removed deprecations in JdbcChatMemory (<a href="https://github.com/spring-projects/spring-ai/commit/356a68f15eea07a040bd27c66442472fc55e6475">356a68f</a>)</p>
+</li>
+<li>
+<p>Refactored chat memory repository artifacts for clarity (<a href="https://github.com/spring-projects/spring-ai/commit/2d517eec5cd7ce5f88149b876ed57a06ad353e11">2d517ee</a>)</p>
+</li>
+<li>
+<p>Refactored chat memory repository autoconfigurations and Spring Boot starters for clarity (<a href="https://github.com/spring-projects/spring-ai/commit/f6dba1bf083d847cdc07888ba62746683e3d61bb">f6dba1b</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_message_and_template_apis"><a class="anchor" href="upgrade-notes.html#_message_and_template_apis"></a>Message and Template APIs</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed deprecated UserMessage constructors (<a href="https://github.com/spring-projects/spring-ai/commit/06edee406978d172a1f87f4c7b255282f9d55e4c">06edee4</a>)</p>
+</li>
+<li>
+<p>Removed deprecated PromptTemplate constructors (<a href="https://github.com/spring-projects/spring-ai/commit/722c77e812f3f3ea40cf2258056fcf1578b15c62">722c77e</a>)</p>
+</li>
+<li>
+<p>Removed deprecated methods from Media (<a href="https://github.com/spring-projects/spring-ai/commit/228ef10bfbfe279d7d09f2a7ba166db873372118">228ef10</a>)</p>
+</li>
+<li>
+<p>Refactored StTemplateRenderer: renamed supportStFunctions to validateStFunctions (<a href="https://github.com/spring-projects/spring-ai/commit/0e15197298c0848b78a746f3d740191e6a6aee7a">0e15197</a>)</p>
+</li>
+<li>
+<p>Removed left over TemplateRender interface after moving it (<a href="https://github.com/spring-projects/spring-ai/commit/52675d854ccecbc702cec24c4f070520eca64938">52675d8</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_additional_client_api_changes"><a class="anchor" href="upgrade-notes.html#_additional_client_api_changes"></a>Additional Client API Changes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed deprecations in ChatClient and Advisors (<a href="https://github.com/spring-projects/spring-ai/commit/4fe74d886e26d52abf6f2f5545264d422a0be4b2">4fe74d8</a>)</p>
+</li>
+<li>
+<p>Removed deprecations from OllamaApi and AnthropicApi (<a href="https://github.com/spring-projects/spring-ai/commit/46be8987d6bc385bf74b9296aa4308c7a8658d2f">46be898</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_package_structure_changes"><a class="anchor" href="upgrade-notes.html#_package_structure_changes"></a>Package Structure Changes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed inter-package dependency cycles in spring-ai-model (<a href="https://github.com/spring-projects/spring-ai/commit/ebfa5b9b2cc2ab0d20e25dc6128c4b1c9c327f89">ebfa5b9</a>)</p>
+</li>
+<li>
+<p>Moved MessageAggregator to spring-ai-model module (<a href="https://github.com/spring-projects/spring-ai/commit/54e5c07428909ceec248e3bbd71e2df4b0812e49">54e5c07</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dependencies"><a class="anchor" href="upgrade-notes.html#_dependencies"></a>Dependencies</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed unused json-path dependency in spring-ai-openai (<a href="https://github.com/spring-projects/spring-ai/commit/9de13d1b2fdb67219dc7afbf319ade789784f2b9">9de13d1</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_behavior_changes"><a class="anchor" href="upgrade-notes.html#_behavior_changes"></a>Behavior Changes</h3>
+<div class="sect3">
+<h4 id="_azure_openai"><a class="anchor" href="upgrade-notes.html#_azure_openai"></a>Azure OpenAI</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Added Entra ID identity management for Azure OpenAI with clean autoconfiguration (<a href="https://github.com/spring-projects/spring-ai/commit/3dc86d33ce90ebd68ec3997a0eb4704ab7774e99">3dc86d3</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_general_cleanup"><a class="anchor" href="upgrade-notes.html#_general_cleanup"></a>General Cleanup</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed all code deprecations (<a href="https://github.com/spring-projects/spring-ai/commit/76bee8ceb2854839f93a6c52876f50bb24219355">76bee8c</a>) and (<a href="https://github.com/spring-projects/spring-ai/commit/b6ce7f3e4a7aafe6b9031043f63813dde6e73605">b6ce7f3</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="upgrading-to-1-0-0-m8"><a class="anchor" href="upgrade-notes.html#upgrading-to-1-0-0-m8"></a>Upgrading to 1.0.0-M8</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can automate the upgrade process to 1.0.0-M8 using an OpenRewrite recipe.
+This recipe helps apply many of the necessary code changes for this version.
+Find the recipe and usage instructions at <a href="https://github.com/arconia-io/arconia-migrations/blob/main/docs/spring-ai.md">Arconia Spring AI Migrations</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_breaking_changes_2"><a class="anchor" href="upgrade-notes.html#_breaking_changes_2"></a>Breaking Changes</h3>
+<div class="paragraph">
+<p>When upgrading from Spring AI 1.0 M7 to 1.0 M8, users who previously registered tool callbacks are encountering breaking changes that cause tool calling functionality to silently fail. This is specifically impacting code that used the deprecated <code>tools()</code> method.</p>
+</div>
+<div class="sect3">
+<h4 id="_example"><a class="anchor" href="upgrade-notes.html#_example"></a>Example</h4>
+<div class="paragraph">
+<p>Here&#8217;s an example of code that worked in M7 but no longer functions as expected in M8:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// This worked in M7 but silently fails in M8
+ChatClient chatClient = new OpenAiChatClient(api)
+    .tools(List.of(
+        new Tool("get_current_weather", "Get the current weather in a given location",
+            new ToolSpecification.ToolParameter("location", "The city and state, e.g. San Francisco, CA", true))
+    ))
+    .toolCallbacks(List.of(
+        new ToolCallback("get_current_weather", (toolName, params) -&gt; {
+            // Weather retrieval logic
+            return Map.of("temperature", 72, "unit", "fahrenheit", "description", "Sunny");
+        })
+    ));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_solution"><a class="anchor" href="upgrade-notes.html#_solution"></a>Solution</h4>
+<div class="paragraph">
+<p>The solution is to use the <code>toolSpecifications()</code> method instead of the deprecated <code>tools()</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// This works in M8
+ChatClient chatClient = new OpenAiChatClient(api)
+    .toolSpecifications(List.of(
+        new Tool("get_current_weather", "Get the current weather in a given location",
+            new ToolSpecification.ToolParameter("location", "The city and state, e.g. San Francisco, CA", true))
+    ))
+    .toolCallbacks(List.of(
+        new ToolCallback("get_current_weather", (toolName, params) -&gt; {
+            // Weather retrieval logic
+            return Map.of("temperature", 72, "unit", "fahrenheit", "description", "Sunny");
+        })
+    ));</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_removed_implementations_and_apis"><a class="anchor" href="upgrade-notes.html#_removed_implementations_and_apis"></a>Removed Implementations and APIs</h3>
+<div class="sect3">
+<h4 id="_memory_management_2"><a class="anchor" href="upgrade-notes.html#_memory_management_2"></a>Memory Management</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed CassandraChatMemory implementation (<a href="https://github.com/spring-projects/spring-ai/commit/11e3c8f9a6636d77f203968b83625d3e5694c408">11e3c8f</a>)</p>
+</li>
+<li>
+<p>Simplified chat memory advisor hierarchy and removed deprecated API (<a href="https://github.com/spring-projects/spring-ai/commit/848a3fd31fadd07c9ba77f6dc30425389d095e9a">848a3fd</a>)</p>
+</li>
+<li>
+<p>Removed deprecations in JdbcChatMemory (<a href="https://github.com/spring-projects/spring-ai/commit/356a68f15eea07a040bd27c66442472fc55e6475">356a68f</a>)</p>
+</li>
+<li>
+<p>Refactored chat memory repository artifacts for clarity (<a href="https://github.com/spring-projects/spring-ai/commit/2d517eec5cd7ce5f88149b876ed57a06ad353e11">2d517ee</a>)</p>
+</li>
+<li>
+<p>Refactored chat memory repository autoconfigurations and Spring Boot starters for clarity (<a href="https://github.com/spring-projects/spring-ai/commit/f6dba1bf083d847cdc07888ba62746683e3d61bb">f6dba1b</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client_apis"><a class="anchor" href="upgrade-notes.html#_client_apis"></a>Client APIs</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed deprecations in ChatClient and Advisors (<a href="https://github.com/spring-projects/spring-ai/commit/4fe74d886e26d52abf6f2f5545264d422a0be4b2">4fe74d8</a>)</p>
+</li>
+<li>
+<p>Breaking changes to chatclient tool calling (<a href="https://github.com/spring-projects/spring-ai/commit/5b7849de088b3c93c7ec894fcaddc85a611a8572">5b7849d</a>)</p>
+</li>
+<li>
+<p>Removed deprecations from OllamaApi and AnthropicApi (<a href="https://github.com/spring-projects/spring-ai/commit/46be8987d6bc385bf74b9296aa4308c7a8658d2f">46be898</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_message_and_template_apis_2"><a class="anchor" href="upgrade-notes.html#_message_and_template_apis_2"></a>Message and Template APIs</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed deprecated UserMessage constructors (<a href="https://github.com/spring-projects/spring-ai/commit/06edee406978d172a1f87f4c7b255282f9d55e4c">06edee4</a>)</p>
+</li>
+<li>
+<p>Removed deprecated PromptTemplate constructors (<a href="https://github.com/spring-projects/spring-ai/commit/722c77e812f3f3ea40cf2258056fcf1578b15c62">722c77e</a>)</p>
+</li>
+<li>
+<p>Removed deprecated methods from Media (<a href="https://github.com/spring-projects/spring-ai/commit/228ef10bfbfe279d7d09f2a7ba166db873372118">228ef10</a>)</p>
+</li>
+<li>
+<p>Refactored StTemplateRenderer: renamed supportStFunctions to validateStFunctions (<a href="https://github.com/spring-projects/spring-ai/commit/0e15197298c0848b78a746f3d740191e6a6aee7a">0e15197</a>)</p>
+</li>
+<li>
+<p>Removed left over TemplateRender interface after moving it (<a href="https://github.com/spring-projects/spring-ai/commit/52675d854ccecbc702cec24c4f070520eca64938">52675d8</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_model_implementations"><a class="anchor" href="upgrade-notes.html#_model_implementations"></a>Model Implementations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed Watson text generation model (<a href="https://github.com/spring-projects/spring-ai/commit/9e71b163e315199fe7b46495d87a0828a807b88f">9e71b16</a>)</p>
+</li>
+<li>
+<p>Removed Qianfan code (<a href="https://github.com/spring-projects/spring-ai/commit/bfcaad7b5495c5927a62b44169e8713e044c2497">bfcaad7</a>)</p>
+</li>
+<li>
+<p>Removed HanaDB vector store autoconfiguration (<a href="https://github.com/spring-projects/spring-ai/commit/f3b46244942c5072c2e2fa89e62cde71c61bbf25">f3b4624</a>)</p>
+</li>
+<li>
+<p>Removed deepseek options from OpenAiApi (<a href="https://github.com/spring-projects/spring-ai/commit/59b36d14dab72d76f2f3d49ce9385a69faaabbba">59b36d1</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_package_structure_changes_2"><a class="anchor" href="upgrade-notes.html#_package_structure_changes_2"></a>Package Structure Changes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed inter-package dependency cycles in spring-ai-model (<a href="https://github.com/spring-projects/spring-ai/commit/ebfa5b9b2cc2ab0d20e25dc6128c4b1c9c327f89">ebfa5b9</a>)</p>
+</li>
+<li>
+<p>Moved MessageAggregator to spring-ai-model module (<a href="https://github.com/spring-projects/spring-ai/commit/54e5c07428909ceec248e3bbd71e2df4b0812e49">54e5c07</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_dependencies_2"><a class="anchor" href="upgrade-notes.html#_dependencies_2"></a>Dependencies</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed unused json-path dependency in spring-ai-openai (<a href="https://github.com/spring-projects/spring-ai/commit/9de13d1b2fdb67219dc7afbf319ade789784f2b9">9de13d1</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_behavior_changes_2"><a class="anchor" href="upgrade-notes.html#_behavior_changes_2"></a>Behavior Changes</h3>
+<div class="sect3">
+<h4 id="_observability_2"><a class="anchor" href="upgrade-notes.html#_observability_2"></a>Observability</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Refactored content observation to use logging instead of tracing (<a href="https://github.com/spring-projects/spring-ai/commit/ca843e85887aa1da6300c77550c379c103500897">ca843e8</a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Replaced content observation filters with logging handlers</p>
+</li>
+<li>
+<p>Renamed configuration properties to better reflect their purpose:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>include-prompt</code> → <code>log-prompt</code></p>
+</li>
+<li>
+<p><code>include-completion</code> → <code>log-completion</code></p>
+</li>
+<li>
+<p><code>include-query-response</code> → <code>log-query-response</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Added <code>TracingAwareLoggingObservationHandler</code> for trace-aware logging</p>
+</li>
+<li>
+<p>Replaced <code>micrometer-tracing-bridge-otel</code> with <code>micrometer-tracing</code></p>
+</li>
+<li>
+<p>Removed event-based tracing in favor of direct logging</p>
+</li>
+<li>
+<p>Removed direct dependency on the OTel SDK</p>
+</li>
+<li>
+<p>Renamed <code>includePrompt</code> to <code>logPrompt</code> in observation properties (in <code>ChatClientBuilderProperties</code>, <code>ChatObservationProperties</code>, and <code>ImageObservationProperties</code>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_azure_openai_2"><a class="anchor" href="upgrade-notes.html#_azure_openai_2"></a>Azure OpenAI</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Added Entra ID identity management for Azure OpenAI with clean autoconfiguration (<a href="https://github.com/spring-projects/spring-ai/commit/3dc86d33ce90ebd68ec3997a0eb4704ab7774e99">3dc86d3</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_general_cleanup_2"><a class="anchor" href="upgrade-notes.html#_general_cleanup_2"></a>General Cleanup</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Removed all deprecations from 1.0.0-M8 (<a href="https://github.com/spring-projects/spring-ai/commit/76bee8ceb2854839f93a6c52876f50bb24219355">76bee8c</a>)</p>
+</li>
+<li>
+<p>General deprecation cleanup (<a href="https://github.com/spring-projects/spring-ai/commit/b6ce7f3e4a7aafe6b9031043f63813dde6e73605">b6ce7f3</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="upgrading-to-1-0-0-m7"><a class="anchor" href="upgrade-notes.html#upgrading-to-1-0-0-m7"></a>Upgrading to 1.0.0-M7</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview_of_changes"><a class="anchor" href="upgrade-notes.html#_overview_of_changes"></a>Overview of Changes</h3>
+<div class="paragraph">
+<p>Spring AI 1.0.0-M7 is the last milestone release before the RC1 and GA releases. It introduces several important changes to artifact IDs, package names, and module structure that will be maintained in the final release.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_artifact_id_package_and_module_changes_2"><a class="anchor" href="upgrade-notes.html#_artifact_id_package_and_module_changes_2"></a>Artifact ID, Package, and Module Changes</h3>
+<div class="paragraph">
+<p>The 1.0.0-M7 includes the same structural changes as 1.0.0-SNAPSHOT.</p>
+</div>
+<div class="paragraph">
+<p>For details, refer to:
+- <a href="upgrade-notes.html#common-artifact-id-changes">Common Artifact ID Changes</a>
+- <a href="upgrade-notes.html#common-package-changes">Common Package Changes</a>
+- <a href="upgrade-notes.html#common-module-structure">Common Module Structure</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mcp_java_sdk_upgrade_to_0_9_0"><a class="anchor" href="upgrade-notes.html#_mcp_java_sdk_upgrade_to_0_9_0"></a>MCP Java SDK Upgrade to 0.9.0</h3>
+<div class="paragraph">
+<p>Spring AI 1.0.0-M7 now uses MCP Java SDK version 0.9.0, which includes significant changes from previous versions. If you&#8217;re using MCP in your applications, you&#8217;ll need to update your code to accommodate these changes.</p>
+</div>
+<div class="paragraph">
+<p>Key changes include:</p>
+</div>
+<div class="sect3">
+<h4 id="_interface_renaming"><a class="anchor" href="upgrade-notes.html#_interface_renaming"></a>Interface Renaming</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>ClientMcpTransport</code> → <code>McpClientTransport</code></p>
+</li>
+<li>
+<p><code>ServerMcpTransport</code> → <code>McpServerTransport</code></p>
+</li>
+<li>
+<p><code>DefaultMcpSession</code> → <code>McpClientSession</code> or <code>McpServerSession</code></p>
+</li>
+<li>
+<p>All <code>*Registration</code> classes → <code>*Specification</code> classes</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_server_creation_changes"><a class="anchor" href="upgrade-notes.html#_server_creation_changes"></a>Server Creation Changes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>McpServerTransportProvider</code> instead of <code>ServerMcpTransport</code></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Before
+ServerMcpTransport transport = new WebFluxSseServerTransport(objectMapper, "/mcp/message");
+var server = McpServer.sync(transport)
+    .serverInfo("my-server", "1.0.0")
+    .build();
+
+// After
+McpServerTransportProvider transportProvider = new WebFluxSseServerTransportProvider(objectMapper, "/mcp/message");
+var server = McpServer.sync(transportProvider)
+    .serverInfo("my-server", "1.0.0")
+    .build();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_handler_signature_changes"><a class="anchor" href="upgrade-notes.html#_handler_signature_changes"></a>Handler Signature Changes</h4>
+<div class="paragraph">
+<p>All handlers now receive an <code>exchange</code> parameter as their first argument:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Before
+.tool(calculatorTool, args -&gt; new CallToolResult("Result: " + calculate(args)))
+
+// After
+.tool(calculatorTool, (exchange, args) -&gt; new CallToolResult("Result: " + calculate(args)))</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client_interaction_via_exchange"><a class="anchor" href="upgrade-notes.html#_client_interaction_via_exchange"></a>Client Interaction via Exchange</h4>
+<div class="paragraph">
+<p>Methods previously available on the server are now accessed through the exchange object:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Before
+ClientCapabilities capabilities = server.getClientCapabilities();
+CreateMessageResult result = server.createMessage(new CreateMessageRequest(...));
+
+// After
+ClientCapabilities capabilities = exchange.getClientCapabilities();
+CreateMessageResult result = exchange.createMessage(new CreateMessageRequest(...));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_roots_change_handlers"><a class="anchor" href="upgrade-notes.html#_roots_change_handlers"></a>Roots Change Handlers</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Before
+.rootsChangeConsumers(List.of(
+    roots -&gt; System.out.println("Roots changed: " + roots)
+))
+
+// After
+.rootsChangeHandlers(List.of(
+    (exchange, roots) -&gt; System.out.println("Roots changed: " + roots)
+))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For a complete guide to migrating MCP code, refer to the <a href="https://github.com/spring-projects/spring-ai/blob/main/spring-ai-docs/src/main/antora/modules/ROOT/pages/mcp-migration.adoc">MCP Migration Guide</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_enablingdisabling_model_auto_configuration"><a class="anchor" href="upgrade-notes.html#_enablingdisabling_model_auto_configuration"></a>Enabling/Disabling Model Auto-Configuration</h3>
+<div class="paragraph">
+<p>The previous configuration properties for enabling/disabling model auto-configuration have been removed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>spring.ai.&lt;provider&gt;.chat.enabled</code></p>
+</li>
+<li>
+<p><code>spring.ai.&lt;provider&gt;.embedding.enabled</code></p>
+</li>
+<li>
+<p><code>spring.ai.&lt;provider&gt;.image.enabled</code></p>
+</li>
+<li>
+<p><code>spring.ai.&lt;provider&gt;.moderation.enabled</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By default, if a model provider (e.g., OpenAI, Ollama) is found on the classpath, its corresponding auto-configuration for relevant model types (chat, embedding, etc.) is enabled. If multiple providers for the same model type are present (e.g., both <code>spring-ai-openai-spring-boot-starter</code> and <code>spring-ai-ollama-spring-boot-starter</code>), you can use the following properties to select <strong>which</strong> provider&#8217;s auto-configuration should be active, effectively disabling the others for that specific model type.</p>
+</div>
+<div class="paragraph">
+<p>To disable auto-configuration for a specific model type entirely, even if only one provider is present, set the corresponding property to a value that does not match any provider on the classpath (e.g., <code>none</code> or <code>disabled</code>).</p>
+</div>
+<div class="paragraph">
+<p>You can refer to the <a href="https://github.com/spring-projects/spring-ai/blob/main/spring-ai-model/src/main/java/org/springframework/ai/model/SpringAIModels.java"><code>SpringAIModels</code></a> enumeration for a list of well-known provider values.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>spring.ai.model.audio.speech=&lt;model-provider|none&gt;</code></p>
+</li>
+<li>
+<p><code>spring.ai.model.audio.transcription=&lt;model-provider|none&gt;</code></p>
+</li>
+<li>
+<p><code>spring.ai.model.chat=&lt;model-provider|none&gt;</code></p>
+</li>
+<li>
+<p><code>spring.ai.model.embedding=&lt;model-provider|none&gt;</code></p>
+</li>
+<li>
+<p><code>spring.ai.model.embedding.multimodal=&lt;model-provider|none&gt;</code></p>
+</li>
+<li>
+<p><code>spring.ai.model.embedding.text=&lt;model-provider|none&gt;</code></p>
+</li>
+<li>
+<p><code>spring.ai.model.image=&lt;model-provider|none&gt;</code></p>
+</li>
+<li>
+<p><code>spring.ai.model.moderation=&lt;model-provider|none&gt;</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_automating_upgrading_using_ai"><a class="anchor" href="upgrade-notes.html#_automating_upgrading_using_ai"></a>Automating upgrading using AI</h3>
+<div class="paragraph">
+<p>You can automate the upgrade process to 1.0.0-M7 using the Claude Code CLI tool with a provided prompt:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download the <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude Code CLI tool</a></p>
+</li>
+<li>
+<p>Copy the prompt from the <a href="https://github.com/spring-projects/spring-ai/blob/main/src/prompts/update-to-m7.txt">update-to-m7.txt</a> file</p>
+</li>
+<li>
+<p>Paste the prompt into the Claude Code CLI</p>
+</li>
+<li>
+<p>The AI will analyze your project and make the necessary changes</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The automated upgrade prompt currently handles artifact ID changes, package relocations, and module structure changes, but does not yet include automatic changes for upgrading to MCP 0.9.0. If you&#8217;re using MCP, you&#8217;ll need to manually update your code following the guidance in the <a href="upgrade-notes.html#mcp-java-sdk-upgrade-to-0-9-0">MCP Java SDK Upgrade</a> section.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="common-sections"><a class="anchor" href="upgrade-notes.html#common-sections"></a>Common Changes Across Versions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="common-artifact-id-changes"><a class="anchor" href="upgrade-notes.html#common-artifact-id-changes"></a>Artifact ID Changes</h3>
+<div class="paragraph">
+<p>The naming pattern for Spring AI starter artifacts has changed.
+You&#8217;ll need to update your dependencies according to the following patterns:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Model starters: <code>spring-ai-{model}-spring-boot-starter</code> → <code>spring-ai-starter-model-{model}</code></p>
+</li>
+<li>
+<p>Vector Store starters: <code>spring-ai-{store}-store-spring-boot-starter</code> → <code>spring-ai-starter-vector-store-{store}</code></p>
+</li>
+<li>
+<p>MCP starters: <code>spring-ai-mcp-{type}-spring-boot-starter</code> → <code>spring-ai-starter-mcp-{type}</code></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_examples"><a class="anchor" href="upgrade-notes.html#_examples"></a>Examples</h4>
+<div id="_tabs_1" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_1_maven" class="tab">
+<p>Maven</p>
+</li>
+<li id="_tabs_1_gradle" class="tab">
+<p>Gradle</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_1_maven--panel" class="tabpanel" aria-labelledby="_tabs_1_maven">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;!-- BEFORE --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-openai-spring-boot-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;!-- AFTER --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-starter-model-openai&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_1_gradle--panel" class="tabpanel" aria-labelledby="_tabs_1_gradle">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">// BEFORE
+implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+implementation 'org.springframework.ai:spring-ai-redis-store-spring-boot-starter'
+
+// AFTER
+implementation 'org.springframework.ai:spring-ai-starter-model-openai'
+implementation 'org.springframework.ai:spring-ai-starter-vector-store-redis'</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_changes_to_spring_ai_autoconfiguration_artifacts"><a class="anchor" href="upgrade-notes.html#_changes_to_spring_ai_autoconfiguration_artifacts"></a>Changes to Spring AI Autoconfiguration Artifacts</h4>
+<div class="paragraph">
+<p>The Spring AI autoconfiguration has changed from a single monolithic artifact to individual autoconfiguration artifacts per model, vector store, and other components.
+This change was made to minimize the impact of different versions of dependent libraries conflicting, such as Google Protocol Buffers, Google RPC, and others.
+By separating autoconfiguration into component-specific artifacts, you can avoid pulling in unnecessary dependencies and reduce the risk of version conflicts in your application.</p>
+</div>
+<div class="paragraph">
+<p>The original monolithic artifact is no longer available:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;!-- NO LONGER AVAILABLE --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-spring-boot-autoconfigure&lt;/artifactId&gt;
+    &lt;version&gt;${project.version}&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instead, each component now has its own autoconfiguration artifact following these patterns:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Model autoconfiguration: <code>spring-ai-autoconfigure-model-{model}</code></p>
+</li>
+<li>
+<p>Vector Store autoconfiguration: <code>spring-ai-autoconfigure-vector-store-{store}</code></p>
+</li>
+<li>
+<p>MCP autoconfiguration: <code>spring-ai-autoconfigure-mcp-{type}</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_examples_of_new_autoconfiguration_artifacts"><a class="anchor" href="upgrade-notes.html#_examples_of_new_autoconfiguration_artifacts"></a>Examples of New Autoconfiguration Artifacts</h4>
+<div id="_tabs_2" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_2_models" class="tab">
+<p>Models</p>
+</li>
+<li id="_tabs_2_vector_stores" class="tab">
+<p>Vector Stores</p>
+</li>
+<li id="_tabs_2_mcp" class="tab">
+<p>MCP</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_2_models--panel" class="tabpanel" aria-labelledby="_tabs_2_models">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-model-openai&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-model-anthropic&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-model-vertex-ai&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_2_vector_stores--panel" class="tabpanel" aria-labelledby="_tabs_2_vector_stores">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-vector-store-redis&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-vector-store-pgvector&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-vector-store-chroma&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_2_mcp--panel" class="tabpanel" aria-labelledby="_tabs_2_mcp">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-mcp-client&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-autoconfigure-mcp-server&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In most cases, you won&#8217;t need to explicitly add these autoconfiguration dependencies.
+They are included transitively when using the corresponding starter dependencies.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="common-package-changes"><a class="anchor" href="upgrade-notes.html#common-package-changes"></a>Package Name Changes</h3>
+<div class="paragraph">
+<p>Your IDE should assist with refactoring to the new package locations.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>KeywordMetadataEnricher</code> and <code>SummaryMetadataEnricher</code> have moved from <code>org.springframework.ai.transformer</code> to <code>org.springframework.ai.chat.transformer</code>.</p>
+</li>
+<li>
+<p><code>Content</code>, <code>MediaContent</code>, and <code>Media</code> have moved from <code>org.springframework.ai.model</code> to <code>org.springframework.ai.content</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="common-module-structure"><a class="anchor" href="upgrade-notes.html#common-module-structure"></a>Module Structure</h3>
+<div class="paragraph">
+<p>The project has undergone significant changes to its module and artifact structure. Previously, <code>spring-ai-core</code> contained all central interfaces, but this has now been split into specialized domain modules to reduce unnecessary dependencies in your applications.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="https://docs.spring.io/spring-ai/reference/_images/spring-ai-dependencies.png" alt="Spring AI Dependencies" width="1000">
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring_ai_commons"><a class="anchor" href="upgrade-notes.html#_spring_ai_commons"></a>spring-ai-commons</h4>
+<div class="paragraph">
+<p>Base module with no dependencies on other Spring AI modules. Contains:
+- Core domain models (<code>Document</code>, <code>TextSplitter</code>)
+- JSON utilities and resource handling
+- Structured logging and observability support</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring_ai_model"><a class="anchor" href="upgrade-notes.html#_spring_ai_model"></a>spring-ai-model</h4>
+<div class="paragraph">
+<p>Provides AI capability abstractions:
+- Interfaces like <code>ChatModel</code>, <code>EmbeddingModel</code>, and <code>ImageModel</code>
+- Message types and prompt templates
+- Function-calling framework (<code>ToolDefinition</code>, <code>ToolCallback</code>)
+- Content filtering and observation support</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring_ai_vector_store"><a class="anchor" href="upgrade-notes.html#_spring_ai_vector_store"></a>spring-ai-vector-store</h4>
+<div class="paragraph">
+<p>Unified vector database abstraction:
+- <code>VectorStore</code> interface for similarity search
+- Advanced filtering with SQL-like expressions
+- <code>SimpleVectorStore</code> for in-memory usage
+- Batching support for embeddings</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring_ai_client_chat"><a class="anchor" href="upgrade-notes.html#_spring_ai_client_chat"></a>spring-ai-client-chat</h4>
+<div class="paragraph">
+<p>High-level conversational AI APIs:
+- <code>ChatClient</code> interface
+- Conversation persistence via <code>ChatMemory</code>
+- Response conversion with <code>OutputConverter</code>
+- Advisor-based interception
+- Synchronous and reactive streaming support</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring_ai_advisors_vector_store"><a class="anchor" href="upgrade-notes.html#_spring_ai_advisors_vector_store"></a>spring-ai-advisors-vector-store</h4>
+<div class="paragraph">
+<p>Bridges chat with vector stores for RAG:
+- <code>QuestionAnswerAdvisor</code>: injects context into prompts
+- <code>VectorStoreChatMemoryAdvisor</code>: stores/retrieves conversation history</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring_ai_model_chat_memory_cassandra"><a class="anchor" href="upgrade-notes.html#_spring_ai_model_chat_memory_cassandra"></a>spring-ai-model-chat-memory-cassandra</h4>
+<div class="paragraph">
+<p>Apache Cassandra persistence for <code>ChatMemory</code>:
+- <code>CassandraChatMemory</code> implementation
+- Type-safe CQL with Cassandra&#8217;s QueryBuilder
+==== spring-ai-model-chat-memory-neo4j</p>
+</div>
+<div class="paragraph">
+<p>Neo4j graph database persistence for chat conversations.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_spring_ai_rag"><a class="anchor" href="upgrade-notes.html#_spring_ai_rag"></a>spring-ai-rag</h4>
+<div class="paragraph">
+<p>Comprehensive framework for Retrieval Augmented Generation:
+- Modular architecture for RAG pipelines
+- <code>RetrievalAugmentationAdvisor</code> as main entry point
+- Functional programming principles with composable components</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dependency_structure"><a class="anchor" href="upgrade-notes.html#_dependency_structure"></a>Dependency Structure</h3>
+<div class="paragraph">
+<p>The dependency hierarchy can be summarized as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>spring-ai-commons</code> (foundation)</p>
+</li>
+<li>
+<p><code>spring-ai-model</code> (depends on commons)</p>
+</li>
+<li>
+<p><code>spring-ai-vector-store</code> and <code>spring-ai-client-chat</code> (both depend on model)</p>
+</li>
+<li>
+<p><code>spring-ai-advisors-vector-store</code> and <code>spring-ai-rag</code> (depend on both client-chat and vector-store)</p>
+</li>
+<li>
+<p><code>spring-ai-model-chat-memory-*</code> modules (depend on client-chat)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="common-toolcontext-changes"><a class="anchor" href="upgrade-notes.html#common-toolcontext-changes"></a>ToolContext Changes</h3>
+<div class="paragraph">
+<p>The <code>ToolContext</code> class has been enhanced to support both explicit and implicit tool resolution. Tools can now be:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Explicitly Included</strong>: Tools that are explicitly requested in the prompt and included in the call to the model.</p>
+</li>
+<li>
+<p><strong>Implicitly Available</strong>: Tools that are made available for runtime dynamic resolution, but never included in any call to the model unless explicitly requested.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Starting with 1.0.0-M7, tools are only included in the call to the model if they are explicitly requested in the prompt or explicitly included in the call.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, the <code>ToolContext</code> class has now been marked as final and cannot be extended anymore. It was never supposed to be subclassed. You can add all the contextual data you need when instantiating a <code>ToolContext</code>, in the form of a <code>Map&lt;String, Object&gt;</code>. For more information, check the [documentation](<a href="api/tools.html#_tool_context" class="bare">docs.spring.io/spring-ai/reference/api/tools.html#_tool_context</a>).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="upgrading-to-1-0-0-m6"><a class="anchor" href="upgrade-notes.html#upgrading-to-1-0-0-m6"></a>Upgrading to 1.0.0-M6</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_changes_to_usage_interface_and_defaultusage_implementation"><a class="anchor" href="upgrade-notes.html#_changes_to_usage_interface_and_defaultusage_implementation"></a>Changes to Usage Interface and DefaultUsage Implementation</h3>
+<div class="paragraph">
+<p>The <code>Usage</code> interface and its default implementation <code>DefaultUsage</code> have undergone the following changes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Method Rename:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getGenerationTokens()</code> is now <code>getCompletionTokens()</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Type Changes:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>All token count fields in <code>DefaultUsage</code> changed from <code>Long</code> to <code>Integer</code>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>promptTokens</code></p>
+</li>
+<li>
+<p><code>completionTokens</code> (formerly <code>generationTokens</code>)</p>
+</li>
+<li>
+<p><code>totalTokens</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_required_actions"><a class="anchor" href="upgrade-notes.html#_required_actions"></a>Required Actions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace all calls to <code>getGenerationTokens()</code> with <code>getCompletionTokens()</code></p>
+</li>
+<li>
+<p>Update <code>DefaultUsage</code> constructor calls:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// Old (M5)
+new DefaultUsage(Long promptTokens, Long generationTokens, Long totalTokens)
+
+// New (M6)
+new DefaultUsage(Integer promptTokens, Integer completionTokens, Integer totalTokens)</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+For more information on handling Usage, refer <a href="api/usage-handling.html" class="xref page">here</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_json_serdeser_changes"><a class="anchor" href="upgrade-notes.html#_json_serdeser_changes"></a>JSON Ser/Deser changes</h4>
+<div class="paragraph">
+<p>While M6 maintains backward compatibility for JSON deserialization of the <code>generationTokens</code> field, this field will be removed in M7. Any persisted JSON documents using the old field name should be updated to use <code>completionTokens</code>.</p>
+</div>
+<div class="paragraph">
+<p>Example of the new JSON format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "promptTokens": 100,
+  "completionTokens": 50,
+  "totalTokens": 150
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_changes_to_usage_of_functioncallingoptions_for_tool_calling"><a class="anchor" href="upgrade-notes.html#_changes_to_usage_of_functioncallingoptions_for_tool_calling"></a>Changes to usage of FunctionCallingOptions for tool calling</h3>
+<div class="paragraph">
+<p>Each <code>ChatModel</code> instance, at construction time, accepts an optional <code>ChatOptions</code> or <code>FunctionCallingOptions</code> instance
+that can be used to configure default tools used for calling the model.</p>
+</div>
+<div class="paragraph">
+<p>Before 1.0.0-M6:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>any tool passed via the <code>functions()</code> method of the default <code>FunctionCallingOptions</code> instance was included in
+each call to the model from that <code>ChatModel</code> instance, possibly overwritten by runtime options.</p>
+</li>
+<li>
+<p>any tool passed via the <code>functionCallbacks()</code> method of the default <code>FunctionCallingOptions</code> instance was only
+made available for runtime dynamic resolution (see <a href="api/tools.html#_tool_resolution" class="xref page">Tool Resolution</a>), but never
+included in any call to the model unless explicitly requested.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Starting 1.0.0-M6:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>any tool passed via the <code>functions()</code> method or the <code>functionCallbacks()</code> of the default <code>FunctionCallingOptions</code>
+instance is now handled in the same way: it is included in each call to the model from that <code>ChatModel</code> instance,
+possibly overwritten by runtime options. With that, there is consistency in the way tools are included in calls
+to the model and prevents any confusion due to a difference in behavior between <code>functionCallbacks()</code> and all the other options.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you want to make a tool available for runtime dynamic resolution and include it in a chat request to the model only
+when explicitly requested, you can use one of the strategies described in <a href="api/tools.html#_tool_resolution" class="xref page">Tool Resolution</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+1.0.0-M6 introduced new APIs for handling tool calling. Backward compatibility is maintained for the old APIs across
+all scenarios, except the one described above. The old APIs are still available, but they are deprecated
+and will be removed in 1.0.0-M7.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_removal_of_deprecated_amazon_bedrock_chat_models"><a class="anchor" href="upgrade-notes.html#_removal_of_deprecated_amazon_bedrock_chat_models"></a>Removal of deprecated Amazon Bedrock chat models</h3>
+<div class="paragraph">
+<p>Starting 1.0.0-M6, Spring AI transitioned to using Amazon Bedrock&#8217;s Converse API for all Chat conversation implementations in Spring AI.
+All the Amazon Bedrock Chat models are removed except the Embedding models for Cohere and Titan.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Refer to <a href="api/chat/bedrock-converse.html" class="xref page">Bedrock Converse</a> documentation for using the chat models.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_changes_to_use_spring_boot_3_4_2_for_dependency_management"><a class="anchor" href="upgrade-notes.html#_changes_to_use_spring_boot_3_4_2_for_dependency_management"></a>Changes to use Spring Boot 3.4.2 for dependency management</h3>
+<div class="paragraph">
+<p>Spring AI updates to use Spring Boot 3.4.2 for the dependency management. You can refer <a href="https://github.com/spring-projects/spring-boot/blob/v3.4.2/spring-boot-project/spring-boot-dependencies/build.gradle">here</a> for the dependencies managed by Spring Boot 3.4.2</p>
+</div>
+<div class="sect3">
+<h4 id="_required_actions_2"><a class="anchor" href="upgrade-notes.html#_required_actions_2"></a>Required Actions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>If you are upgrading to Spring Boot 3.4.2, please make sure to refer to <a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.4-Release-Notes#upgrading-from-spring-boot-33">this</a> documentation for the changes required to configure the REST Client. Notably, if you don’t have an HTTP client library on the classpath, this will likely result in the use of <code>JdkClientHttpRequestFactory</code> where <code>SimpleClientHttpRequestFactory</code> would have been used previously. To switch to use <code>SimpleClientHttpRequestFactory</code>, you need to set <code>spring.http.client.factory=simple</code>.</p>
+</li>
+<li>
+<p>If you are using a different version of Spring Boot (say Spring Boot 3.3.x) and need a specific version of a dependency, you can override it in your build configuration.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_vector_store_api_changes"><a class="anchor" href="upgrade-notes.html#_vector_store_api_changes"></a>Vector Store API changes</h3>
+<div class="paragraph">
+<p>In version 1.0.0-M6, the <code>delete</code> method in the <code>VectorStore</code> interface has been modified to be a void operation instead of returning an <code>Optional&lt;Boolean&gt;</code>.
+If your code previously checked the return value of the delete operation, you&#8217;ll need to remove this check.
+The operation now throws an exception if the deletion fails, providing more direct error handling.</p>
+</div>
+<div class="sect3">
+<h4 id="_before_1_0_0_m6"><a class="anchor" href="upgrade-notes.html#_before_1_0_0_m6"></a>Before 1.0.0-M6:</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Optional&lt;Boolean&gt; result = vectorStore.delete(ids);
+if (result.isPresent() &amp;&amp; result.get()) {
+    // handle successful deletion
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_in_1_0_0_m6_and_later"><a class="anchor" href="upgrade-notes.html#_in_1_0_0_m6_and_later"></a>In 1.0.0-M6 and later:</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">vectorStore.delete(ids);
+// deletion successful if no exception is thrown</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_upgrading_to_1_0_0_m5"><a class="anchor" href="upgrade-notes.html#_upgrading_to_1_0_0_m5"></a>Upgrading to 1.0.0.M5</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Vector Builders have been refactored for consistency.</p>
+</li>
+<li>
+<p>Current VectorStore implementation constructors have been deprecated, use the builder pattern.</p>
+</li>
+<li>
+<p>VectorStore implementation packages have been moved into unique package names, avoiding conflicts across artifact.  For example <code>org.springframework.ai.vectorstore</code> to <code>org.springframework.ai.pgvector.vectorstore</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_upgrading_to_1_0_0_rc3"><a class="anchor" href="upgrade-notes.html#_upgrading_to_1_0_0_rc3"></a>Upgrading to 1.0.0.RC3</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The type of the portable chat options (<code>frequencyPenalty</code>, <code>presencePenalty</code>, <code>temperature</code>, <code>topP</code>) has been changed from <code>Float</code> to <code>Double</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_upgrading_to_1_0_0_m2"><a class="anchor" href="upgrade-notes.html#_upgrading_to_1_0_0_m2"></a>Upgrading to 1.0.0.M2</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The configuration prefix for the Chroma Vector Store has been changes from <code>spring.ai.vectorstore.chroma.store</code> to <code>spring.ai.vectorstore.chroma</code> in order to align with the naming conventions of other vector stores.</p>
+</li>
+<li>
+<p>The default value of the <code>initialize-schema</code> property on vector stores capable of initializing a schema is now set to <code>false</code>.
+This implies that the applications now need to explicitly opt-in for schema initialization on supported vector stores, if the schema is expected to be created at application startup.
+Not all vector stores support this property.
+See the corresponding vector store documentation for more details.
+The following are the vector stores that currently don&#8217;t support the <code>initialize-schema</code> property.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Hana</p>
+</li>
+<li>
+<p>Pinecone</p>
+</li>
+<li>
+<p>Weaviate</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>In Bedrock Jurassic 2, the chat options <code>countPenalty</code>, <code>frequencyPenalty</code>, and <code>presencePenalty</code>
+have been renamed to <code>countPenaltyOptions</code>, <code>frequencyPenaltyOptions</code>, and <code>presencePenaltyOptions</code>.
+Furthermore, the type of the chat option <code>stopSequences</code> have been changed from <code>String[]</code> to <code>List&lt;String&gt;</code>.</p>
+</li>
+<li>
+<p>In Azure OpenAI, the type of the chat options <code>frequencyPenalty</code> and <code>presencePenalty</code>
+has been changed from <code>Double</code> to <code>Float</code>, consistently with all the other implementations.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_upgrading_to_1_0_0_m1"><a class="anchor" href="upgrade-notes.html#_upgrading_to_1_0_0_m1"></a>Upgrading to 1.0.0.M1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>On our march to release 1.0.0 M1 we have made several breaking changes.  Apologies, it is for the best!</p>
+</div>
+<div class="sect2">
+<h3 id="_chatclient_changes"><a class="anchor" href="upgrade-notes.html#_chatclient_changes"></a>ChatClient changes</h3>
+<div class="paragraph">
+<p>A major change was made that took the 'old' <code>ChatClient</code> and moved the functionality into <code>ChatModel</code>.  The 'new' <code>ChatClient</code> now takes an instance of <code>ChatModel</code>. This was done to support a fluent API for creating and executing prompts in a style similar to other client classes in the Spring ecosystem, such as <code>RestClient</code>, <code>WebClient</code>, and <code>JdbcClient</code>.  Refer to the [JavaDoc](<a href="https://docs.spring.io/spring-ai/docs/api" class="bare">docs.spring.io/spring-ai/docs/api</a>) for more information on the Fluent API, proper reference documentation is coming shortly.</p>
+</div>
+<div class="paragraph">
+<p>We renamed the 'old' <code>ModelClient</code> to <code>Model</code> and renamed implementing classes, for example <code>ImageClient</code> was renamed to <code>ImageModel</code>.  The <code>Model</code> implementation represents the portability layer that converts between the Spring AI API and the underlying AI Model API.</p>
+</div>
+<div class="paragraph">
+<p>A new package <code>model</code> that contains interfaces and base classes to support creating AI Model Clients for any input/output data type combination. At the moment, the chat and image model packages implement this. We will be updating the embedding package to this new model soon.</p>
+</div>
+<div class="paragraph">
+<p>A new "portable options" design pattern. We wanted to provide as much portability in the <code>ModelCall</code> as possible across different chat based AI Models. There is a common set of generation options and then those that are specific to a model provider. A sort of "duck typing" approach is used. <code>ModelOptions</code> in the model package is a marker interface indicating implementations of this class will provide the options for a model. See <code>ImageOptions</code>, a subinterface that defines portable options across all text&#8594;image <code>ImageModel</code> implementations. Then <code>StabilityAiImageOptions</code> and <code>OpenAiImageOptions</code> provide the options specific to each model provider. All options classes are created via a fluent API builder, all can be passed into the portable <code>ImageModel</code> API. These option data types are used in autoconfiguration/configuration properties for the <code>ImageModel</code> implementations.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_artifact_name_changes"><a class="anchor" href="upgrade-notes.html#_artifact_name_changes"></a>Artifact name changes</h3>
+<div class="paragraph">
+<p>Renamed POM artifact names:
+- spring-ai-qdrant &#8594; spring-ai-qdrant-store
+- spring-ai-cassandra &#8594; spring-ai-cassandra-store
+- spring-ai-pinecone &#8594; spring-ai-pinecone-store
+- spring-ai-redis &#8594; spring-ai-redis-store
+- spring-ai-qdrant &#8594; spring-ai-qdrant-store
+- spring-ai-gemfire &#8594; spring-ai-gemfire-store
+- spring-ai-azure-vector-store-spring-boot-starter &#8594; spring-ai-azure-store-spring-boot-starter
+- spring-ai-redis-spring-boot-starter &#8594; spring-ai-starter-vector-store-redis</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_upgrading_to_0_8_1"><a class="anchor" href="upgrade-notes.html#_upgrading_to_0_8_1"></a>Upgrading to 0.8.1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Former <code>spring-ai-vertex-ai</code> has been renamed to <code>spring-ai-vertex-ai-palm2</code> and <code>spring-ai-vertex-ai-spring-boot-starter</code> has been renamed to <code>spring-ai-vertex-ai-palm2-spring-boot-starter</code>.</p>
+</div>
+<div class="paragraph">
+<p>So, you need to change the dependency from</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-vertex-ai&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-vertex-ai-palm2&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and the related Boot starter for the Palm2 model has changed from</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-vertex-ai-spring-boot-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-vertex-ai-palm2-spring-boot-starter&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Renamed Classes (01.03.2024)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>VertexAiApi &#8594; VertexAiPalm2Api</p>
+</li>
+<li>
+<p>VertexAiClientChat &#8594; VertexAiPalm2ChatClient</p>
+</li>
+<li>
+<p>VertexAiEmbeddingClient &#8594; VertexAiPalm2EmbeddingClient</p>
+</li>
+<li>
+<p>VertexAiChatOptions &#8594; VertexAiPalm2ChatOptions</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_upgrading_to_0_8_0"><a class="anchor" href="upgrade-notes.html#_upgrading_to_0_8_0"></a>Upgrading to 0.8.0</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_january_24_2024_update"><a class="anchor" href="upgrade-notes.html#_january_24_2024_update"></a>January 24, 2024 Update</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Moving the <code>prompt</code> and <code>messages</code> and <code>metadata</code> packages to subpackages of <code>org.springframework.ai.chat</code></p>
+</li>
+<li>
+<p>New functionality is <strong>text to image</strong> clients. Classes are <code>OpenAiImageModel</code> and <code>StabilityAiImageModel</code>. See the integration tests for usage, docs are coming soon.</p>
+</li>
+<li>
+<p>A new package <code>model</code> that contains interfaces and base classes to support creating AI Model Clients for any input/output data type combination. At the moment, the chat and image model packages implement this. We will be updating the embedding package to this new model soon.</p>
+</li>
+<li>
+<p>A new "portable options" design pattern. We wanted to provide as much portability in the <code>ModelCall</code> as possible across different chat based AI Models. There is a common set of generation options and then those that are specific to a model provider. A sort of "duck typing" approach is used. <code>ModelOptions</code> in the model package is a marker interface indicating implementations of this class will provide the options for a model. See <code>ImageOptions</code>, a subinterface that defines portable options across all text&#8594;image <code>ImageModel</code> implementations. Then <code>StabilityAiImageOptions</code> and <code>OpenAiImageOptions</code> provide the options specific to each model provider. All options classes are created via a fluent API builder, all can be passed into the portable <code>ImageModel</code> API. These option data types are used in autoconfiguration/configuration properties for the <code>ImageModel</code> implementations.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_january_13_2024_update"><a class="anchor" href="upgrade-notes.html#_january_13_2024_update"></a>January 13, 2024 Update</h3>
+<div class="paragraph">
+<p>The following OpenAi Autoconfiguration chat properties have changed</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>from <code>spring.ai.openai.model</code> to <code>spring.ai.openai.chat.options.model</code>.</p>
+</li>
+<li>
+<p>from <code>spring.ai.openai.temperature</code> to <code>spring.ai.openai.chat.options.temperature</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Find updated documentation about the OpenAi properties: <a href="api/chat/openai-chat.html" class="bare">docs.spring.io/spring-ai/reference/api/chat/openai-chat.html</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_december_27_2023_update"><a class="anchor" href="upgrade-notes.html#_december_27_2023_update"></a>December 27, 2023 Update</h3>
+<div class="paragraph">
+<p>Merge SimplePersistentVectorStore and InMemoryVectorStore into SimpleVectorStore
+* Replace InMemoryVectorStore with SimpleVectorStore</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_december_20_2023_update"><a class="anchor" href="upgrade-notes.html#_december_20_2023_update"></a>December 20, 2023 Update</h3>
+<div class="paragraph">
+<p>Refactor the Ollama client and related classes and package names</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Replace the org.springframework.ai.ollama.client.OllamaClient by org.springframework.ai.ollama.OllamaModelCall.</p>
+</li>
+<li>
+<p>The OllamaChatClient method signatures have changed.</p>
+</li>
+<li>
+<p>Rename the org.springframework.ai.autoconfigure.ollama.OllamaProperties into org.springframework.ai.model.ollama.autoconfigure.OllamaChatProperties and change the suffix to: <code>spring.ai.ollama.chat</code>. Some of the properties have changed as well.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_december_19_2023_update"><a class="anchor" href="upgrade-notes.html#_december_19_2023_update"></a>December 19, 2023 Update</h3>
+<div class="paragraph">
+<p>Renaming of AiClient and related classes and package names</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Rename AiClient to ChatClient</p>
+</li>
+<li>
+<p>Rename AiResponse to ChatResponse</p>
+</li>
+<li>
+<p>Rename AiStreamClient to StreamingChatClient</p>
+</li>
+<li>
+<p>Rename package org.sf.ai.client to org.sf.ai.chat</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Rename artifact ID of</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>transformers-embedding</code> to <code>spring-ai-transformers</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Moved Maven modules from top-level directory and <code>embedding-clients</code> subdirectory to all be under a single <code>models</code> directory.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_december_1_2023"><a class="anchor" href="upgrade-notes.html#_december_1_2023"></a>December 1, 2023</h3>
+<div class="paragraph">
+<p>We are transitioning the project&#8217;s Group ID:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>FROM</strong>: <code>org.springframework.experimental.ai</code></p>
+</li>
+<li>
+<p><strong>TO</strong>: <code>org.springframework.ai</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Artifacts will still be hosted in the snapshot repository as shown below.</p>
+</div>
+<div class="paragraph">
+<p>The main branch will move to the version <code>0.8.0-SNAPSHOT</code>.
+It will be unstable for a week or two.
+Please use the 0.7.1-SNAPSHOT if you don&#8217;t want to be on the bleeding edge.</p>
+</div>
+<div class="paragraph">
+<p>You can access <code>0.7.1-SNAPSHOT</code> artifacts as before and still access <a href="https://markpollack.github.io/spring-ai-0.7.1/">0.7.1-SNAPSHOT Documentation</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_0_7_1_snapshot_dependencies"><a class="anchor" href="upgrade-notes.html#_0_7_1_snapshot_dependencies"></a>0.7.1-SNAPSHOT Dependencies</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Azure OpenAI</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.experimental.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-azure-openai-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;0.7.1-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>OpenAI</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.experimental.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-openai-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;0.7.1-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="api/cloud-bindings.html">Deploying to the Cloud</a></span>
+  <span class="next"><a href="api/tools-migration.html">Migrating FunctionCallback to ToolCallback API</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="index.html">Spring AI</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="index.html">
+      1.0.0
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Snapshot
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="1.1-SNAPSHOT/index.html">
+      1.1.0-SNAPSHOT
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+                <div class="col-right">
+                  <ul class="projects">
+  <li>
+    Related Spring Documentation
+    <ul class="projects-list">
+        <li>
+<a href="https://docs.spring.io/spring-boot/">
+  Spring Boot
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-framework/reference/">
+  Spring Framework
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Cloud
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-build/reference/">
+  Spring Cloud Build
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-bus/reference/">
+  Spring Cloud Bus
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-circuitbreaker/reference/">
+  Spring Cloud Circuit Breaker
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-commons/reference/">
+  Spring Cloud Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-config/reference/">
+  Spring Cloud Config
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-consul/reference/">
+  Spring Cloud Consul
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-contract/reference/">
+  Spring Cloud Contract
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-function/reference/">
+  Spring Cloud Function
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-gateway/reference/">
+  Spring Cloud Gateway
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-kubernetes/reference/">
+  Spring Cloud Kubernetes
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-netflix/reference/">
+  Spring Cloud Netflix
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-openfeign/reference/">
+  Spring Cloud OpenFeign
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-stream/reference/">
+  Spring Cloud Stream
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-task/reference/">
+  Spring Cloud Task
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-vault/reference/">
+  Spring Cloud Vault
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-zookeeper/reference/">
+  Spring Cloud Zookeeper
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Data
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-data/cassandra/reference/">
+  Spring Data Cassandra
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/commons/reference/">
+  Spring Data Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/couchbase/reference/">
+  Spring Data Couchbase
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/elasticsearch/reference/">
+  Spring Data Elasticsearch
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/jpa/reference/">
+  Spring Data JPA
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/keyvalue/reference/">
+  Spring Data KeyValue
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/ldap/reference/">
+  Spring Data LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/mongodb/reference/">
+  Spring Data MongoDB
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/neo4j/reference/">
+  Spring Data Neo4j
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/redis/reference/">
+  Spring Data Redis
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/relational/reference/">
+  Spring Data JDBC &amp; R2DBC
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/rest/reference/">
+  Spring Data REST
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-integration/reference/">
+  Spring Integration
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-batch/reference/">
+  Spring Batch
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+<a href="https://docs.spring.io/spring-security/reference/">
+  Spring Security
+</a>
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-authorization-server/reference/">
+  Spring Authorization Server
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-ldap/reference/">
+  Spring LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-security-kerberos/reference/">
+  Spring Security Kerberos
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-session/reference/">
+  Spring Session
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-vault/reference/">
+  Spring Vault
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="index.html">
+  Spring AI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-amqp/reference/">
+  Spring AMQP
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-cli/reference/">
+  Spring CLI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-graphql/reference/">
+  Spring GraphQL
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-kafka/reference/">
+  Spring for Apache Kafka
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-modulith/reference/">
+  Spring Modulith
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-pulsar/reference/">
+  Spring for Apache Pulsar
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-shell/reference/">
+  Spring Shell
+</a>
+</li>
+    </ul>
+  </li
+  <li><a href="spring-projects.html">All Docs...</a></li>
+</ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">Copyright © 2005 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> Broadcom. All Rights Reserved. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.<br/><a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="GitHub"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/vendor/import.js"></script>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/site.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/highlight.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-link-box">
+                    <a class="search-link" href="search.html">Search in all Spring Docs</a>
+                </div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-light.svg"/>
+                        <img class="dark" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-dark.svg"/>
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="https://docs.spring.io/spring-ai/reference/_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="c2e84f15fa630d534f1c62b1c413bb77" data-index-name="springdocs" data-stylesheet="./_/css/vendor/search.css" data-page-version="1.0.0" data-page-component="ai"></script>
+  <script>if (window.parent == window) {(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-2728886-23', 'auto', {'siteSpeedSampleRate': 100});ga('send', 'pageview');}</script></body>
+</html>

@@ -1,6 +1,7 @@
+"""Core module for executing retrieval-augmented generation (RAG) chains using LangChain and Pinecone."""
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv()  # Load environment variables from .env file
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
@@ -18,6 +19,14 @@ from consts import INDEX_NAME
 
 
 def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
+    """Execute a history-aware retrieval-augmented generation chain.
+    Args:
+        query: The user's input question.
+        chat_history: List of role-content tuples for conversation history.
+    Returns:
+        A dict with 'answer' (model response) and 'context' (retrieved documents).
+    """
+    # Initialize embeddings and vector store
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
     chat = ChatOpenAI(verbose=True, temperature=0)
@@ -39,10 +48,24 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
 
 
 def format_docs(docs):
+    """Concatenate document contents separated by double newlines.
+    Args:
+        docs: Iterable of document objects with page_content attribute.
+    Returns:
+        A single string combining each document's page_content.
+    """
     return "\n\n".join(doc.page_content for doc in docs)
 
 
 def run_llm2(query: str, chat_history: List[Dict[str, Any]] = []):
+    """Run an alternative RAG chain pipeline using RunnablePassthrough and output parser.
+    Args:
+        query: The user's input question.
+        chat_history: Conversation history as a list of role-content pairs.
+    Returns:
+        Parsed model output after retrieval and generation.
+    """
+    # Initialize embeddings and vector store
     embeddings = OpenAIEmbeddings()
     docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
     chat = ChatOpenAI(model_name="gpt-4o", verbose=True, temperature=0)

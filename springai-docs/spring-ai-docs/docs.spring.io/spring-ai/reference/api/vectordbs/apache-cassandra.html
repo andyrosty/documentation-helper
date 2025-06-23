@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apache Cassandra Vector Store :: Spring AI Reference</title>
+    <link rel="canonical" href="apache-cassandra.html">
+    <link rel="prev" href="azure-cosmos-db.html">
+    <link rel="next" href="chroma.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.6">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/site.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="v0.4.17"> 
+    <meta name="version" content="1.0.0">
+    <meta name="component" content="ai">
+    <meta name="latest-version" content="true">
+    <link rel="icon" href="https://docs.spring.io/spring-ai/reference/_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img id="springlogo" class="block" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring"/>
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="apache-cassandra.html#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/why-spring">Overview</a>
+            <a class="navbar-item" href="https://spring.io/microservices">Microservices</a>
+            <a class="navbar-item" href="https://spring.io/reactive">Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event
+              Driven</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web
+              Applications</a>
+            <a class="navbar-item" href="https://spring.io/serverless">Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="apache-cassandra.html#">Learn</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/learn">Overview</a>
+            <a class="navbar-item" href="https://spring.io/quickstart">Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="apache-cassandra.html#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://spring.io/projects">Overview</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-boot">Spring Boot</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-framework">Spring Framework</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud">Spring Cloud</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud-dataflow">Spring Cloud Data Flow</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-data">Spring Data</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-integration">Spring Integration</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-batch">Spring Batch</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-security">Spring Security</a>
+            <a class="navbar-item navbar-item-special" href="https://spring.io/projects">View all projects</a>
+            <li class="navbar-item navbar-item-special-3">DEVELOPMENT TOOLS</li>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools 4</a>
+            <a class="navbar-item navbar-item-special-2" href="https://start.spring.io">Spring Initializr
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg></a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="apache-cassandra.html#">Academy</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.academy/courses">Courses</a>
+            <a class="navbar-item" href="https://spring.academy/learning-path">Get Certified</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="apache-cassandra.html#">Solutions</a>
+          <div class="navbar-dropdown lg">
+            <a class="navbar-item" href="https://spring.io/solutions">Overview</a>
+            <a class="navbar-item" href="https://spring.io/support">Spring Runtime</a>
+            <a class="navbar-item" href="https://spring.io/consulting">Spring Consulting</a>
+            <a class="navbar-item" href="https://spring.academy/teams">Spring Academy For Teams</a>
+            <a class="navbar-item" href="https://spring.io/security">Security Advisories</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-community">
+          <a class="navbar-link" href="apache-cassandra.html#">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/community">Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/team">Team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox"/>
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="ai" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring AI</span>
+  <span class="version">1.0.0</span>
+  <button class="browse-version" id="browse-version">
+    <svg height="24px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="24px" xml:space="preserve"><g><path d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"></path><path d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"></path><path d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"></path></g></svg>
+  </button>
+  <div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Overview</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../concepts.html">AI Concepts</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chatclient.html">Chat Client API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../advisors.html">Advisors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../prompt.html">Prompts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../structured-output-converter.html">Structured Output</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../multimodality.html">Multimodality</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chatmodel.html">Chat Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/comparison.html">Chat Models Comparison</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/bedrock-converse.html">Amazon Bedrock Converse</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/anthropic-chat.html">Anthropic 3</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/azure-openai-chat.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/deepseek-chat.html">DeepSeek</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/dmr-chat.html">Docker Model Runner</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chat/google-vertexai.html">Google VertexAI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../chat/vertexai-gemini-chat.html">VertexAI Gemini</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/groq-chat.html">Groq</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/huggingface.html">Hugging Face</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/mistralai-chat.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/minimax-chat.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/moonshot-chat.html">Moonshot AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/nvidia-chat.html">NVIDIA</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/ollama-chat.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/perplexity-chat.html">Perplexity AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">OCI Generative AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../chat/oci-genai/cohere-chat.html">Cohere</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/openai-chat.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/qianfan-chat.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../chat/zhipuai-chat.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../embeddings.html">Embedding Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../bedrock.html">Amazon Bedrock</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/bedrock-cohere-embedding.html">Cohere</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/bedrock-titan-embedding.html">Titan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/azure-openai-embeddings.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/mistralai-embeddings.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/minimax-embeddings.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/oci-genai-embeddings.html">OCI GenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/ollama-embeddings.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/onnx.html">(ONNX) Transformers</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/openai-embeddings.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/postgresml-embeddings.html">PostgresML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/qianfan-embeddings.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">VertexAI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/vertexai-embeddings-text.html">Text Embedding</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/vertexai-embeddings-multimodal.html">Multimodal Embedding</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/zhipuai-embeddings.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../imageclient.html">Image Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/azure-openai-image.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/openai-image.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/stabilityai-image.html">Stability</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/zhipuai-image.html">ZhiPuAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/qianfan-image.html">QianFan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="apache-cassandra.html#api/audio">Audio Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../audio/transcriptions.html">Transcription API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../audio/transcriptions/azure-openai-transcriptions.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../audio/transcriptions/openai-transcriptions.html">OpenAI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../audio/speech.html">Text-To-Speech (TTS) API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../audio/speech/openai-speech.html">OpenAI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="apache-cassandra.html#api/moderation">Moderation Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../moderation/openai-moderation.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../moderation/mistral-ai-moderation.html">Mistral AI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chat-memory.html">Chat Memory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tools.html">Tool Calling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../mcp/mcp-overview.html">Model Context Protocol (MCP)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../mcp/mcp-client-boot-starter-docs.html">MCP Client Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../mcp/mcp-server-boot-starter-docs.html">MCP Server Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../mcp/mcp-helpers.html">MCP Utilities</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../retrieval-augmented-generation.html">Retrieval Augmented Generation (RAG)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../etl-pipeline.html">ETL Pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../testing.html">Model Evaluation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../vectordbs.html">Vector Databases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="azure.html">Azure AI Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="azure-cosmos-db.html">Azure Cosmos DB</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="apache-cassandra.html">Apache Cassandra Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="chroma.html">Chroma</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="couchbase.html">Couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="elasticsearch.html">Elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="gemfire.html">GemFire</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mariadb.html">MariaDB Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="milvus.html">Milvus</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mongodb.html">MongoDB Atlas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="neo4j.html">Neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="opensearch.html">OpenSearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="oracle.html">Oracle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="pgvector.html">PGvector</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="pinecone.html">Pinecone</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="qdrant.html">Qdrant</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="redis.html">Redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hana.html">SAP Hana</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="typesense.html">Typesense</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="weaviate.html">Weaviate</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../observability/index.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../docker-compose.html">Development-time Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../testcontainers.html">Testcontainers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://github.com/spring-ai-community/awesome-spring-ai">Awesome Spring AI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chat/prompt-engineering-patterns.html">Prompt Engineering Patterns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effective-agents.html">Building Effective Agents</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cloud-bindings.html">Deploying to the Cloud</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../upgrade-notes.html">Upgrade Notes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tools-migration.html">Migrating FunctionCallback to ToolCallback API</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="toc" data-title="Apache Cassandra Vector Store" data-levels="2">
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/spring-projects/spring-ai/blob/v1.0.0/spring-ai-docs/src/main/antora/modules/ROOT/pages/api/vectordbs/apache-cassandra.adoc">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/spring-projects/spring-ai" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" height="512px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="512px"><style type="text/css"><![CDATA[
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path class="st0" d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"></path></g></svg>
+          GitHub Project
+        </a>
+        <a href="https://stackoverflow.com/questions/tagged/spring">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"></path></svg>
+          Stack Overflow
+        </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Spring AI</a></li>
+      <li>Reference</li>
+      <li><a href="../vectordbs.html">Vector Databases</a></li>
+      <li><a href="apache-cassandra.html">Apache Cassandra Vector Store</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Apache Cassandra Vector Store</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section walks you through setting up <code>CassandraVectorStore</code> to store document embeddings and perform similarity searches.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_apache_cassandra"><a class="anchor" href="apache-cassandra.html#_what_is_apache_cassandra"></a>What is Apache Cassandra?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://cassandra.apache.org">Apache Cassandra®</a> is a true open source distributed database renowned for linear scalability, proven fault-tolerance and low latency, making it the perfect platform for mission-critical transactional data.</p>
+</div>
+<div class="paragraph">
+<p>Its Vector Similarity Search (VSS) is based on the JVector library that ensures best-in-class performance and relevancy.</p>
+</div>
+<div class="paragraph">
+<p>A vector search in Apache Cassandra is done as simply as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT content FROM table ORDER BY content_vector ANN OF query_embedding;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>More docs on this can be read <a href="https://cassandra.apache.org/doc/latest/cassandra/getting-started/vector-search-quickstart.html">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>This Spring AI Vector Store is designed to work for both brand-new RAG applications and be able to be retrofitted on top of existing data and tables.</p>
+</div>
+<div class="paragraph">
+<p>The store can also be used for non-RAG use-cases in an existing database, e.g. semantic searches, geo-proximity searches, etc.</p>
+</div>
+<div class="paragraph">
+<p>The store will automatically create, or enhance, the schema as needed according to its configuration. If you don&#8217;t want the schema modifications, configure the store with <code>initializeSchema</code>.</p>
+</div>
+<div class="paragraph">
+<p>When using spring-boot-autoconfigure <code>initializeSchema</code> defaults to <code>false</code>, per Spring Boot standards, and you must opt-in to schema creation/modifications by setting <code>&#8230;&#8203;initialize-schema=true</code> in the <code>application.properties</code> file.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_jvector"><a class="anchor" href="apache-cassandra.html#_what_is_jvector"></a>What is JVector?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/jbellis/jvector">JVector</a> is a pure Java embedded vector search engine.</p>
+</div>
+<div class="paragraph">
+<p>It stands out from other HNSW Vector Similarity Search implementations by being:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Algorithmic-fast. JVector uses state of the art graph algorithms inspired by DiskANN and related research that offer high recall and low latency.</p>
+</li>
+<li>
+<p>Implementation-fast. JVector uses the Panama SIMD API to accelerate index build and queries.</p>
+</li>
+<li>
+<p>Memory efficient. JVector compresses vectors using product quantization so they can stay in memory during searches.</p>
+</li>
+<li>
+<p>Disk-aware. JVector&#8217;s disk layout is designed to do the minimum necessary iops at query time.</p>
+</li>
+<li>
+<p>Concurrent. Index builds scale linearly to at least 32 threads. Double the threads, half the build time.</p>
+</li>
+<li>
+<p>Incremental. Query your index as you build it. No delay between adding a vector and being able to find it in search results.</p>
+</li>
+<li>
+<p>Easy to embed. API designed for easy embedding, by people using it in production.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="apache-cassandra.html#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A <code>EmbeddingModel</code> instance to compute the document embeddings. This is usually configured as a Spring Bean. Several options are available:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Transformers Embedding</code> - computes the embedding in your local environment. The default is via ONNX and the all-MiniLM-L6-v2 Sentence Transformers. This just works.</p>
+</li>
+<li>
+<p>If you want to use OpenAI&#8217;s Embeddings - uses the OpenAI embedding endpoint. You need to create an account at <a href="https://platform.openai.com/signup">OpenAI Signup</a> and generate the api-key token at <a href="https://platform.openai.com/account/api-keys">API Keys</a>.</p>
+</li>
+<li>
+<p>There are many more choices, see <code>Embeddings API</code> docs.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>An Apache Cassandra instance, from version 5.0-beta1</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="https://cassandra.apache.org/_/quickstart.html">DIY Quick Start</a></p>
+</li>
+<li>
+<p>For a managed offering <a href="https://astra.datastax.com/">Astra DB</a> offers a healthy free tier offering.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_dependencies"><a class="anchor" href="apache-cassandra.html#_dependencies"></a>Dependencies</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There has been a significant change in the Spring AI auto-configuration, starter modules' artifact names.
+Please refer to the <a href="../../upgrade-notes.html">upgrade notes</a> for more information.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+For dependency management, we recommend using the Spring AI BOM as explained in the <a href="../../getting-started.html#dependency-management" class="xref page">Dependency Management</a> section.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Add these dependencies to your project:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For just the Cassandra Vector Store:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-cassandra-store&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Or, for everything you need in a RAG application (using the default ONNX Embedding Model):</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-starter-vector-store-cassandra&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_properties"><a class="anchor" href="apache-cassandra.html#_configuration_properties"></a>Configuration Properties</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use the following properties in your Spring Boot configuration to customize the Apache Cassandra vector store.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 66.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Default Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.vectorstore.cassandra.keyspace</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">springframework</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.vectorstore.cassandra.table</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ai_vector_store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.vectorstore.cassandra.initialize-schema</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.vectorstore.cassandra.index-name</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.vectorstore.cassandra.content-column-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">content</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.vectorstore.cassandra.embedding-column-name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">embedding</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.vectorstore.cassandra.fixed-thread-pool-executor-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage"><a class="anchor" href="apache-cassandra.html#_usage"></a>Usage</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_basic_usage"><a class="anchor" href="apache-cassandra.html#_basic_usage"></a>Basic Usage</h3>
+<div class="paragraph">
+<p>Create a CassandraVectorStore instance as a Spring Bean:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public VectorStore vectorStore(CqlSession session, EmbeddingModel embeddingModel) {
+    return CassandraVectorStore.builder(embeddingModel)
+        .session(session)
+        .keyspace("my_keyspace")
+        .table("my_vectors")
+        .build();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once you have the vector store instance, you can add documents and perform searches:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Add documents
+vectorStore.add(List.of(
+    new Document("1", "content1", Map.of("key1", "value1")),
+    new Document("2", "content2", Map.of("key2", "value2"))
+));
+
+// Search with filters
+List&lt;Document&gt; results = vectorStore.similaritySearch(
+    SearchRequest.query("search text")
+        .withTopK(5)
+        .withSimilarityThreshold(0.7f)
+        .withFilterExpression("metadata.key1 == 'value1'")
+);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_advanced_configuration"><a class="anchor" href="apache-cassandra.html#_advanced_configuration"></a>Advanced Configuration</h3>
+<div class="paragraph">
+<p>For more complex use cases, you can configure additional settings in your Spring Bean:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public VectorStore vectorStore(CqlSession session, EmbeddingModel embeddingModel) {
+    return CassandraVectorStore.builder(embeddingModel)
+        .session(session)
+        .keyspace("my_keyspace")
+        .table("my_vectors")
+        // Configure primary keys
+        .partitionKeys(List.of(
+            new SchemaColumn("id", DataTypes.TEXT),
+            new SchemaColumn("category", DataTypes.TEXT)
+        ))
+        .clusteringKeys(List.of(
+            new SchemaColumn("timestamp", DataTypes.TIMESTAMP)
+        ))
+        // Add metadata columns with optional indexing
+        .addMetadataColumns(
+            new SchemaColumn("category", DataTypes.TEXT, SchemaColumnTags.INDEXED),
+            new SchemaColumn("score", DataTypes.DOUBLE)
+        )
+        // Customize column names
+        .contentColumnName("text")
+        .embeddingColumnName("vector")
+        // Performance tuning
+        .fixedThreadPoolExecutorSize(32)
+        // Schema management
+        .initializeSchema(true)
+        // Custom batching strategy
+        .batchingStrategy(new TokenCountBatchingStrategy())
+        .build();
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_connection_configuration"><a class="anchor" href="apache-cassandra.html#_connection_configuration"></a>Connection Configuration</h3>
+<div class="paragraph">
+<p>There are two ways to configure the connection to Cassandra:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Using an injected CqlSession (recommended):</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public VectorStore vectorStore(CqlSession session, EmbeddingModel embeddingModel) {
+    return CassandraVectorStore.builder(embeddingModel)
+        .session(session)
+        .keyspace("my_keyspace")
+        .table("my_vectors")
+        .build();
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Using connection details directly in the builder:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public VectorStore vectorStore(EmbeddingModel embeddingModel) {
+    return CassandraVectorStore.builder(embeddingModel)
+        .contactPoint(new InetSocketAddress("localhost", 9042))
+        .localDatacenter("datacenter1")
+        .keyspace("my_keyspace")
+        .build();
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_metadata_filtering"><a class="anchor" href="apache-cassandra.html#_metadata_filtering"></a>Metadata Filtering</h3>
+<div class="paragraph">
+<p>You can leverage the generic, portable metadata filters with the CassandraVectorStore. For metadata columns to be searchable they must be either primary keys or SAI indexed. To make non-primary-key columns indexed, configure the metadata column with the <code>SchemaColumnTags.INDEXED</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example, you can use either the text expression language:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">vectorStore.similaritySearch(
+    SearchRequest.builder().query("The World")
+        .topK(5)
+        .filterExpression("country in ['UK', 'NL'] &amp;&amp; year &gt;= 2020").build());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or programmatically using the expression DSL:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Filter.Expression f = new FilterExpressionBuilder()
+    .and(
+        f.in("country", "UK", "NL"),
+        f.gte("year", 2020)
+    ).build();
+
+vectorStore.similaritySearch(
+    SearchRequest.builder().query("The World")
+        .topK(5)
+        .filterExpression(f).build());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The portable filter expressions get automatically converted into <a href="https://cassandra.apache.org/doc/latest/cassandra/developing/cql/index.html">CQL queries</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_advanced_example_vector_store_on_top_of_wikipedia_dataset"><a class="anchor" href="apache-cassandra.html#_advanced_example_vector_store_on_top_of_wikipedia_dataset"></a>Advanced Example: Vector Store on top of Wikipedia Dataset</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following example demonstrates how to use the store on an existing schema. Here we use the schema from the <a href="https://github.com/datastax-labs/colbert-wikipedia-data" class="bare">github.com/datastax-labs/colbert-wikipedia-data</a> project which comes with the full wikipedia dataset ready vectorized for you.</p>
+</div>
+<div class="paragraph">
+<p>First, create the schema in the Cassandra database:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget https://s.apache.org/colbert-wikipedia-schema-cql -O colbert-wikipedia-schema.cql
+cqlsh -f colbert-wikipedia-schema.cql</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then configure the store using the builder pattern:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+public VectorStore vectorStore(CqlSession session, EmbeddingModel embeddingModel) {
+    List&lt;SchemaColumn&gt; partitionColumns = List.of(
+        new SchemaColumn("wiki", DataTypes.TEXT),
+        new SchemaColumn("language", DataTypes.TEXT),
+        new SchemaColumn("title", DataTypes.TEXT)
+    );
+
+    List&lt;SchemaColumn&gt; clusteringColumns = List.of(
+        new SchemaColumn("chunk_no", DataTypes.INT),
+        new SchemaColumn("bert_embedding_no", DataTypes.INT)
+    );
+
+    List&lt;SchemaColumn&gt; extraColumns = List.of(
+        new SchemaColumn("revision", DataTypes.INT),
+        new SchemaColumn("id", DataTypes.INT)
+    );
+
+    return CassandraVectorStore.builder()
+        .session(session)
+        .embeddingModel(embeddingModel)
+        .keyspace("wikidata")
+        .table("articles")
+        .partitionKeys(partitionColumns)
+        .clusteringKeys(clusteringColumns)
+        .contentColumnName("body")
+        .embeddingColumnName("all_minilm_l6_v2_embedding")
+        .indexName("all_minilm_l6_v2_ann")
+        .initializeSchema(false)
+        .addMetadataColumns(extraColumns)
+        .primaryKeyTranslator((List&lt;Object&gt; primaryKeys) -&gt; {
+            if (primaryKeys.isEmpty()) {
+                return "test§¶0";
+            }
+            return String.format("%s§¶%s", primaryKeys.get(2), primaryKeys.get(3));
+        })
+        .documentIdTranslator((id) -&gt; {
+            String[] parts = id.split("§¶");
+            String title = parts[0];
+            int chunk_no = parts.length &gt; 1 ? Integer.parseInt(parts[1]) : 0;
+            return List.of("simplewiki", "en", title, chunk_no, 0);
+        })
+        .build();
+}
+
+@Bean
+public EmbeddingModel embeddingModel() {
+    // default is ONNX all-MiniLM-L6-v2 which is what we want
+    return new TransformersEmbeddingModel();
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_loading_the_complete_wikipedia_dataset"><a class="anchor" href="apache-cassandra.html#_loading_the_complete_wikipedia_dataset"></a>Loading the Complete Wikipedia Dataset</h3>
+<div class="paragraph">
+<p>To load the full wikipedia dataset:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download <code>simplewiki-sstable.tar</code> from <a href="https://s.apache.org/simplewiki-sstable-tar" class="bare">s.apache.org/simplewiki-sstable-tar</a> (this will take a while, the file is tens of GBs)</p>
+</li>
+<li>
+<p>Load the data:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>tar -xf simplewiki-sstable.tar -C ${CASSANDRA_DATA}/data/wikidata/articles-*/
+nodetool import wikidata articles ${CASSANDRA_DATA}/data/wikidata/articles-*/</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>If you have existing data in this table, check the tarball&#8217;s files don&#8217;t clobber existing sstables when doing the <code>tar</code>.</p>
+</li>
+<li>
+<p>An alternative to <code>nodetool import</code> is to just restart Cassandra.</p>
+</li>
+<li>
+<p>If there are any failures in the indexes they will be rebuilt automatically.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_accessing_the_native_client"><a class="anchor" href="apache-cassandra.html#_accessing_the_native_client"></a>Accessing the Native Client</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Cassandra Vector Store implementation provides access to the underlying native Cassandra client (<code>CqlSession</code>) through the <code>getNativeClient()</code> method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">CassandraVectorStore vectorStore = context.getBean(CassandraVectorStore.class);
+Optional&lt;CqlSession&gt; nativeClient = vectorStore.getNativeClient();
+
+if (nativeClient.isPresent()) {
+    CqlSession session = nativeClient.get();
+    // Use the native client for Cassandra-specific operations
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The native client gives you access to Cassandra-specific features and operations that might not be exposed through the <code>VectorStore</code> interface.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="azure-cosmos-db.html">Azure Cosmos DB</a></span>
+  <span class="next"><a href="chroma.html">Chroma</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../index.html">Spring AI</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../index.html">
+      1.0.0
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Snapshot
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../1.1-SNAPSHOT/index.html">
+      1.1.0-SNAPSHOT
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+                <div class="col-right">
+                  <ul class="projects">
+  <li>
+    Related Spring Documentation
+    <ul class="projects-list">
+        <li>
+<a href="https://docs.spring.io/spring-boot/">
+  Spring Boot
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-framework/reference/">
+  Spring Framework
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Cloud
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-build/reference/">
+  Spring Cloud Build
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-bus/reference/">
+  Spring Cloud Bus
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-circuitbreaker/reference/">
+  Spring Cloud Circuit Breaker
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-commons/reference/">
+  Spring Cloud Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-config/reference/">
+  Spring Cloud Config
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-consul/reference/">
+  Spring Cloud Consul
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-contract/reference/">
+  Spring Cloud Contract
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-function/reference/">
+  Spring Cloud Function
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-gateway/reference/">
+  Spring Cloud Gateway
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-kubernetes/reference/">
+  Spring Cloud Kubernetes
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-netflix/reference/">
+  Spring Cloud Netflix
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-openfeign/reference/">
+  Spring Cloud OpenFeign
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-stream/reference/">
+  Spring Cloud Stream
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-task/reference/">
+  Spring Cloud Task
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-vault/reference/">
+  Spring Cloud Vault
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-zookeeper/reference/">
+  Spring Cloud Zookeeper
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Data
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-data/cassandra/reference/">
+  Spring Data Cassandra
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/commons/reference/">
+  Spring Data Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/couchbase/reference/">
+  Spring Data Couchbase
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/elasticsearch/reference/">
+  Spring Data Elasticsearch
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/jpa/reference/">
+  Spring Data JPA
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/keyvalue/reference/">
+  Spring Data KeyValue
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/ldap/reference/">
+  Spring Data LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/mongodb/reference/">
+  Spring Data MongoDB
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/neo4j/reference/">
+  Spring Data Neo4j
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/redis/reference/">
+  Spring Data Redis
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/relational/reference/">
+  Spring Data JDBC &amp; R2DBC
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/rest/reference/">
+  Spring Data REST
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-integration/reference/">
+  Spring Integration
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-batch/reference/">
+  Spring Batch
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+<a href="https://docs.spring.io/spring-security/reference/">
+  Spring Security
+</a>
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-authorization-server/reference/">
+  Spring Authorization Server
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-ldap/reference/">
+  Spring LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-security-kerberos/reference/">
+  Spring Security Kerberos
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-session/reference/">
+  Spring Session
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-vault/reference/">
+  Spring Vault
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="../../index.html">
+  Spring AI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-amqp/reference/">
+  Spring AMQP
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-cli/reference/">
+  Spring CLI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-graphql/reference/">
+  Spring GraphQL
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-kafka/reference/">
+  Spring for Apache Kafka
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-modulith/reference/">
+  Spring Modulith
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-pulsar/reference/">
+  Spring for Apache Pulsar
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-shell/reference/">
+  Spring Shell
+</a>
+</li>
+    </ul>
+  </li
+  <li><a href="../../spring-projects.html">All Docs...</a></li>
+</ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">Copyright © 2005 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> Broadcom. All Rights Reserved. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.<br/><a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="GitHub"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/vendor/import.js"></script>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/site.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/highlight.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-link-box">
+                    <a class="search-link" href="../../search.html">Search in all Spring Docs</a>
+                </div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-light.svg"/>
+                        <img class="dark" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-dark.svg"/>
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="https://docs.spring.io/spring-ai/reference/_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="c2e84f15fa630d534f1c62b1c413bb77" data-index-name="springdocs" data-stylesheet="../../_/css/vendor/search.css" data-page-version="1.0.0" data-page-component="ai"></script>
+  <script>if (window.parent == window) {(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-2728886-23', 'auto', {'siteSpeedSampleRate': 100});ga('send', 'pageview');}</script></body>
+</html>

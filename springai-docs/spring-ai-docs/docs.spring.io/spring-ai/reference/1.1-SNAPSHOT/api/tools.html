@@ -1,0 +1,2929 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tool Calling :: Spring AI Reference</title>
+    <link rel="canonical" href="../../api/tools.html">
+    <link rel="prev" href="chat-memory.html">
+    <link rel="next" href="mcp/mcp-overview.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.6">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/site.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="v0.4.17"> 
+    <meta name="version" content="1.1.0">
+    <meta name="component" content="ai">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="https://docs.spring.io/spring-ai/reference/_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img id="springlogo" class="block" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring"/>
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="tools.html#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/why-spring">Overview</a>
+            <a class="navbar-item" href="https://spring.io/microservices">Microservices</a>
+            <a class="navbar-item" href="https://spring.io/reactive">Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event
+              Driven</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web
+              Applications</a>
+            <a class="navbar-item" href="https://spring.io/serverless">Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="tools.html#">Learn</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/learn">Overview</a>
+            <a class="navbar-item" href="https://spring.io/quickstart">Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="tools.html#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://spring.io/projects">Overview</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-boot">Spring Boot</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-framework">Spring Framework</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud">Spring Cloud</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud-dataflow">Spring Cloud Data Flow</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-data">Spring Data</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-integration">Spring Integration</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-batch">Spring Batch</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-security">Spring Security</a>
+            <a class="navbar-item navbar-item-special" href="https://spring.io/projects">View all projects</a>
+            <li class="navbar-item navbar-item-special-3">DEVELOPMENT TOOLS</li>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools 4</a>
+            <a class="navbar-item navbar-item-special-2" href="https://start.spring.io">Spring Initializr
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg></a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="tools.html#">Academy</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.academy/courses">Courses</a>
+            <a class="navbar-item" href="https://spring.academy/learning-path">Get Certified</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="tools.html#">Solutions</a>
+          <div class="navbar-dropdown lg">
+            <a class="navbar-item" href="https://spring.io/solutions">Overview</a>
+            <a class="navbar-item" href="https://spring.io/support">Spring Runtime</a>
+            <a class="navbar-item" href="https://spring.io/consulting">Spring Consulting</a>
+            <a class="navbar-item" href="https://spring.academy/teams">Spring Academy For Teams</a>
+            <a class="navbar-item" href="https://spring.io/security">Security Advisories</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-community">
+          <a class="navbar-link" href="tools.html#">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/community">Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/team">Team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox"/>
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="ai" data-version="1.1.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring AI</span>
+  <span class="version">1.1.0-SNAPSHOT</span>
+  <button class="browse-version" id="browse-version">
+    <svg height="24px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="24px" xml:space="preserve"><g><path d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"></path><path d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"></path><path d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"></path></g></svg>
+  </button>
+  <div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Overview</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../concepts.html">AI Concepts</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="chatclient.html">Chat Client API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="advisors.html">Advisors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="prompt.html">Prompts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="structured-output-converter.html">Structured Output</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="multimodality.html">Multimodality</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="chatmodel.html">Chat Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/comparison.html">Chat Models Comparison</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/bedrock-converse.html">Amazon Bedrock Converse</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/anthropic-chat.html">Anthropic</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/azure-openai-chat.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/deepseek-chat.html">DeepSeek</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/dmr-chat.html">Docker Model Runner</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="chat/google-vertexai.html">Google VertexAI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="chat/vertexai-gemini-chat.html">VertexAI Gemini</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/groq-chat.html">Groq</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/huggingface.html">Hugging Face</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/mistralai-chat.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/minimax-chat.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/moonshot-chat.html">Moonshot AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/nvidia-chat.html">NVIDIA</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/ollama-chat.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/perplexity-chat.html">Perplexity AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">OCI Generative AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="chat/oci-genai/cohere-chat.html">Cohere</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/openai-chat.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/qianfan-chat.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="chat/zhipuai-chat.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="embeddings.html">Embedding Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="bedrock.html">Amazon Bedrock</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="embeddings/bedrock-cohere-embedding.html">Cohere</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="embeddings/bedrock-titan-embedding.html">Titan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/azure-openai-embeddings.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/mistralai-embeddings.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/minimax-embeddings.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/oci-genai-embeddings.html">OCI GenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/ollama-embeddings.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/onnx.html">(ONNX) Transformers</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/openai-embeddings.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/postgresml-embeddings.html">PostgresML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/qianfan-embeddings.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">VertexAI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="embeddings/vertexai-embeddings-text.html">Text Embedding</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="embeddings/vertexai-embeddings-multimodal.html">Multimodal Embedding</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="embeddings/zhipuai-embeddings.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="imageclient.html">Image Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="image/azure-openai-image.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="image/openai-image.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="image/stabilityai-image.html">Stability</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="image/zhipuai-image.html">ZhiPuAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="image/qianfan-image.html">QianFan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="tools.html#api/audio">Audio Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="audio/transcriptions.html">Transcription API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="audio/transcriptions/azure-openai-transcriptions.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="audio/transcriptions/openai-transcriptions.html">OpenAI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="audio/speech.html">Text-To-Speech (TTS) API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="audio/speech/openai-speech.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="audio/speech/elevenlabs-speech.html">ElevenLabs</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="tools.html#api/moderation">Moderation Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="moderation/openai-moderation.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="moderation/mistral-ai-moderation.html">Mistral AI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chat-memory.html">Chat Memory</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="tools.html">Tool Calling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="mcp/mcp-overview.html">Model Context Protocol (MCP)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mcp/mcp-client-boot-starter-docs.html">MCP Client Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mcp/mcp-server-boot-starter-docs.html">MCP Server Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mcp/mcp-helpers.html">MCP Utilities</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="retrieval-augmented-generation.html">Retrieval Augmented Generation (RAG)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="etl-pipeline.html">ETL Pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="testing.html">Model Evaluation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="vectordbs.html">Vector Databases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/azure.html">Azure AI Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/azure-cosmos-db.html">Azure Cosmos DB</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/apache-cassandra.html">Apache Cassandra Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/chroma.html">Chroma</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/couchbase.html">Couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/elasticsearch.html">Elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/gemfire.html">GemFire</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/mariadb.html">MariaDB Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/milvus.html">Milvus</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/mongodb.html">MongoDB Atlas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/neo4j.html">Neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/opensearch.html">OpenSearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/oracle.html">Oracle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/pgvector.html">PGvector</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/pinecone.html">Pinecone</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/qdrant.html">Qdrant</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/redis.html">Redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/hana.html">SAP Hana</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/typesense.html">Typesense</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="vectordbs/weaviate.html">Weaviate</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../observability/index.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="docker-compose.html">Development-time Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="testcontainers.html">Testcontainers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://github.com/spring-ai-community/awesome-spring-ai">Awesome Spring AI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="chat/prompt-engineering-patterns.html">Prompt Engineering Patterns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="effective-agents.html">Building Effective Agents</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cloud-bindings.html">Deploying to the Cloud</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../upgrade-notes.html">Upgrade Notes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="tools-migration.html">Migrating FunctionCallback to ToolCallback API</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="toc" data-title="Tool Calling" data-levels="2">
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/spring-projects/spring-ai/edit/main/spring-ai-docs/src/main/antora/modules/ROOT/pages/api/tools.adoc">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/spring-projects/spring-ai" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" height="512px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="512px"><style type="text/css"><![CDATA[
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path class="st0" d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"></path></g></svg>
+          GitHub Project
+        </a>
+        <a href="https://stackoverflow.com/questions/tagged/spring">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"></path></svg>
+          Stack Overflow
+        </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Spring AI</a></li>
+      <li>Reference</li>
+      <li><a href="tools.html">Tool Calling</a></li>
+    </ul>
+  </nav>
+</div><div class="admonitionblock important latest">
+  <table>
+    <tbody><tr>
+      <td class="icon">
+        <i class="fa icon-important" title="Important"></i>
+      </td>
+      <td class="content">
+        <div class="paragraph">
+          <p>This version is still in development and is not considered stable yet. For the latest snapshot version, please use <a href="../../api/tools.html">Spring AI 1.0.0</a>!</p>
+        </div>
+      </td>
+    </tr></tbody>
+  </table>
+</div>
+<h1 id="page-title" class="page">Tool Calling</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Tool calling</em> (also known as <em>function calling</em>) is a common pattern in AI applications allowing a model to interact with a set of APIs, or <em>tools</em>, augmenting its capabilities.</p>
+</div>
+<div class="paragraph">
+<p>Tools are mainly used for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Information Retrieval</strong>. Tools in this category can be used to retrieve information from external sources, such as a database, a web service, a file system, or a web search engine. The goal is to augment the knowledge of the model, allowing it to answer questions that it would not be able to answer otherwise. As such, they can be used in Retrieval Augmented Generation (RAG) scenarios. For example, a tool can be used to retrieve the current weather for a given location, to retrieve the latest news articles, or to query a database for a specific record.</p>
+</li>
+<li>
+<p><strong>Taking Action</strong>. Tools in this category can be used to take action in a software system, such as sending an email, creating a new record in a database, submitting a form, or triggering a workflow. The goal is to automate tasks that would otherwise require human intervention or explicit programming. For example, a tool can be used to book a flight for a customer interacting with a chatbot, to fill out a form on a web page, or to implement a Java class based on an automated test (TDD) in a code generation scenario.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Even though we typically refer to <em>tool calling</em> as a model capability, it is actually up to the client application to provide the tool calling logic. The model can only request a tool call and provide the input arguments, whereas the application is responsible for executing the tool call from the input arguments and returning the result. The model never gets access to any of the APIs provided as tools, which is a critical security consideration.</p>
+</div>
+<div class="paragraph">
+<p>Spring AI provides convenient APIs to define tools, resolve tool call requests from a model, and execute the tool calls. The following sections provide an overview of the tool calling capabilities in Spring AI.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Check the <a href="chat/comparison.html" class="xref page">Chat Model Comparisons</a> to see which AI models support tool calling invocation.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Follow the guide to migrate from the deprecated <a href="tools-migration.html" class="xref page">FunctionCallback to ToolCallback API</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quick_start"><a class="anchor" href="tools.html#_quick_start"></a>Quick Start</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let&#8217;s see how to start using tool calling in Spring AI. We&#8217;ll implement two simple tools: one for information retrieval and one for taking action. The information retrieval tool will be used to get the current date and time in the user&#8217;s time zone. The action tool will be used to set an alarm for a specified time.</p>
+</div>
+<div class="sect2">
+<h3 id="_information_retrieval"><a class="anchor" href="tools.html#_information_retrieval"></a>Information Retrieval</h3>
+<div class="paragraph">
+<p>AI models don&#8217;t have access to real-time information. Any question that assumes awareness of information such as the current date or weather forecast cannot be answered by the model. However, we can provide a tool that can retrieve this information, and let the model call this tool when access to real-time information is needed.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s implement a tool to get the current date and time in the user&#8217;s time zone in a <code>DateTimeTools</code> class. The tool will take no argument. The <code>LocaleContextHolder</code> from Spring Framework can provide the user&#8217;s time zone. The tool will be defined as a method annotated with <code>@Tool</code>. To help the model understand if and when to call this tool, we&#8217;ll provide a detailed description of what the tools does.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import java.time.LocalDateTime;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.context.i18n.LocaleContextHolder;
+
+</span><span class="fold-block">class DateTimeTools {
+
+    @Tool(description = "Get the current date and time in the user's timezone")
+    String getCurrentDateTime() {
+        return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();
+    }
+
+}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, let&#8217;s make the tool available to the model. In this example, we&#8217;ll use the <code>ChatClient</code> to interact with the model. We&#8217;ll provide the tool to the model by passing an instance of <code>DateTimeTools</code> via the <code>tools()</code> method. When the model needs to know the current date and time, it will request the tool to be called. Internally, the <code>ChatClient</code> will call the tool and return the result to the model, which will then use the tool call result to generate the final response to the original question.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+
+String response = ChatClient.create(chatModel)
+        .prompt("What day is tomorrow?")
+        .tools(new DateTimeTools())
+        .call()
+        .content();
+
+System.out.println(response);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output will be something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">Tomorrow is 2015-10-21.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can retry asking the same question again. This time, don&#8217;t provide the tool to the model. The output will be something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">I am an AI and do not have access to real-time information. Please provide the current date so I can accurately determine what day tomorrow will be.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Without the tool, the model doesn&#8217;t know how to answer the question because it doesn&#8217;t have the ability to determine the current date and time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_taking_actions"><a class="anchor" href="tools.html#_taking_actions"></a>Taking Actions</h3>
+<div class="paragraph">
+<p>AI models can be used to generate plans for accomplishing certain goals. For example, a model can generate a plan for booking a trip to Denmark. However, the model doesn&#8217;t have the ability to execute the plan. That&#8217;s where tools come in: they can be used to execute the plan that a model generates.</p>
+</div>
+<div class="paragraph">
+<p>In the previous example, we used a tool to determine the current date and time. In this example, we&#8217;ll define a second tool for setting an alarm at a specific time. The goal is to set an alarm for 10 minutes from now, so we need to provide both tools to the model to accomplish this task.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll add the new tool to the same <code>DateTimeTools</code> class as before. The new tool will take a single parameter, which is the time in ISO-8601 format. The tool will then print a message to the console indicating that the alarm has been set for the given time. Like before, the tool is defined as a method annotated with <code>@Tool</code>, which we also use to provide a detailed description to help the model understand when and how to use the tool.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.context.i18n.LocaleContextHolder;
+
+</span><span class="fold-block">class DateTimeTools {
+
+    @Tool(description = "Get the current date and time in the user's timezone")
+    String getCurrentDateTime() {
+        return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();
+    }
+
+    @Tool(description = "Set a user alarm for the given time, provided in ISO-8601 format")
+    void setAlarm(String time) {
+        LocalDateTime alarmTime = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+        System.out.println("Alarm set for " + alarmTime);
+    }
+
+}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Next, let&#8217;s make both tools available to the model. We&#8217;ll use the <code>ChatClient</code> to interact with the model. We&#8217;ll provide the tools to the model by passing an instance of <code>DateTimeTools</code> via the <code>tools()</code> method. When we ask to set up an alarm 10 minutes from now, the model will first need to know the current date and time. Then, it will use the current date and time to calculate the alarm time. Finally, it will use the alarm tool to set up the alarm. Internally, the <code>ChatClient</code> will handle any tool call request from the model and send back to it any tool call execution result, so that the model can generate the final response.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+
+String response = ChatClient.create(chatModel)
+        .prompt("Can you set an alarm 10 minutes from now?")
+        .tools(new DateTimeTools())
+        .call()
+        .content();
+
+System.out.println(response);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the application logs, you can check the alarm has been set at the correct time.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_overview"><a class="anchor" href="tools.html#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring AI supports tool calling through a set of flexible abstractions that allow you to define, resolve, and execute tools in a consistent way. This section provides an overview of the main concepts and components of tool calling in Spring AI.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="https://docs.spring.io/spring-ai/reference/1.1-SNAPSHOT/_images/tools/tool-calling-01.jpg" alt="The main sequence of actions for tool calling" width="700">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When we want to make a tool available to the model, we include its definition in the chat request. Each tool definition comprises of a name, a description, and the schema of the input parameters.</p>
+</li>
+<li>
+<p>When the model decides to call a tool, it sends a response with the tool name and the input parameters modeled after the defined schema.</p>
+</li>
+<li>
+<p>The application is responsible for using the tool name to identify and execute the tool with the provided input parameters.</p>
+</li>
+<li>
+<p>The result of the tool call is processed by the application.</p>
+</li>
+<li>
+<p>The application sends the tool call result back to the model.</p>
+</li>
+<li>
+<p>The model generates the final response using the tool call result as additional context.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Tools are the building blocks of tool calling and they are modeled by the <code>ToolCallback</code> interface. Spring AI provides built-in support for specifying <code>ToolCallback</code>(s) from methods and functions, but you can always define your own <code>ToolCallback</code> implementations to support more use cases.</p>
+</div>
+<div class="paragraph">
+<p><code>ChatModel</code> implementations transparently dispatch tool call requests to the corresponding <code>ToolCallback</code> implementations and will send the tool call results back to the model, which will ultimately generate the final response. They do so using the <code>ToolCallingManager</code> interface, which is responsible for managing the tool execution lifecycle.</p>
+</div>
+<div class="paragraph">
+<p>Both <code>ChatClient</code> and <code>ChatModel</code> accept a list of <code>ToolCallback</code> objects to make the tools available to the model and the <code>ToolCallingManager</code> that will eventually execute them.</p>
+</div>
+<div class="paragraph">
+<p>Besides passing the <code>ToolCallback</code> objects directly, you can also pass a list of tool names, that will be resolved dynamically using the <code>ToolCallbackResolver</code> interface.</p>
+</div>
+<div class="paragraph">
+<p>The following sections will go into more details about all these concepts and APIs, including how to customize and extend them to support more use cases.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_methods_as_tools"><a class="anchor" href="tools.html#_methods_as_tools"></a>Methods as Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring AI provides built-in support for specifying tools (i.e. <code>ToolCallback</code>(s)) from methods in two ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>declaratively, using the <code>@Tool</code> annotation</p>
+</li>
+<li>
+<p>programmatically, using the low-level <code>MethodToolCallback</code> implementation.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_declarative_specification_tool"><a class="anchor" href="tools.html#_declarative_specification_tool"></a>Declarative Specification: <code>@Tool</code></h3>
+<div class="paragraph">
+<p>You can turn a method into a tool by annotating it with <code>@Tool</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class DateTimeTools {
+
+    @Tool(description = "Get the current date and time in the user's timezone")
+    String getCurrentDateTime() {
+        return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@Tool</code> annotation allows you to provide key information about the tool:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code>: The name of the tool. If not provided, the method name will be used. AI models use this name to identify the tool when calling it. Therefore, it&#8217;s not allowed to have two tools with the same name in the same class. The name must be unique across all the tools available to the model for a specific chat request.</p>
+</li>
+<li>
+<p><code>description</code>: The description for the tool, which can be used by the model to understand when and how to call the tool. If not provided, the method name will be used as the tool description. However, it&#8217;s strongly recommended to provide a detailed description because that&#8217;s paramount for the model to understand the tool&#8217;s purpose and how to use it. Failing in providing a good description can lead to the model not using the tool when it should or using it incorrectly.</p>
+</li>
+<li>
+<p><code>returnDirect</code>: Whether the tool result should be returned directly to the client or passed back to the model. See <a href="tools.html#_return_direct">Return Direct</a> for more details.</p>
+</li>
+<li>
+<p><code>resultConverter</code>: The <code>ToolCallResultConverter</code> implementation to use for converting the result of a tool call to a <code>String object</code> to send back to the AI model. See <a href="tools.html#_result_conversion">Result Conversion</a> for more details.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The method can be either static or instance, and it can have any visibility (public, protected, package-private, or private). The class that contains the method can be either a top-level class or a nested class, and it can also have any visibility (as long as it&#8217;s accessible where you&#8217;re planning to instantiate it).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Spring AI provides built-in support for AOT compilation of the <code>@Tool</code>-annotated methods as long as the class containing the methods is a Spring bean (e.g. <code>@Component</code>). Otherwise, you&#8217;ll need to provide the necessary configuration to the GraalVM compiler. For example, by annotating the class with <code>@RegisterReflection(memberCategories = MemberCategory.INVOKE_DECLARED_METHODS)</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can define any number of arguments for the method (including no argument) with most types (primitives, POJOs, enums, lists, arrays, maps, and so on). Similarly, the method can return most types, including <code>void</code>. If the method returns a value, the return type must be a serializable type, as the result will be serialized and sent back to the model.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Some types are not supported. See <a href="tools.html#_method_tool_limitations">Method Tool Limitations</a> for more details.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Spring AI will generate the JSON schema for the input parameters of the <code>@Tool</code>-annotated method automatically. The schema is used by the model to understand how to call the tool and prepare the tool request. The <code>@ToolParam</code> annotation can be used to provide additional information about the input parameters, such as a description or whether the parameter is required or optional. By default, all input parameters are considered required.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
+
+</span><span class="fold-block">class DateTimeTools {
+
+    @Tool(description = "Set a user alarm for the given time")
+    void setAlarm(@ToolParam(description = "Time in ISO-8601 format") String time) {
+        LocalDateTime alarmTime = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+        System.out.println("Alarm set for " + alarmTime);
+    }
+
+}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@ToolParam</code> annotation allows you to provide key information about a tool parameter:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>description</code>: The description for the parameter, which can be used by the model to understand better how to use it. For example, what format the parameter should be in, what values are allowed, and so on.</p>
+</li>
+<li>
+<p><code>required</code>: Whether the parameter is required or optional. By default, all parameters are considered required.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a parameter is annotated as <code>@Nullable</code>, it will be considered optional unless explicitly marked as required using the <code>@ToolParam</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Besides the <code>@ToolParam</code> annotation, you can also use the <code>@Schema</code> annotation from Swagger or <code>@JsonProperty</code> from Jackson. See <a href="tools.html#_json_schema">JSON Schema</a> for more details.</p>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatclient"><a class="anchor" href="tools.html#_adding_tools_to_chatclient"></a>Adding Tools to <code>ChatClient</code></h4>
+<div class="paragraph">
+<p>When using the declarative specification approach, you can pass the tool class instance to the <code>tools()</code> method when invoking a <code>ChatClient</code>. Such tools will only be available for the specific chat request they are added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatClient.create(chatModel)
+    .prompt("What day is tomorrow?")
+    .tools(new DateTimeTools())
+    .call()
+    .content();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Under the hood, the <code>ChatClient</code> will generate a <code>ToolCallback</code> from each <code>@Tool</code>-annotated method in the tool class instance and pass them to the model. In case you prefer to generate the <code>ToolCallback</code>(s) yourself, you can use the <code>ToolCallbacks</code> utility class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallback[] dateTimeTools = ToolCallbacks.from(new DateTimeTools());</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatclient"><a class="anchor" href="tools.html#_adding_default_tools_to_chatclient"></a>Adding Default Tools to <code>ChatClient</code></h4>
+<div class="paragraph">
+<p>When using the declarative specification approach, you can add default tools to a <code>ChatClient.Builder</code> by passing the tool class instance to the <code>defaultTools()</code> method.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by all the <code>ChatClient</code> instances built from the same <code>ChatClient.Builder</code>. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ChatClient chatClient = ChatClient.builder(chatModel)
+    .defaultTools(new DateTimeTools())
+    .build();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatmodel"><a class="anchor" href="tools.html#_adding_tools_to_chatmodel"></a>Adding Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the declarative specification approach, you can pass the tool class instance to the <code>toolCallbacks()</code> method of the <code>ToolCallingChatOptions</code> you use to call a <code>ChatModel</code>. Such tools will only be available for the specific chat request they are added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ToolCallback[] dateTimeTools = ToolCallbacks.from(new DateTimeTools());
+ChatOptions chatOptions = ToolCallingChatOptions.builder()
+    .toolCallbacks(dateTimeTools)
+    .build();
+Prompt prompt = new Prompt("What day is tomorrow?", chatOptions);
+chatModel.call(prompt);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatmodel"><a class="anchor" href="tools.html#_adding_default_tools_to_chatmodel"></a>Adding Default Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the declarative specification approach, you can add default tools to <code>ChatModel</code> at construction time by passing the tool class instance to the <code>toolCallbacks()</code> method of the <code>ToolCallingChatOptions</code> instance used to create the <code>ChatModel</code>.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by that <code>ChatModel</code> instance. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallback[] dateTimeTools = ToolCallbacks.from(new DateTimeTools());
+ChatModel chatModel = OllamaChatModel.builder()
+    .ollamaApi(OllamaApi.builder().build())
+    .defaultOptions(ToolCallingChatOptions.builder()
+            .toolCallbacks(dateTimeTools)
+            .build())
+    .build();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_programmatic_specification_methodtoolcallback"><a class="anchor" href="tools.html#_programmatic_specification_methodtoolcallback"></a>Programmatic Specification: <code>MethodToolCallback</code></h3>
+<div class="paragraph">
+<p>You can turn a method into a tool by building a <code>MethodToolCallback</code> programmatically.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class DateTimeTools {
+
+    String getCurrentDateTime() {
+        return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>MethodToolCallback.Builder</code> allows you to build a <code>MethodToolCallback</code> instance and provide key information about the tool:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>toolDefinition</code>: The <code>ToolDefinition</code> instance that defines the tool name, description, and input schema. You can build it using the <code>ToolDefinition.Builder</code> class. Required.</p>
+</li>
+<li>
+<p><code>toolMetadata</code>: The <code>ToolMetadata</code> instance that defines additional settings such as whether the result should be returned directly to the client, and the result converter to use. You can build it using the <code>ToolMetadata.Builder</code> class.</p>
+</li>
+<li>
+<p><code>toolMethod</code>: The <code>Method</code> instance that represents the tool method. Required.</p>
+</li>
+<li>
+<p><code>toolObject</code>: The object instance that contains the tool method. If the method is static, you can omit this parameter.</p>
+</li>
+<li>
+<p><code>toolCallResultConverter</code>: The <code>ToolCallResultConverter</code> instance to use for converting the result of a tool call to a <code>String</code> object to send back to the AI model. If not provided, the default converter will be used (<code>DefaultToolCallResultConverter</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>ToolDefinition.Builder</code> allows you to build a <code>ToolDefinition</code> instance and define the tool name, description, and input schema:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code>: The name of the tool. If not provided, the method name will be used. AI models use this name to identify the tool when calling it. Therefore, it&#8217;s not allowed to have two tools with the same name in the same class. The name must be unique across all the tools available to the model for a specific chat request.</p>
+</li>
+<li>
+<p><code>description</code>: The description for the tool, which can be used by the model to understand when and how to call the tool. If not provided, the method name will be used as the tool description. However, it&#8217;s strongly recommended to provide a detailed description because that&#8217;s paramount for the model to understand the tool&#8217;s purpose and how to use it. Failing in providing a good description can lead to the model not using the tool when it should or using it incorrectly.</p>
+</li>
+<li>
+<p><code>inputSchema</code>: The JSON schema for the input parameters of the tool. If not provided, the schema will be generated automatically based on the method parameters. You can use the <code>@ToolParam</code> annotation to provide additional information about the input parameters, such as a description or whether the parameter is required or optional. By default, all input parameters are considered required. See <a href="tools.html#_json_schema">JSON Schema</a> for more details.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>ToolMetadata.Builder</code> allows you to build a <code>ToolMetadata</code> instance and define additional settings for the tool:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>returnDirect</code>: Whether the tool result should be returned directly to the client or passed back to the model. See <a href="tools.html#_return_direct">Return Direct</a> for more details.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Method method = ReflectionUtils.findMethod(DateTimeTools.class, "getCurrentDateTime");
+ToolCallback toolCallback = MethodToolCallback.builder()
+    .toolDefinition(ToolDefinitions.builder(method)
+            .description("Get the current date and time in the user's timezone")
+            .build())
+    .toolMethod(method)
+    .toolObject(new DateTimeTools())
+    .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The method can be either static or instance, and it can have any visibility (public, protected, package-private, or private). The class that contains the method can be either a top-level class or a nested class, and it can also have any visibility (as long as it&#8217;s accessible where you&#8217;re planning to instantiate it).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Spring AI provides built-in support for AOT compilation of the tool methods as long as the class containing the methods is a Spring bean (e.g. <code>@Component</code>). Otherwise, you&#8217;ll need to provide the necessary configuration to the GraalVM compiler. For example, by annotating the class with <code>@RegisterReflection(memberCategories = MemberCategory.INVOKE_DECLARED_METHODS)</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can define any number of arguments for the method (including no argument) with most types (primitives, POJOs, enums, lists, arrays, maps, and so on). Similarly, the method can return most types, including <code>void</code>. If the method returns a value, the return type must be a serializable type, as the result will be serialized and sent back to the model.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Some types are not supported. See <a href="tools.html#_method_tool_limitations">Method Tool Limitations</a> for more details.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the method is static, you can omit the <code>toolObject()</code> method, as it&#8217;s not needed.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class DateTimeTools {
+
+    static String getCurrentDateTime() {
+        return LocalDateTime.now().atZone(LocaleContextHolder.getTimeZone().toZoneId()).toString();
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Method method = ReflectionUtils.findMethod(DateTimeTools.class, "getCurrentDateTime");
+ToolCallback toolCallback = MethodToolCallback.builder()
+    .toolDefinition(ToolDefinitions.builder(method)
+            .description("Get the current date and time in the user's timezone")
+            .build())
+    .toolMethod(method)
+    .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Spring AI will generate the JSON schema for the input parameters of the method automatically. The schema is used by the model to understand how to call the tool and prepare the tool request. The <code>@ToolParam</code> annotation can be used to provide additional information about the input parameters, such as a description or whether the parameter is required or optional. By default, all input parameters are considered required.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.springframework.ai.tool.annotation.ToolParam;
+
+</span><span class="fold-block">class DateTimeTools {
+
+    void setAlarm(@ToolParam(description = "Time in ISO-8601 format") String time) {
+        LocalDateTime alarmTime = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+        System.out.println("Alarm set for " + alarmTime);
+    }
+
+}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@ToolParam</code> annotation allows you to provide key information about a tool parameter:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>description</code>: The description for the parameter, which can be used by the model to understand better how to use it. For example, what format the parameter should be in, what values are allowed, and so on.</p>
+</li>
+<li>
+<p><code>required</code>: Whether the parameter is required or optional. By default, all parameters are considered required.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a parameter is annotated as <code>@Nullable</code>, it will be considered optional unless explicitly marked as required using the <code>@ToolParam</code> annotation.</p>
+</div>
+<div class="paragraph">
+<p>Besides the <code>@ToolParam</code> annotation, you can also use the <code>@Schema</code> annotation from Swagger or <code>@JsonProperty</code> from Jackson. See <a href="tools.html#_json_schema">JSON Schema</a> for more details.</p>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatclient_and_chatmodel"><a class="anchor" href="tools.html#_adding_tools_to_chatclient_and_chatmodel"></a>Adding Tools to <code>ChatClient</code> and <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can pass the <code>MethodToolCallback</code> instance to the <code>toolCallbacks()</code> method of <code>ChatClient</code>.
+The tool will only be available for the specific chat request it&#8217;s added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallback toolCallback = ...
+ChatClient.create(chatModel)
+    .prompt("What day is tomorrow?")
+    .toolCallbacks(toolCallback)
+    .call()
+    .content();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatclient_2"><a class="anchor" href="tools.html#_adding_default_tools_to_chatclient_2"></a>Adding Default Tools to <code>ChatClient</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can add default tools to a <code>ChatClient.Builder</code> by passing the <code>MethodToolCallback</code> instance to the <code>defaultToolCallbacks()</code> method.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by all the <code>ChatClient</code> instances built from the same <code>ChatClient.Builder</code>. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ToolCallback toolCallback = ...
+ChatClient chatClient = ChatClient.builder(chatModel)
+    .defaultToolCallbacks(toolCallback)
+    .build();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatmodel_2"><a class="anchor" href="tools.html#_adding_tools_to_chatmodel_2"></a>Adding Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can pass the <code>MethodToolCallback</code> instance to the <code>toolCallbacks()</code> method of the <code>ToolCallingChatOptions</code> you use to call a <code>ChatModel</code>. The tool will only be available for the specific chat request it&#8217;s added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ToolCallback toolCallback = ...
+ChatOptions chatOptions = ToolCallingChatOptions.builder()
+    .toolCallbacks(toolCallback)
+    .build():
+Prompt prompt = new Prompt("What day is tomorrow?", chatOptions);
+chatModel.call(prompt);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatmodel_2"><a class="anchor" href="tools.html#_adding_default_tools_to_chatmodel_2"></a>Adding Default Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can add default tools to a <code>ChatModel</code> at construction time by passing the <code>MethodToolCallback</code> instance to the <code>toolCallbacks()</code> method of the <code>ToolCallingChatOptions</code> instance used to create the <code>ChatModel</code>.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by that <code>ChatModel</code> instance. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallback toolCallback = ...
+ChatModel chatModel = OllamaChatModel.builder()
+    .ollamaApi(OllamaApi.builder().build())
+    .defaultOptions(ToolCallingChatOptions.builder()
+            .toolCallbacks(toolCallback)
+            .build())
+    .build();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_method_tool_limitations"><a class="anchor" href="tools.html#_method_tool_limitations"></a>Method Tool Limitations</h3>
+<div class="paragraph">
+<p>The following types are not currently supported as parameters or return types for methods used as tools:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Optional</code></p>
+</li>
+<li>
+<p>Asynchronous types (e.g. <code>CompletableFuture</code>, <code>Future</code>)</p>
+</li>
+<li>
+<p>Reactive types (e.g. <code>Flow</code>, <code>Mono</code>, <code>Flux</code>)</p>
+</li>
+<li>
+<p>Functional types (e.g. <code>Function</code>, <code>Supplier</code>, <code>Consumer</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Functional types are supported using the function-based tool specification approach. See <a href="tools.html#_functions_as_tools">Functions as Tools</a> for more details.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_functions_as_tools"><a class="anchor" href="tools.html#_functions_as_tools"></a>Functions as Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring AI provides built-in support for specifying tools from functions, either programmatically using the low-level <code>FunctionToolCallback</code> implementation or dynamically as <code>@Bean</code>(s) resolved at runtime.</p>
+</div>
+<div class="sect2">
+<h3 id="_programmatic_specification_functiontoolcallback"><a class="anchor" href="tools.html#_programmatic_specification_functiontoolcallback"></a>Programmatic Specification: <code>FunctionToolCallback</code></h3>
+<div class="paragraph">
+<p>You can turn a functional type (<code>Function</code>, <code>Supplier</code>, <code>Consumer</code>, or <code>BiFunction</code>) into a tool by building a <code>FunctionToolCallback</code> programmatically.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class WeatherService implements Function&lt;WeatherRequest, WeatherResponse&gt; {
+    public WeatherResponse apply(WeatherRequest request) {
+        return new WeatherResponse(30.0, Unit.C);
+    }
+}
+
+public enum Unit { C, F }
+public record WeatherRequest(String location, Unit unit) {}
+public record WeatherResponse(double temp, Unit unit) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>FunctionToolCallback.Builder</code> allows you to build a <code>FunctionToolCallback</code> instance and provide key information about the tool:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code>: The name of the tool. AI models use this name to identify the tool when calling it. Therefore, it&#8217;s not allowed to have two tools with the same name in the same context. The name must be unique across all the tools available to the model for a specific chat request. Required.</p>
+</li>
+<li>
+<p><code>toolFunction</code>: The functional object that represents the tool method (<code>Function</code>, <code>Supplier</code>, <code>Consumer</code>, or <code>BiFunction</code>). Required.</p>
+</li>
+<li>
+<p><code>description</code>: The description for the tool, which can be used by the model to understand when and how to call the tool. If not provided, the method name will be used as the tool description. However, it&#8217;s strongly recommended to provide a detailed description because that&#8217;s paramount for the model to understand the tool&#8217;s purpose and how to use it. Failing in providing a good description can lead to the model not using the tool when it should or using it incorrectly.</p>
+</li>
+<li>
+<p><code>inputType</code>: The type of the function input. Required.</p>
+</li>
+<li>
+<p><code>inputSchema</code>: The JSON schema for the input parameters of the tool. If not provided, the schema will be generated automatically based on the <code>inputType</code>. You can use the <code>@ToolParam</code> annotation to provide additional information about the input parameters, such as a description or whether the parameter is required or optional. By default, all input parameters are considered required. See <a href="tools.html#_json_schema">JSON Schema</a> for more details.</p>
+</li>
+<li>
+<p><code>toolMetadata</code>: The <code>ToolMetadata</code> instance that defines additional settings such as whether the result should be returned directly to the client, and the result converter to use. You can build it using the <code>ToolMetadata.Builder</code> class.</p>
+</li>
+<li>
+<p><code>toolCallResultConverter</code>: The <code>ToolCallResultConverter</code> instance to use for converting the result of a tool call to a <code>String</code> object to send back to the AI model. If not provided, the default converter will be used (<code>DefaultToolCallResultConverter</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>ToolMetadata.Builder</code> allows you to build a <code>ToolMetadata</code> instance and define additional settings for the tool:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>returnDirect</code>: Whether the tool result should be returned directly to the client or passed back to the model. See <a href="tools.html#_return_direct">Return Direct</a> for more details.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallback toolCallback = FunctionToolCallback
+    .builder("currentWeather", new WeatherService())
+    .description("Get the weather in location")
+    .inputType(WeatherRequest.class)
+    .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The function inputs and outputs can be either <code>Void</code> or POJOs. The input and output POJOs must be serializable, as the result will be serialized and sent back to the model. The function as well as the input and output types must be public.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Some types are not supported. See <a href="tools.html#_function_tool_limitations">Function Tool Limitations</a> for more details.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatclient_2"><a class="anchor" href="tools.html#_adding_tools_to_chatclient_2"></a>Adding Tools to <code>ChatClient</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can pass the <code>FunctionToolCallback</code> instance to the <code>toolCallbacks()</code> method of <code>ChatClient</code>. The tool will only be available for the specific chat request it&#8217;s added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallback toolCallback = ...
+ChatClient.create(chatModel)
+    .prompt("What's the weather like in Copenhagen?")
+    .toolCallbacks(toolCallback)
+    .call()
+    .content();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatclient_3"><a class="anchor" href="tools.html#_adding_default_tools_to_chatclient_3"></a>Adding Default Tools to <code>ChatClient</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can add default tools to a <code>ChatClient.Builder</code> by passing the <code>FunctionToolCallback</code> instance to the <code>defaultToolCallbacks()</code> method.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by all the <code>ChatClient</code> instances built from the same <code>ChatClient.Builder</code>. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ToolCallback toolCallback = ...
+ChatClient chatClient = ChatClient.builder(chatModel)
+    .defaultToolCallbacks(toolCallback)
+    .build();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatmodel_3"><a class="anchor" href="tools.html#_adding_tools_to_chatmodel_3"></a>Adding Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can pass the <code>FunctionToolCallback</code> instance to the <code>toolCallbacks()</code> method of <code>ToolCallingChatOptions</code>. The tool will only be available for the specific chat request it&#8217;s added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ToolCallback toolCallback = ...
+ChatOptions chatOptions = ToolCallingChatOptions.builder()
+    .toolCallbacks(toolCallback)
+    .build():
+Prompt prompt = new Prompt("What's the weather like in Copenhagen?", chatOptions);
+chatModel.call(prompt);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatmodel_3"><a class="anchor" href="tools.html#_adding_default_tools_to_chatmodel_3"></a>Adding Default Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the programmatic specification approach, you can add default tools to a <code>ChatModel</code> at construction time by passing the <code>FunctionToolCallback</code> instance to the <code>toolCallbacks()</code> method of the <code>ToolCallingChatOptions</code> instance used to create the <code>ChatModel</code>.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by that <code>ChatModel</code> instance. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallback toolCallback = ...
+ChatModel chatModel = OllamaChatModel.builder()
+    .ollamaApi(OllamaApi.builder().build())
+    .defaultOptions(ToolCallingChatOptions.builder()
+            .toolCallbacks(toolCallback)
+            .build())
+    .build();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dynamic_specification_bean"><a class="anchor" href="tools.html#_dynamic_specification_bean"></a>Dynamic Specification: <code>@Bean</code></h3>
+<div class="paragraph">
+<p>Instead of specifying tools programmatically, you can define tools as Spring beans and let Spring AI resolve them dynamically at runtime using the <code>ToolCallbackResolver</code> interface (via the <code>SpringBeanToolCallbackResolver</code> implementation). This option gives you the possibility to use any <code>Function</code>, <code>Supplier</code>, <code>Consumer</code>, or <code>BiFunction</code> bean as a tool. The bean name will be used as the tool name, and the <code>@Description</code> annotation from Spring Framework can be used to provide a description for the tool, used by the model to understand when and how to call the tool. If you don&#8217;t provide a description, the method name will be used as the tool description. However, it&#8217;s strongly recommended to provide a detailed description because that&#8217;s paramount for the model to understand the tool&#8217;s purpose and how to use it. Failing in providing a good description can lead to the model not using the tool when it should or using it incorrectly.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration(proxyBeanMethods = false)
+class WeatherTools {
+
+    WeatherService weatherService = new WeatherService();
+
+	@Bean
+	@Description("Get the weather in location")
+	Function&lt;WeatherRequest, WeatherResponse&gt; currentWeather() {
+		return weatherService;
+	}
+
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Some types are not supported. See <a href="tools.html#_function_tool_limitations">Function Tool Limitations</a> for more details.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The JSON schema for the input parameters of the tool will be generated automatically. You can use the <code>@ToolParam</code> annotation to provide additional information about the input parameters, such as a description or whether the parameter is required or optional. By default, all input parameters are considered required. See <a href="tools.html#_json_schema">JSON Schema</a> for more details.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">record WeatherRequest(@ToolParam(description = "The name of a city or a country") String location, Unit unit) {}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This tool specification approach has the drawback of not guaranteeing type safety, as the tool resolution is done at runtime. To mitigate this, you can specify the tool name explicitly using the <code>@Bean</code> annotation and storing the value in a constant, so that you can use it in a chat request instead of hard-coding the tool name.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration(proxyBeanMethods = false)
+class WeatherTools {
+
+    public static final String CURRENT_WEATHER_TOOL = "currentWeather";
+
+	@Bean(CURRENT_WEATHER_TOOL)
+	@Description("Get the weather in location")
+	Function&lt;WeatherRequest, WeatherResponse&gt; currentWeather() {
+		...
+	}
+
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatclient_3"><a class="anchor" href="tools.html#_adding_tools_to_chatclient_3"></a>Adding Tools to <code>ChatClient</code></h4>
+<div class="paragraph">
+<p>When using the dynamic specification approach, you can pass the tool name (i.e. the function bean name) to the <code>tools()</code> method of <code>ChatClient</code>.
+The tool will only be available for the specific chat request it&#8217;s added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatClient.create(chatModel)
+    .prompt("What's the weather like in Copenhagen?")
+    .toolNames("currentWeather")
+    .call()
+    .content();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatclient_4"><a class="anchor" href="tools.html#_adding_default_tools_to_chatclient_4"></a>Adding Default Tools to <code>ChatClient</code></h4>
+<div class="paragraph">
+<p>When using the dynamic specification approach, you can add default tools to a <code>ChatClient.Builder</code> by passing the tool name to the <code>defaultToolNames()</code> method.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by all the <code>ChatClient</code> instances built from the same <code>ChatClient.Builder</code>. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ChatClient chatClient = ChatClient.builder(chatModel)
+    .defaultToolNames("currentWeather")
+    .build();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_tools_to_chatmodel_4"><a class="anchor" href="tools.html#_adding_tools_to_chatmodel_4"></a>Adding Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the dynamic specification approach, you can pass the tool name to the <code>toolNames()</code> method of the <code>ToolCallingChatOptions</code> you use to call the <code>ChatModel</code>. The tool will only be available for the specific chat request it&#8217;s added to.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ChatOptions chatOptions = ToolCallingChatOptions.builder()
+    .toolNames("currentWeather")
+    .build();
+Prompt prompt = new Prompt("What's the weather like in Copenhagen?", chatOptions);
+chatModel.call(prompt);</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_adding_default_tools_to_chatmodel_4"><a class="anchor" href="tools.html#_adding_default_tools_to_chatmodel_4"></a>Adding Default Tools to <code>ChatModel</code></h4>
+<div class="paragraph">
+<p>When using the dynamic specification approach, you can add default tools to <code>ChatModel</code> at construction time by passing the tool name to the <code>toolNames()</code> method of the <code>ToolCallingChatOptions</code> instance used to create the <code>ChatModel</code>.
+If both default and runtime tools are provided, the runtime tools will completely override the default tools.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Default tools are shared across all the chat requests performed by that <code>ChatModel</code> instance. They are useful for tools that are commonly used across different chat requests, but they can also be dangerous if not used carefully, risking to make them available when they shouldn&#8217;t.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = OllamaChatModel.builder()
+    .ollamaApi(OllamaApi.builder().build())
+    .defaultOptions(ToolCallingChatOptions.builder()
+            .toolNames("currentWeather")
+            .build())
+    .build();</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_function_tool_limitations"><a class="anchor" href="tools.html#_function_tool_limitations"></a>Function Tool Limitations</h3>
+<div class="paragraph">
+<p>The following types are not currently supported as input or output types for functions used as tools:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Primitive types</p>
+</li>
+<li>
+<p><code>Optional</code></p>
+</li>
+<li>
+<p>Collection types (e.g. <code>List</code>, <code>Map</code>, <code>Array</code>, <code>Set</code>)</p>
+</li>
+<li>
+<p>Asynchronous types (e.g. <code>CompletableFuture</code>, <code>Future</code>)</p>
+</li>
+<li>
+<p>Reactive types (e.g. <code>Flow</code>, <code>Mono</code>, <code>Flux</code>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Primitive types and collections are supported using the method-based tool specification approach. See <a href="tools.html#_methods_as_tools">Methods as Tools</a> for more details.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tool_specification"><a class="anchor" href="tools.html#_tool_specification"></a>Tool Specification</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In Spring AI, tools are modeled via the <code>ToolCallback</code> interface. In the previous sections, we&#8217;ve seen how to define tools from methods and functions using the built-in support provided by Spring AI (see <a href="tools.html#_methods_as_tools">Methods as Tools</a> and <a href="tools.html#_functions_as_tools">Functions as Tools</a>). This section will dive deeper into the tool specification and how to customize and extend it to support more use cases.</p>
+</div>
+<div class="sect2">
+<h3 id="_tool_callback"><a class="anchor" href="tools.html#_tool_callback"></a>Tool Callback</h3>
+<div class="paragraph">
+<p>The <code>ToolCallback</code> interface provides a way to define a tool that can be called by the AI model, including both definition and execution logic. It&#8217;s the main interface to implement when you want to define a tool from scratch. For example, you can define a <code>ToolCallback</code> from an MCP Client (using the Model Context Protocol) or a <code>ChatClient</code> (to build a modular agentic application).</p>
+</div>
+<div class="paragraph">
+<p>The interface provides the following methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface ToolCallback {
+
+	/**
+	 * Definition used by the AI model to determine when and how to call the tool.
+	 */
+	ToolDefinition getToolDefinition();
+
+	/**
+	 * Metadata providing additional information on how to handle the tool.
+	 */
+	ToolMetadata getToolMetadata();
+
+    /**
+	 * Execute tool with the given input and return the result to send back to the AI model.
+	 */
+	String call(String toolInput);
+
+    /**
+	 * Execute tool with the given input and context, and return the result to send back to the AI model.
+	 */
+	String call(String toolInput, ToolContext tooContext);
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Spring AI provides built-in implementations for tool methods (<code>MethodToolCallback</code>) and tool functions (<code>FunctionToolCallback</code>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tool_definition"><a class="anchor" href="tools.html#_tool_definition"></a>Tool Definition</h3>
+<div class="paragraph">
+<p>The <code>ToolDefinition</code> interface provides the required information for the AI model to know about the availability of the tool, including the tool name, description, and input schema. Each <code>ToolCallback</code> implementation must provide a <code>ToolDefinition</code> instance to define the tool.</p>
+</div>
+<div class="paragraph">
+<p>The interface provides the following methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface ToolDefinition {
+
+	/**
+	 * The tool name. Unique within the tool set provided to a model.
+	 */
+	String name();
+
+	/**
+	 * The tool description, used by the AI model to determine what the tool does.
+	 */
+	String description();
+
+	/**
+	 * The schema of the parameters used to call the tool.
+	 */
+	String inputSchema();
+
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+See <a href="tools.html#_json_schema">JSON Schema</a> for more details on the input schema.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>ToolDefinition.Builder</code> lets you build a <code>ToolDefinition</code> instance using the default implementation (<code>DefaultToolDefinition</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolDefinition toolDefinition = ToolDefinition.builder()
+    .name("currentWeather")
+    .description("Get the weather in location")
+    .inputSchema("""
+        {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string",
+                    "enum": ["C", "F"]
+                }
+            },
+            "required": ["location", "unit"]
+        }
+    """)
+    .build();</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_method_tool_definition"><a class="anchor" href="tools.html#_method_tool_definition"></a>Method Tool Definition</h4>
+<div class="paragraph">
+<p>When building tools from a method, the <code>ToolDefinition</code> is automatically generated for you. In case you prefer to generate the <code>ToolDefinition</code> yourself, you can use this convenient builder.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Method method = ReflectionUtils.findMethod(DateTimeTools.class, "getCurrentDateTime");
+ToolDefinition toolDefinition = ToolDefinition.from(method);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>ToolDefinition</code> generated from a method includes the method name as the tool name, the method name as the tool description, and the JSON schema of the method input parameters. If the method is annotated with <code>@Tool</code>, the tool name and description will be taken from the annotation, if set.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+See <a href="tools.html#_methods_as_tools">Methods as Tools</a> for more details.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you&#8217;d rather provide some or all of the attributes explicitly, you can use the <code>ToolDefinition.Builder</code> to build a custom <code>ToolDefinition</code> instance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Method method = ReflectionUtils.findMethod(DateTimeTools.class, "getCurrentDateTime");
+ToolDefinition toolDefinition = ToolDefinitions.builder(method)
+    .name("currentDateTime")
+    .description("Get the current date and time in the user's timezone")
+    .inputSchema(JsonSchemaGenerator.generateForMethodInput(method))
+    .build();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_function_tool_definition"><a class="anchor" href="tools.html#_function_tool_definition"></a>Function Tool Definition</h4>
+<div class="paragraph">
+<p>When building tools from a function, the <code>ToolDefinition</code> is automatically generated for you. When you use the <code>FunctionToolCallback.Builder</code> to build a <code>FunctionToolCallback</code> instance, you can provide the tool name, description, and input schema that will be used to generate the <code>ToolDefinition</code>. See <a href="tools.html#_functions_as_tools">Functions as Tools</a> for more details.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_json_schema"><a class="anchor" href="tools.html#_json_schema"></a>JSON Schema</h3>
+<div class="paragraph">
+<p>When providing a tool to the AI model, the model needs to know the schema of the input type for calling the tool. The schema is used to understand how to call the tool and prepare the tool request. Spring AI provides built-in support for generating the JSON Schema of the input type for a tool via the <code>JsonSchemaGenerator</code> class. The schema is provided as part of the <code>ToolDefinition</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+See <a href="tools.html#_tool_definition">Tool Definition</a> for more details on the <code>ToolDefinition</code> and how to pass the input schema to it.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>JsonSchemaGenerator</code> class is used under the hood to generate the JSON schema for the input parameters of a method or a function, using any of the strategies described in <a href="tools.html#_methods_as_tools">Methods as Tools</a> and <a href="tools.html#_functions_as_tools">Functions as Tools</a>. The JSON schema generation logic supports a series of annotations that you can use on the input parameters for methods and functions to customize the resulting schema.</p>
+</div>
+<div class="paragraph">
+<p>This section describes two main options you can customize when generating the JSON schema for the input parameters of a tool: description and required status.</p>
+</div>
+<div class="sect3">
+<h4 id="_description"><a class="anchor" href="tools.html#_description"></a>Description</h4>
+<div class="paragraph">
+<p>Besides providing a description for the tool itself, you can also provide a description for the input parameters of a tool. The description can be used to provide key information about the input parameters, such as what format the parameter should be in, what values are allowed, and so on. This is useful to help the model understand the input schema and how to use it. Spring AI provides built-in support for generating the description for an input parameter using one of the following annotations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@ToolParam(description = "&#8230;&#8203;")</code> from Spring AI</p>
+</li>
+<li>
+<p><code>@JsonClassDescription(description = "&#8230;&#8203;")</code> from Jackson</p>
+</li>
+<li>
+<p><code>@JsonPropertyDescription(description = "&#8230;&#8203;")</code> from Jackson</p>
+</li>
+<li>
+<p><code>@Schema(description = "&#8230;&#8203;")</code> from Swagger.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This approach works for both methods and functions, and you can use it recursively for nested types.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.ai.tool.annotation.ToolParam;
+import org.springframework.context.i18n.LocaleContextHolder;
+
+</span><span class="fold-block">class DateTimeTools {
+
+    @Tool(description = "Set a user alarm for the given time")
+    void setAlarm(@ToolParam(description = "Time in ISO-8601 format") String time) {
+        LocalDateTime alarmTime = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME);
+        System.out.println("Alarm set for " + alarmTime);
+    }
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_requiredoptional"><a class="anchor" href="tools.html#_requiredoptional"></a>Required/Optional</h4>
+<div class="paragraph">
+<p>By default, each input parameter is considered required, which forces the AI model to provide a value for it when calling the tool. However, you can make an input parameter optional by using one of the following annotations, in this order of precedence:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@ToolParam(required = false)</code> from Spring AI</p>
+</li>
+<li>
+<p><code>@JsonProperty(required = false)</code> from Jackson</p>
+</li>
+<li>
+<p><code>@Schema(required = false)</code> from Swagger</p>
+</li>
+<li>
+<p><code>@Nullable</code> from Spring Framework.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This approach works for both methods and functions, and you can use it recursively for nested types.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class CustomerTools {
+
+    @Tool(description = "Update customer information")
+    void updateCustomerInfo(Long id, String name, @ToolParam(required = false) String email) {
+        System.out.println("Updated info for customer with id: " + id);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Defining the correct required status for the input parameter is crucial to mitigate the risk of hallucinations and ensure the model provides the right input when calling the tool. In the previous example, the <code>email</code> parameter is optional, which means the model can call the tool without providing a value for it. If the parameter was required, the model would have to provide a value for it when calling the tool. And if no value existed, the model would probably make one up, leading to hallucinations.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_result_conversion"><a class="anchor" href="tools.html#_result_conversion"></a>Result Conversion</h3>
+<div class="paragraph">
+<p>The result of a tool call is serialized using a <code>ToolCallResultConverter</code> and then sent back to the AI model. The <code>ToolCallResultConverter</code> interface provides a way to convert the result of a tool call to a <code>String</code> object.</p>
+</div>
+<div class="paragraph">
+<p>The interface provides the following method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@FunctionalInterface
+public interface ToolCallResultConverter {
+
+	/**
+	 * Given an Object returned by a tool, convert it to a String compatible with the
+	 * given class type.
+	 */
+	String convert(@Nullable Object result, @Nullable Type returnType);
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result must be a serializable type. By default, the result is serialized to JSON using Jackson (<code>DefaultToolCallResultConverter</code>), but you can customize the serialization process by providing your own <code>ToolCallResultConverter</code> implementation.</p>
+</div>
+<div class="paragraph">
+<p>Spring AI relies on the <code>ToolCallResultConverter</code> in both method and function tools.</p>
+</div>
+<div class="sect3">
+<h4 id="_method_tool_call_result_conversion"><a class="anchor" href="tools.html#_method_tool_call_result_conversion"></a>Method Tool Call Result Conversion</h4>
+<div class="paragraph">
+<p>When building tools from a method with the declarative approach, you can provide a custom <code>ToolCallResultConverter</code> to use for the tool by setting the <code>resultConverter()</code> attribute of the <code>@Tool</code> annotation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class CustomerTools {
+
+    @Tool(description = "Retrieve customer information", resultConverter = CustomToolCallResultConverter.class)
+    Customer getCustomerInfo(Long id) {
+        return customerRepository.findById(id);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If using the programmatic approach, you can provide a custom <code>ToolCallResultConverter</code> to use for the tool by setting the <code>resultConverter()</code> attribute of the <code>MethodToolCallback.Builder</code>.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="tools.html#_methods_as_tools">Methods as Tools</a> for more details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_function_tool_call_result_conversion"><a class="anchor" href="tools.html#_function_tool_call_result_conversion"></a>Function Tool Call Result Conversion</h4>
+<div class="paragraph">
+<p>When building tools from a function using the programmatic approach, you can provide a custom <code>ToolCallResultConverter</code> to use for the tool by setting the <code>resultConverter()</code> attribute of the <code>FunctionToolCallback.Builder</code>.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="tools.html#_functions_as_tools">Functions as Tools</a> for more details.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tool_context"><a class="anchor" href="tools.html#_tool_context"></a>Tool Context</h3>
+<div class="paragraph">
+<p>Spring AI supports passing additional contextual information to tools through the <code>ToolContext</code> API. This feature allows you to provide extra, user-provided data that can be used within the tool execution along with the tool arguments passed by the AI model.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="https://docs.spring.io/spring-ai/reference/1.1-SNAPSHOT/_images/tools/tool-context.jpg" alt="Providing additional contextual info to tools" width="700">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class CustomerTools {
+
+    @Tool(description = "Retrieve customer information")
+    Customer getCustomerInfo(Long id, ToolContext toolContext) {
+        return customerRepository.findById(id, toolContext.getContext().get("tenantId"));
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>ToolContext</code> is populated with the data provided by the user when invoking <code>ChatClient</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+
+String response = ChatClient.create(chatModel)
+        .prompt("Tell me more about the customer with ID 42")
+        .tools(new CustomerTools())
+        .toolContext(Map.of("tenantId", "acme"))
+        .call()
+        .content();
+
+System.out.println(response);</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+None of the data provided in the <code>ToolContext</code> is sent to the AI model.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Similarly, you can define tool context data when invoking the <code>ChatModel</code> directly.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ToolCallback[] customerTools = ToolCallbacks.from(new CustomerTools());
+ChatOptions chatOptions = ToolCallingChatOptions.builder()
+    .toolCallbacks(customerTools)
+    .toolContext(Map.of("tenantId", "acme"))
+    .build();
+Prompt prompt = new Prompt("Tell me more about the customer with ID 42", chatOptions);
+chatModel.call(prompt);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the <code>toolContext</code> option is set both in the default options and in the runtime options, the resulting <code>ToolContext</code> will be the merge of the two,
+where the runtime options take precedence over the default options.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_return_direct"><a class="anchor" href="tools.html#_return_direct"></a>Return Direct</h3>
+<div class="paragraph">
+<p>By default, the result of a tool call is sent back to the model as a response. Then, the model can use the result to continue the conversation.</p>
+</div>
+<div class="paragraph">
+<p>There are cases where you&#8217;d rather return the result directly to the caller instead of sending it back to the model. For example, if you build an agent that relies on a RAG tool, you might want to return the result directly to the caller instead of sending it back to the model for unnecessary post-processing. Or perhaps you have certain tools that should end the reasoning loop of the agent.</p>
+</div>
+<div class="paragraph">
+<p>Each <code>ToolCallback</code> implementation can define whether the result of a tool call should be returned directly to the caller or sent back to the model. By default, the result is sent back to the model. But you can change this behavior per tool.</p>
+</div>
+<div class="paragraph">
+<p>The <code>ToolCallingManager</code>, responsible for managing the tool execution lifecycle, is in charge of handling the <code>returnDirect</code> attribute associated with the tool. If the attribute is set to <code>true</code>, the result of the tool call is returned directly to the caller. Otherwise, the result is sent back to the model.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If multiple tool calls are requested at once, the <code>returnDirect</code> attribute must be set to <code>true</code> for all the tools to return the results directly to the caller. Otherwise, the results will be sent back to the model.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="https://docs.spring.io/spring-ai/reference/1.1-SNAPSHOT/_images/tools/return-direct.jpg" alt="Returning tool call results directly to the caller" width="700">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When we want to make a tool available to the model, we include its definition in the chat request. If we want the result of the tool execution to be returned directly to the caller, we set the <code>returnDirect</code> attribute to <code>true</code>.</p>
+</li>
+<li>
+<p>When the model decides to call a tool, it sends a response with the tool name and the input parameters modeled after the defined schema.</p>
+</li>
+<li>
+<p>The application is responsible for using the tool name to identify and execute the tool with the provided input parameters.</p>
+</li>
+<li>
+<p>The result of the tool call is processed by the application.</p>
+</li>
+<li>
+<p>The application sends the tool call result directly to the caller, instead of sending it back to the model.</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_method_return_direct"><a class="anchor" href="tools.html#_method_return_direct"></a>Method Return Direct</h4>
+<div class="paragraph">
+<p>When building tools from a method with the declarative approach, you can mark a tool to return the result directly to the caller by setting the <code>returnDirect</code> attribute of the <code>@Tool</code> annotation to <code>true</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class CustomerTools {
+
+    @Tool(description = "Retrieve customer information", returnDirect = true)
+    Customer getCustomerInfo(Long id) {
+        return customerRepository.findById(id);
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If using the programmatic approach, you can set the <code>returnDirect</code> attribute via the <code>ToolMetadata</code> interface and pass it to the <code>MethodToolCallback.Builder</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolMetadata toolMetadata = ToolMetadata.builder()
+    .returnDirect(true)
+    .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="tools.html#_methods_as_tools">Methods as Tools</a> for more details.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_function_return_direct"><a class="anchor" href="tools.html#_function_return_direct"></a>Function Return Direct</h4>
+<div class="paragraph">
+<p>When building tools from a function with the programmatic approach, you can set the <code>returnDirect</code> attribute via the <code>ToolMetadata</code> interface and pass it to the <code>FunctionToolCallback.Builder</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolMetadata toolMetadata = ToolMetadata.builder()
+    .returnDirect(true)
+    .build();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="tools.html#_functions_as_tools">Functions as Tools</a> for more details.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tool_execution"><a class="anchor" href="tools.html#_tool_execution"></a>Tool Execution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The tool execution is the process of calling the tool with the provided input arguments and returning the result. The tool execution is handled by the <code>ToolCallingManager</code> interface, which is responsible for managing the tool execution lifecycle.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface ToolCallingManager {
+
+	/**
+	 * Resolve the tool definitions from the model's tool calling options.
+	 */
+	List&lt;ToolDefinition&gt; resolveToolDefinitions(ToolCallingChatOptions chatOptions);
+
+	/**
+	 * Execute the tool calls requested by the model.
+	 */
+	ToolExecutionResult executeToolCalls(Prompt prompt, ChatResponse chatResponse);
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re using any of the Spring AI Spring Boot Starters, <code>DefaultToolCallingManager</code> is the autoconfigured implementation of the <code>ToolCallingManager</code> interface. You can customize the tool execution behavior by providing your own <code>ToolCallingManager</code> bean.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+ToolCallingManager toolCallingManager() {
+    return ToolCallingManager.builder().build();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, Spring AI manages the tool execution lifecycle transparently for you from within each <code>ChatModel</code> implementation. But you have the possibility to opt-out of this behavior and control the tool execution yourself. This section describes these two scenarios.</p>
+</div>
+<div class="sect2">
+<h3 id="_framework_controlled_tool_execution"><a class="anchor" href="tools.html#_framework_controlled_tool_execution"></a>Framework-Controlled Tool Execution</h3>
+<div class="paragraph">
+<p>When using the default behavior, Spring AI will automatically intercept any tool call request from the model, call the tool and return the result to the model. All of this is done transparently for you by each <code>ChatModel</code> implementation using a <code>ToolCallingManager</code>.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="https://docs.spring.io/spring-ai/reference/1.1-SNAPSHOT/_images/tools/framework-manager.jpg" alt="Framework-controlled tool execution lifecycle" width="700">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When we want to make a tool available to the model, we include its definition in the chat request (<code>Prompt</code>) and invoke the <code>ChatModel</code> API which sends the request to the AI model.</p>
+</li>
+<li>
+<p>When the model decides to call a tool, it sends a response (<code>ChatResponse</code>) with the tool name and the input parameters modeled after the defined schema.</p>
+</li>
+<li>
+<p>The <code>ChatModel</code> sends the tool call request to the <code>ToolCallingManager</code> API.</p>
+</li>
+<li>
+<p>The <code>ToolCallingManager</code> is responsible for identifying the tool to call and executing it with the provided input parameters.</p>
+</li>
+<li>
+<p>The result of the tool call is returned to the <code>ToolCallingManager</code>.</p>
+</li>
+<li>
+<p>The <code>ToolCallingManager</code> returns the tool execution result back to the <code>ChatModel</code>.</p>
+</li>
+<li>
+<p>The <code>ChatModel</code> sends the tool execution result back to the AI model (<code>ToolResponseMessage</code>).</p>
+</li>
+<li>
+<p>The AI model generates the final response using the tool call result as additional context and sends it back to the caller (<code>ChatResponse</code>) via the <code>ChatClient</code>.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Currently, the internal messages exchanged with the model regarding the tool execution are not exposed to the user. If you need to access these messages, you should use the user-controlled tool execution approach.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The logic determining whether a tool call is eligible for execution is handled by the <code>ToolExecutionEligibilityPredicate</code> interface. By default, the tool execution eligibility is determined by checking if the <code>internalToolExecutionEnabled</code> attribute of <code>ToolCallingChatOptions</code> is set to <code>true</code> (the default value), and if the <code>ChatResponse</code> contains any tool calls.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class DefaultToolExecutionEligibilityPredicate implements ToolExecutionEligibilityPredicate {
+
+	@Override
+	public boolean test(ChatOptions promptOptions, ChatResponse chatResponse) {
+		return ToolCallingChatOptions.isInternalToolExecutionEnabled(promptOptions) &amp;&amp; chatResponse != null
+				&amp;&amp; chatResponse.hasToolCalls();
+	}
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can provide your custom implementation of <code>ToolExecutionEligibilityPredicate</code> when creating the <code>ChatModel</code> bean.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_user_controlled_tool_execution"><a class="anchor" href="tools.html#_user_controlled_tool_execution"></a>User-Controlled Tool Execution</h3>
+<div class="paragraph">
+<p>There are cases where you&#8217;d rather control the tool execution lifecycle yourself. You can do so by setting the <code>internalToolExecutionEnabled</code> attribute of <code>ToolCallingChatOptions</code> to <code>false</code>.</p>
+</div>
+<div class="paragraph">
+<p>When you invoke a <code>ChatModel</code> with this option, the tool execution will be delegated to the caller, giving you full control over the tool execution lifecycle. It&#8217;s your responsibility checking for tool calls in the <code>ChatResponse</code> and executing them using the <code>ToolCallingManager</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following example demonstrates a minimal implementation of the user-controlled tool execution approach:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ChatModel chatModel = ...
+ToolCallingManager toolCallingManager = ToolCallingManager.builder().build();
+
+ChatOptions chatOptions = ToolCallingChatOptions.builder()
+    .toolCallbacks(new CustomerTools())
+    .internalToolExecutionEnabled(false)
+    .build();
+Prompt prompt = new Prompt("Tell me more about the customer with ID 42", chatOptions);
+
+ChatResponse chatResponse = chatModel.call(prompt);
+
+while (chatResponse.hasToolCalls()) {
+    ToolExecutionResult toolExecutionResult = toolCallingManager.executeToolCalls(prompt, chatResponse);
+
+    prompt = new Prompt(toolExecutionResult.conversationHistory(), chatOptions);
+
+    chatResponse = chatModel.call(prompt);
+}
+
+System.out.println(chatResponse.getResult().getOutput().getText());</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When choosing the user-controlled tool execution approach, we recommend using a <code>ToolCallingManager</code> to manage the tool calling operations. This way, you can benefit from the built-in support provided by Spring AI for tool execution. However, nothing prevents you from implementing your own tool execution logic.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The next examples shows a minimal implementation of the user-controlled tool execution approach combined with the usage of the <code>ChatMemory</code> API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ToolCallingManager toolCallingManager = DefaultToolCallingManager.builder().build();
+ChatMemory chatMemory = MessageWindowChatMemory.builder().build();
+String conversationId = UUID.randomUUID().toString();
+
+ChatOptions chatOptions = ToolCallingChatOptions.builder()
+    .toolCallbacks(ToolCallbacks.from(new MathTools()))
+    .internalToolExecutionEnabled(false)
+    .build();
+Prompt prompt = new Prompt(
+        List.of(new SystemMessage("You are a helpful assistant."), new UserMessage("What is 6 * 8?")),
+        chatOptions);
+chatMemory.add(conversationId, prompt.getInstructions());
+
+Prompt promptWithMemory = new Prompt(chatMemory.get(conversationId), chatOptions);
+ChatResponse chatResponse = chatModel.call(promptWithMemory);
+chatMemory.add(conversationId, chatResponse.getResult().getOutput());
+
+while (chatResponse.hasToolCalls()) {
+    ToolExecutionResult toolExecutionResult = toolCallingManager.executeToolCalls(promptWithMemory,
+            chatResponse);
+    chatMemory.add(conversationId, toolExecutionResult.conversationHistory()
+        .get(toolExecutionResult.conversationHistory().size() - 1));
+    promptWithMemory = new Prompt(chatMemory.get(conversationId), chatOptions);
+    chatResponse = chatModel.call(promptWithMemory);
+    chatMemory.add(conversationId, chatResponse.getResult().getOutput());
+}
+
+UserMessage newUserMessage = new UserMessage("What did I ask you earlier?");
+chatMemory.add(conversationId, newUserMessage);
+
+ChatResponse newResponse = chatModel.call(new Prompt(chatMemory.get(conversationId)));</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exception_handling"><a class="anchor" href="tools.html#_exception_handling"></a>Exception Handling</h3>
+<div class="paragraph">
+<p>When a tool call fails, the exception is propagated as a <code>ToolExecutionException</code> which can be caught to handle the error.
+A <code>ToolExecutionExceptionProcessor</code> can be used to handle a <code>ToolExecutionException</code> with two outcomes: either producing an error message to be sent back to the AI model or throwing an exception to be handled by the caller.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@FunctionalInterface
+public interface ToolExecutionExceptionProcessor {
+
+	/**
+	 * Convert an exception thrown by a tool to a String that can be sent back to the AI
+	 * model or throw an exception to be handled by the caller.
+	 */
+	String process(ToolExecutionException exception);
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re using any of the Spring AI Spring Boot Starters, <code>DefaultToolExecutionExceptionProcessor</code> is the autoconfigured implementation of the <code>ToolExecutionExceptionProcessor</code> interface. By default, the error message is sent back to the model. The <code>DefaultToolExecutionExceptionProcessor</code> constructor lets you set the <code>alwaysThrow</code> attribute to <code>true</code> or <code>false</code>. If <code>true</code>, an exception will be thrown instead of sending an error message back to the model.</p>
+</div>
+<div class="paragraph">
+<p>You can use the <code>`spring.ai.tools.throw-exception-on-error</code> property to control the behavior of the <code>DefaultToolExecutionExceptionProcessor</code> bean:</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 60%;">
+<col style="width: 30%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>spring.ai.tools.throw-exception-on-error</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <code>true</code>, tool calling errors are thrown as exceptions for the caller to handle. If <code>false</code>, errors are converted to messages and sent back to the AI model, allowing it to process and respond to the error.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+ToolExecutionExceptionProcessor toolExecutionExceptionProcessor() {
+    return new DefaultToolExecutionExceptionProcessor(true);
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you defined your own <code>ToolCallback</code> implementation, make sure to throw a <code>ToolExecutionException</code> when an error occurs as part of the tool execution logic in the <code>call()</code> method.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>ToolExecutionExceptionProcessor</code> is used internally by the default <code>ToolCallingManager</code> (<code>DefaultToolCallingManager</code>) to handle exceptions during tool execution. See <a href="tools.html#_tool_execution">Tool Execution</a> for more details about the tool execution lifecycle.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tool_resolution"><a class="anchor" href="tools.html#_tool_resolution"></a>Tool Resolution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The main approach for passing tools to a model is by providing the <code>ToolCallback</code>(s) when invoking the <code>ChatClient</code> or the <code>ChatModel</code>,
+using one of the strategies described in <a href="tools.html#_methods_as_tools">Methods as Tools</a> and <a href="tools.html#_functions_as_tools">Functions as Tools</a>.</p>
+</div>
+<div class="paragraph">
+<p>However, Spring AI also supports resolving tools dynamically at runtime using the <code>ToolCallbackResolver</code> interface.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public interface ToolCallbackResolver {
+
+	/**
+	 * Resolve the {@link ToolCallback} for the given tool name.
+	 */
+	@Nullable
+	ToolCallback resolve(String toolName);
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When using this approach:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>On the client-side, you provide the tool names to the <code>ChatClient</code> or the <code>ChatModel</code> instead of the <code>ToolCallback</code>(s).</p>
+</li>
+<li>
+<p>On the server-side, a <code>ToolCallbackResolver</code> implementation is responsible for resolving the tool names to the corresponding <code>ToolCallback</code> instances.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>By default, Spring AI relies on a <code>DelegatingToolCallbackResolver</code> that delegates the tool resolution to a list of <code>ToolCallbackResolver</code> instances:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>SpringBeanToolCallbackResolver</code> resolves tools from Spring beans of type <code>Function</code>, <code>Supplier</code>, <code>Consumer</code>, or <code>BiFunction</code>. See <a href="tools.html#_dynamic_specification_bean">Dynamic Specification: <code>@Bean</code></a> for more details.</p>
+</li>
+<li>
+<p>The <code>StaticToolCallbackResolver</code> resolves tools from a static list of <code>ToolCallback</code> instances. When using the Spring Boot Autoconfiguration, this resolver is automatically configured with all the beans of type <code>ToolCallback</code> defined in the application context.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you rely on the Spring Boot Autoconfiguration, you can customize the resolution logic by providing a custom <code>ToolCallbackResolver</code> bean.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Bean
+ToolCallbackResolver toolCallbackResolver(List&lt;FunctionCallback&gt; toolCallbacks) {
+    StaticToolCallbackResolver staticToolCallbackResolver = new StaticToolCallbackResolver(toolCallbacks);
+    return new DelegatingToolCallbackResolver(List.of(staticToolCallbackResolver));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>ToolCallbackResolver</code> is used internally by the <code>ToolCallingManager</code> to resolve tools dynamically at runtime, supporting both <a href="tools.html#_framework_controlled_tool_execution">Framework-Controlled Tool Execution</a> and <a href="tools.html#_user_controlled_tool_execution">User-Controlled Tool Execution</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_observability"><a class="anchor" href="tools.html#_observability"></a>Observability</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tool calling includes observability support with spring.ai.tool observations that measure completion time and propagate tracing information. See <a href="../observability/index.html#_tool_calling" class="xref page">Tool Calling Observability</a>.</p>
+</div>
+<div class="paragraph">
+<p>Optionally, Spring AI can export tool call arguments and results as span attributes, disabled by default for sensitivity reasons. Details: <a href="../observability/index.html#_tool_call_arguments_and_result_data" class="xref page">Tool Call Arguments and Result Data</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_logging"><a class="anchor" href="tools.html#_logging"></a>Logging</h3>
+<div class="paragraph">
+<p>All the main operations of the tool calling features are logged at the <code>DEBUG</code> level. You can enable the logging by setting the log level to <code>DEBUG</code> for the <code>org.springframework.ai</code> package.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="chat-memory.html">Chat Memory</a></span>
+  <span class="next"><a href="mcp/mcp-overview.html">Model Context Protocol (MCP)</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../index.html">Spring AI</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../index.html">
+      1.0.0
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Snapshot
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../index.html">
+      1.1.0-SNAPSHOT
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+                <div class="col-right">
+                  <ul class="projects">
+  <li>
+    Related Spring Documentation
+    <ul class="projects-list">
+        <li>
+<a href="https://docs.spring.io/spring-boot/">
+  Spring Boot
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-framework/reference/">
+  Spring Framework
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Cloud
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-build/reference/">
+  Spring Cloud Build
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-bus/reference/">
+  Spring Cloud Bus
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-circuitbreaker/reference/">
+  Spring Cloud Circuit Breaker
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-commons/reference/">
+  Spring Cloud Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-config/reference/">
+  Spring Cloud Config
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-consul/reference/">
+  Spring Cloud Consul
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-contract/reference/">
+  Spring Cloud Contract
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-function/reference/">
+  Spring Cloud Function
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-gateway/reference/">
+  Spring Cloud Gateway
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-kubernetes/reference/">
+  Spring Cloud Kubernetes
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-netflix/reference/">
+  Spring Cloud Netflix
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-openfeign/reference/">
+  Spring Cloud OpenFeign
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-stream/reference/">
+  Spring Cloud Stream
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-task/reference/">
+  Spring Cloud Task
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-vault/reference/">
+  Spring Cloud Vault
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-zookeeper/reference/">
+  Spring Cloud Zookeeper
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Data
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-data/cassandra/reference/">
+  Spring Data Cassandra
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/commons/reference/">
+  Spring Data Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/couchbase/reference/">
+  Spring Data Couchbase
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/elasticsearch/reference/">
+  Spring Data Elasticsearch
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/jpa/reference/">
+  Spring Data JPA
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/keyvalue/reference/">
+  Spring Data KeyValue
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/ldap/reference/">
+  Spring Data LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/mongodb/reference/">
+  Spring Data MongoDB
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/neo4j/reference/">
+  Spring Data Neo4j
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/redis/reference/">
+  Spring Data Redis
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/relational/reference/">
+  Spring Data JDBC &amp; R2DBC
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/rest/reference/">
+  Spring Data REST
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-integration/reference/">
+  Spring Integration
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-batch/reference/">
+  Spring Batch
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+<a href="https://docs.spring.io/spring-security/reference/">
+  Spring Security
+</a>
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-authorization-server/reference/">
+  Spring Authorization Server
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-ldap/reference/">
+  Spring LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-security-kerberos/reference/">
+  Spring Security Kerberos
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-session/reference/">
+  Spring Session
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-vault/reference/">
+  Spring Vault
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="../../index.html">
+  Spring AI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-amqp/reference/">
+  Spring AMQP
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-cli/reference/">
+  Spring CLI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-graphql/reference/">
+  Spring GraphQL
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-kafka/reference/">
+  Spring for Apache Kafka
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-modulith/reference/">
+  Spring Modulith
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-pulsar/reference/">
+  Spring for Apache Pulsar
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-shell/reference/">
+  Spring Shell
+</a>
+</li>
+    </ul>
+  </li
+  <li><a href="../../spring-projects.html">All Docs...</a></li>
+</ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">Copyright © 2005 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> Broadcom. All Rights Reserved. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.<br/><a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="GitHub"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/vendor/import.js"></script>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/site.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/highlight.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-link-box">
+                    <a class="search-link" href="../../search.html">Search in all Spring Docs</a>
+                </div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-light.svg"/>
+                        <img class="dark" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-dark.svg"/>
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="https://docs.spring.io/spring-ai/reference/_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="c2e84f15fa630d534f1c62b1c413bb77" data-index-name="springdocs" data-stylesheet="../../_/css/vendor/search.css" data-page-version="1.1.0" data-page-component="ai"></script>
+  <script>if (window.parent == window) {(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-2728886-23', 'auto', {'siteSpeedSampleRate': 100});ga('send', 'pageview');}</script></body>
+</html>

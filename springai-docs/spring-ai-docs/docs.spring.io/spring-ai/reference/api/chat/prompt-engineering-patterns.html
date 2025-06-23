@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prompt Engineering Patterns :: Spring AI Reference</title>
+    <link rel="canonical" href="prompt-engineering-patterns.html">
+    <link rel="prev" href="../testcontainers.html">
+    <link rel="next" href="../effective-agents.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.6">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/site.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="https://docs.spring.io/spring-ai/reference/_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="v0.4.17"> 
+    <meta name="version" content="1.0.0">
+    <meta name="component" content="ai">
+    <meta name="latest-version" content="true">
+    <link rel="icon" href="https://docs.spring.io/spring-ai/reference/_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img id="springlogo" class="block" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring"/>
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="prompt-engineering-patterns.html#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/why-spring">Overview</a>
+            <a class="navbar-item" href="https://spring.io/microservices">Microservices</a>
+            <a class="navbar-item" href="https://spring.io/reactive">Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event
+              Driven</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web
+              Applications</a>
+            <a class="navbar-item" href="https://spring.io/serverless">Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="prompt-engineering-patterns.html#">Learn</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/learn">Overview</a>
+            <a class="navbar-item" href="https://spring.io/quickstart">Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="prompt-engineering-patterns.html#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://spring.io/projects">Overview</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-boot">Spring Boot</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-framework">Spring Framework</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud">Spring Cloud</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud-dataflow">Spring Cloud Data Flow</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-data">Spring Data</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-integration">Spring Integration</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-batch">Spring Batch</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-security">Spring Security</a>
+            <a class="navbar-item navbar-item-special" href="https://spring.io/projects">View all projects</a>
+            <li class="navbar-item navbar-item-special-3">DEVELOPMENT TOOLS</li>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools 4</a>
+            <a class="navbar-item navbar-item-special-2" href="https://start.spring.io">Spring Initializr
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg></a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="prompt-engineering-patterns.html#">Academy</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.academy/courses">Courses</a>
+            <a class="navbar-item" href="https://spring.academy/learning-path">Get Certified</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="prompt-engineering-patterns.html#">Solutions</a>
+          <div class="navbar-dropdown lg">
+            <a class="navbar-item" href="https://spring.io/solutions">Overview</a>
+            <a class="navbar-item" href="https://spring.io/support">Spring Runtime</a>
+            <a class="navbar-item" href="https://spring.io/consulting">Spring Consulting</a>
+            <a class="navbar-item" href="https://spring.academy/teams">Spring Academy For Teams</a>
+            <a class="navbar-item" href="https://spring.io/security">Security Advisories</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-community">
+          <a class="navbar-link" href="prompt-engineering-patterns.html#">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/community">Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/team">Team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox"/>
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon" class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="ai" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring AI</span>
+  <span class="version">1.0.0</span>
+  <button class="browse-version" id="browse-version">
+    <svg height="24px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="24px" xml:space="preserve"><g><path d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"></path><path d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"></path><path d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"></path></g></svg>
+  </button>
+  <div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Overview</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../concepts.html">AI Concepts</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Reference</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chatclient.html">Chat Client API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../advisors.html">Advisors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../prompt.html">Prompts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../structured-output-converter.html">Structured Output</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../multimodality.html">Multimodality</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../chatmodel.html">Chat Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="comparison.html">Chat Models Comparison</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="bedrock-converse.html">Amazon Bedrock Converse</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="anthropic-chat.html">Anthropic 3</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="azure-openai-chat.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="deepseek-chat.html">DeepSeek</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="dmr-chat.html">Docker Model Runner</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="google-vertexai.html">Google VertexAI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="vertexai-gemini-chat.html">VertexAI Gemini</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="groq-chat.html">Groq</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="huggingface.html">Hugging Face</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="mistralai-chat.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="minimax-chat.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="moonshot-chat.html">Moonshot AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="nvidia-chat.html">NVIDIA</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="ollama-chat.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="perplexity-chat.html">Perplexity AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">OCI Generative AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="oci-genai/cohere-chat.html">Cohere</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="openai-chat.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="qianfan-chat.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="zhipuai-chat.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../embeddings.html">Embedding Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../bedrock.html">Amazon Bedrock</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/bedrock-cohere-embedding.html">Cohere</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/bedrock-titan-embedding.html">Titan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/azure-openai-embeddings.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/mistralai-embeddings.html">Mistral AI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/minimax-embeddings.html">MiniMax</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/oci-genai-embeddings.html">OCI GenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/ollama-embeddings.html">Ollama</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/onnx.html">(ONNX) Transformers</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/openai-embeddings.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/postgresml-embeddings.html">PostgresML</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/qianfan-embeddings.html">QianFan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">VertexAI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/vertexai-embeddings-text.html">Text Embedding</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../embeddings/vertexai-embeddings-multimodal.html">Multimodal Embedding</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../embeddings/zhipuai-embeddings.html">ZhiPu AI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../imageclient.html">Image Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/azure-openai-image.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/openai-image.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/stabilityai-image.html">Stability</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/zhipuai-image.html">ZhiPuAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../image/qianfan-image.html">QianFan</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="prompt-engineering-patterns.html#api/audio">Audio Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../audio/transcriptions.html">Transcription API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../audio/transcriptions/azure-openai-transcriptions.html">Azure OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../audio/transcriptions/openai-transcriptions.html">OpenAI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../audio/speech.html">Text-To-Speech (TTS) API</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../audio/speech/openai-speech.html">OpenAI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="prompt-engineering-patterns.html#api/moderation">Moderation Models</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../moderation/openai-moderation.html">OpenAI</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../moderation/mistral-ai-moderation.html">Mistral AI</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../chat-memory.html">Chat Memory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tools.html">Tool Calling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../mcp/mcp-overview.html">Model Context Protocol (MCP)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../mcp/mcp-client-boot-starter-docs.html">MCP Client Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../mcp/mcp-server-boot-starter-docs.html">MCP Server Boot Starters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../mcp/mcp-helpers.html">MCP Utilities</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../retrieval-augmented-generation.html">Retrieval Augmented Generation (RAG)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../etl-pipeline.html">ETL Pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../testing.html">Model Evaluation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../vectordbs.html">Vector Databases</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/azure.html">Azure AI Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/azure-cosmos-db.html">Azure Cosmos DB</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/apache-cassandra.html">Apache Cassandra Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/chroma.html">Chroma</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/couchbase.html">Couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/elasticsearch.html">Elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/gemfire.html">GemFire</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/mariadb.html">MariaDB Vector Store</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/milvus.html">Milvus</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/mongodb.html">MongoDB Atlas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/neo4j.html">Neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/opensearch.html">OpenSearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/oracle.html">Oracle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/pgvector.html">PGvector</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/pinecone.html">Pinecone</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/qdrant.html">Qdrant</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/redis.html">Redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/hana.html">SAP Hana</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/typesense.html">Typesense</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../vectordbs/weaviate.html">Weaviate</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../observability/index.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../docker-compose.html">Development-time Services</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../testcontainers.html">Testcontainers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://github.com/spring-ai-community/awesome-spring-ai">Awesome Spring AI</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="prompt-engineering-patterns.html">Prompt Engineering Patterns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../effective-agents.html">Building Effective Agents</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cloud-bindings.html">Deploying to the Cloud</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../upgrade-notes.html">Upgrade Notes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tools-migration.html">Migrating FunctionCallback to ToolCallback API</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="toc" data-title="Prompt Engineering Patterns" data-levels="2">
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/spring-projects/spring-ai/blob/v1.0.0/spring-ai-docs/src/main/antora/modules/ROOT/pages/api/chat/prompt-engineering-patterns.adoc">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/spring-projects/spring-ai" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" height="512px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="512px"><style type="text/css"><![CDATA[
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path class="st0" d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"></path></g></svg>
+          GitHub Project
+        </a>
+        <a href="https://stackoverflow.com/questions/tagged/spring">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"></path></svg>
+          Stack Overflow
+        </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Spring AI</a></li>
+      <li>Guides</li>
+      <li><a href="prompt-engineering-patterns.html">Prompt Engineering Patterns</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Prompt Engineering Patterns</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Practical implementations of Prompt Engineering techniques based on the comprehensive <a href="https://www.kaggle.com/whitepaper-prompt-engineering">Prompt Engineering Guide</a>.
+The guide covers the theory, principles, and patterns of effective prompt engineering, while here we demonstrate how to translate those concepts into working Java code using Spring AI&#8217;s fluent <a href="../chatclient.html" class="xref page">ChatClient API</a>.
+The demo source code used in this article is available at: <a href="https://github.com/spring-projects/spring-ai-examples/tree/main/prompt-engineering/prompt-engineering-patterns">Prompt Engineering Patterns Examples</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_configuration"><a class="anchor" href="prompt-engineering-patterns.html#_1_configuration"></a>1. Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The configuration section outlines how to set up and tune your Large Language Model (LLM) with Spring AI.
+It covers selecting the right LLM provider for your use case and configuring important generation parameters that control the quality, style, and format of model outputs.</p>
+</div>
+<div class="sect2">
+<h3 id="_llm_provider_selection"><a class="anchor" href="prompt-engineering-patterns.html#_llm_provider_selection"></a>LLM Provider Selection</h3>
+<div class="paragraph">
+<p>For prompt engineering, you will start by choosing a model.
+Spring AI supports <a href="comparison.html" class="xref page">multiple LLM providers</a> (such as OpenAI, Anthropic, Google Vertex AI, AWS Bedrock, Ollama and more), letting you switch providers without changing application code - just update your configuration.
+Just add the selected starter dependency <code>spring-ai-starter-model-&lt;MODEL-PROVIDER-NAME&gt;</code>.
+For example, here is how to enable Anthropic Claude API:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.ai&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-ai-starter-model-anthropic&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can specify the LLM model name like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.options(ChatOptions.builder()
+        .model("claude-3-7-sonnet-latest")  // Use Anthropic's Claude model
+        .build())</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Find detailed information for enabling each model in the <a href="../chatmodel.html" class="xref page">reference docs</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_llm_output_configuration"><a class="anchor" href="prompt-engineering-patterns.html#_llm_output_configuration"></a>LLM Output Configuration</h3>
+<div class="imageblock right">
+<div class="content">
+<img src="https://docs.spring.io/spring-ai/reference/_images/chat-options-flow.jpg" alt="chat options flow" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Before we dive into prompt engineering techniques, it&#8217;s essential to understand how to configure the LLM&#8217;s output behavior. Spring AI provides several configuration options that let you control various aspects of generation through the <a href="../chatmodel.html#_chat_options" class="xref page">ChatOptions</a> builder.</p>
+</div>
+<div class="paragraph">
+<p>All configurations can be applied programmatically as demonstrated in the examples below or through Spring application properties at start time.</p>
+</div>
+<div class="sect3">
+<h4 id="_temperature"><a class="anchor" href="prompt-engineering-patterns.html#_temperature"></a>Temperature</h4>
+<div class="paragraph">
+<p>Temperature controls the randomness or "creativity" of the model&#8217;s response.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Lower values (0.0-0.3)</strong>: More deterministic, focused responses. Better for factual questions, classification, or tasks where consistency is critical.</p>
+</li>
+<li>
+<p><strong>Medium values (0.4-0.7)</strong>: Balanced between determinism and creativity. Good for general use cases.</p>
+</li>
+<li>
+<p><strong>Higher values (0.8-1.0)</strong>: More creative, varied, and potentially surprising responses. Better for creative writing, brainstorming, or generating diverse options.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.options(ChatOptions.builder()
+        .temperature(0.1)  // Very deterministic output
+        .build())</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Understanding temperature is crucial for prompt engineering as different techniques benefit from different temperature settings.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_output_length_maxtokens"><a class="anchor" href="prompt-engineering-patterns.html#_output_length_maxtokens"></a>Output Length (MaxTokens)</h4>
+<div class="paragraph">
+<p>The <code>maxTokens</code> parameter limits how many tokens (word pieces) the model can generate in its response.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Low values (5-25)</strong>: For single words, short phrases, or classification labels.</p>
+</li>
+<li>
+<p><strong>Medium values (50-500)</strong>: For paragraphs or short explanations.</p>
+</li>
+<li>
+<p><strong>High values (1000+)</strong>: For long-form content, stories, or complex explanations.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.options(ChatOptions.builder()
+        .maxTokens(250)  // Medium-length response
+        .build())</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Setting appropriate output length is important to ensure you get complete responses without unnecessary verbosity.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sampling_controls_top_k_and_top_p"><a class="anchor" href="prompt-engineering-patterns.html#_sampling_controls_top_k_and_top_p"></a>Sampling Controls (Top-K and Top-P)</h4>
+<div class="paragraph">
+<p>These parameters give you fine-grained control over the token selection process during generation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Top-K</strong>: Limits token selection to the K most likely next tokens. Higher values (e.g., 40-50) introduce more diversity.</p>
+</li>
+<li>
+<p><strong>Top-P (nucleus sampling)</strong>: Dynamically selects from the smallest set of tokens whose cumulative probability exceeds P. Values like 0.8-0.95 are common.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">.options(ChatOptions.builder()
+        .topK(40)      // Consider only the top 40 tokens
+        .topP(0.8)     // Sample from tokens that cover 80% of probability mass
+        .build())</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These sampling controls work in conjunction with temperature to shape response characteristics.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_structured_response_format"><a class="anchor" href="prompt-engineering-patterns.html#_structured_response_format"></a>Structured Response Format</h4>
+<div class="paragraph">
+<p>Along with the plain text response (using <code>.content()</code>), Spring AI makes it easy to directly map LLM responses to Java objects using the <code>.entity()</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">enum Sentiment {
+    POSITIVE, NEUTRAL, NEGATIVE
+}
+
+Sentiment result = chatClient.prompt("...")
+        .call()
+        .entity(Sentiment.class);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This feature is particularly powerful when combined with system prompts that instruct the model to return structured data.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_model_specific_options"><a class="anchor" href="prompt-engineering-patterns.html#_model_specific_options"></a>Model-Specific Options</h4>
+<div class="paragraph">
+<p>While the portable <code>ChatOptions</code> provides a consistent interface across different LLM providers, Spring AI also offers model-specific options classes that expose provider-specific features and configurations. These model-specific options allow you to leverage the unique capabilities of each LLM provider.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Using OpenAI-specific options
+OpenAiChatOptions openAiOptions = OpenAiChatOptions.builder()
+        .model("gpt-4o")
+        .temperature(0.2)
+        .frequencyPenalty(0.5)      // OpenAI-specific parameter
+        .presencePenalty(0.3)       // OpenAI-specific parameter
+        .responseFormat(new ResponseFormat("json_object"))  // OpenAI-specific JSON mode
+        .seed(42)                   // OpenAI-specific deterministic generation
+        .build();
+
+String result = chatClient.prompt("...")
+        .options(openAiOptions)
+        .call()
+        .content();
+
+// Using Anthropic-specific options
+AnthropicChatOptions anthropicOptions = AnthropicChatOptions.builder()
+        .model("claude-3-7-sonnet-latest")
+        .temperature(0.2)
+        .topK(40)                   // Anthropic-specific parameter
+        .thinking(AnthropicApi.ThinkingType.ENABLED, 1000)  // Anthropic-specific thinking configuration
+        .build();
+
+String result = chatClient.prompt("...")
+        .options(anthropicOptions)
+        .call()
+        .content();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each model provider has its own implementation of chat options (e.g., <code>OpenAiChatOptions</code>, <code>AnthropicChatOptions</code>, <code>MistralAiChatOptions</code>) that exposes provider-specific parameters while still implementing the common interface. This approach gives you the flexibility to use portable options for cross-provider compatibility or model-specific options when you need access to unique features of a particular provider.</p>
+</div>
+<div class="paragraph">
+<p>Note that when using model-specific options, your code becomes tied to that specific provider, reducing portability. It&#8217;s a trade-off between accessing advanced provider-specific features versus maintaining provider independence in your application.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_prompt_engineering_techniques"><a class="anchor" href="prompt-engineering-patterns.html#_2_prompt_engineering_techniques"></a>2. Prompt Engineering Techniques</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each section below implements a specific prompt engineering technique from the guide.
+By following both the "Prompt Engineering" guide and these implementations, you&#8217;ll develop a thorough understanding of not just what prompt engineering techniques are available, but how to effectively implement them in production Java applications.</p>
+</div>
+<div class="sect2">
+<h3 id="_2_1_zero_shot_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_2_1_zero_shot_prompting"></a>2.1 Zero-Shot Prompting</h3>
+<div class="paragraph">
+<p>Zero-shot prompting involves asking an AI to perform a task without providing any examples. This approach tests the model&#8217;s ability to understand and execute instructions from scratch. Large language models are trained on vast corpora of text, allowing them to understand what tasks like "translation," "summarization," or "classification" entail without explicit demonstrations.</p>
+</div>
+<div class="paragraph">
+<p>Zero-shot is ideal for straightforward tasks where the model likely has seen similar examples during training, and when you want to minimize prompt length. However, performance may vary depending on task complexity and how well the instructions are formulated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.1: General prompting / zero shot (page 15)
+public void pt_zero_shot(ChatClient chatClient) {
+    enum Sentiment {
+        POSITIVE, NEUTRAL, NEGATIVE
+    }
+
+    Sentiment reviewSentiment = chatClient.prompt("""
+            Classify movie reviews as POSITIVE, NEUTRAL or NEGATIVE.
+            Review: "Her" is a disturbing study revealing the direction
+            humanity is headed if AI is allowed to keep evolving,
+            unchecked. I wish there were more movies like this masterpiece.
+            Sentiment:
+            """)
+            .options(ChatOptions.builder()
+                    .model("claude-3-7-sonnet-latest")
+                    .temperature(0.1)
+                    .maxTokens(5)
+                    .build())
+            .call()
+            .entity(Sentiment.class);
+
+    System.out.println("Output: " + reviewSentiment);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example shows how to classify a movie review sentiment without providing examples. Note the low temperature (0.1) for more deterministic results and the direct <code>.entity(Sentiment.class)</code> mapping to a Java enum.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Brown, T. B., et al. (2020). "Language Models are Few-Shot Learners." arXiv:2005.14165. <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_2_one_shot_few_shot_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_2_2_one_shot_few_shot_prompting"></a>2.2 One-Shot &amp; Few-Shot Prompting</h3>
+<div class="paragraph">
+<p>Few-shot prompting provides the model with one or more examples to help guide its responses, particularly useful for tasks requiring specific output formats. By showing the model examples of desired input-output pairs, it can learn the pattern and apply it to new inputs without explicit parameter updates.</p>
+</div>
+<div class="paragraph">
+<p>One-shot provides a single example, which is useful when examples are costly or when the pattern is relatively simple. Few-shot uses multiple examples (typically 3-5) to help the model better understand patterns in more complex tasks or to illustrate different variations of correct outputs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.2: One-shot &amp; few-shot (page 16)
+public void pt_one_shot_few_shots(ChatClient chatClient) {
+    String pizzaOrder = chatClient.prompt("""
+            Parse a customer's pizza order into valid JSON
+
+            EXAMPLE 1:
+            I want a small pizza with cheese, tomato sauce, and pepperoni.
+            JSON Response:
+            ```
+            {
+                "size": "small",
+                "type": "normal",
+                "ingredients": ["cheese", "tomato sauce", "pepperoni"]
+            }
+            ```
+
+            EXAMPLE 2:
+            Can I get a large pizza with tomato sauce, basil and mozzarella.
+            JSON Response:
+            ```
+            {
+                "size": "large",
+                "type": "normal",
+                "ingredients": ["tomato sauce", "basil", "mozzarella"]
+            }
+            ```
+
+            Now, I would like a large pizza, with the first half cheese and mozzarella.
+            And the other tomato sauce, ham and pineapple.
+            """)
+            .options(ChatOptions.builder()
+                    .model("claude-3-7-sonnet-latest")
+                    .temperature(0.1)
+                    .maxTokens(250)
+                    .build())
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Few-shot prompting is especially effective for tasks requiring specific formatting, handling edge cases, or when the task definition might be ambiguous without examples. The quality and diversity of the examples significantly impact performance.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Brown, T. B., et al. (2020). "Language Models are Few-Shot Learners." arXiv:2005.14165. <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_3_system_contextual_and_role_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_2_3_system_contextual_and_role_prompting"></a>2.3 System, contextual and role prompting</h3>
+<div class="sect3">
+<h4 id="_system_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_system_prompting"></a>System Prompting</h4>
+<div class="paragraph">
+<p>System prompting sets the overall context and purpose for the language model, defining the "big picture" of what the model should be doing. It establishes the behavioral framework, constraints, and high-level objectives for the model&#8217;s responses, separate from the specific user queries.</p>
+</div>
+<div class="paragraph">
+<p>System prompts act as a persistent "mission statement" throughout the conversation, allowing you to set global parameters like output format, tone, ethical boundaries, or role definitions. Unlike user prompts which focus on specific tasks, system prompts frame how all user prompts should be interpreted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.3.1: System prompting
+public void pt_system_prompting_1(ChatClient chatClient) {
+    String movieReview = chatClient
+            .prompt()
+            .system("Classify movie reviews as positive, neutral or negative. Only return the label in uppercase.")
+            .user("""
+                    Review: "Her" is a disturbing study revealing the direction
+                    humanity is headed if AI is allowed to keep evolving,
+                    unchecked. It's so disturbing I couldn't watch it.
+
+                    Sentiment:
+                    """)
+            .options(ChatOptions.builder()
+                    .model("claude-3-7-sonnet-latest")
+                    .temperature(1.0)
+                    .topK(40)
+                    .topP(0.8)
+                    .maxTokens(5)
+                    .build())
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>System prompting is particularly powerful when combined with Spring AI&#8217;s entity mapping capabilities:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.3.1: System prompting with JSON output
+record MovieReviews(Movie[] movie_reviews) {
+    enum Sentiment {
+        POSITIVE, NEUTRAL, NEGATIVE
+    }
+
+    record Movie(Sentiment sentiment, String name) {
+    }
+}
+
+MovieReviews movieReviews = chatClient
+        .prompt()
+        .system("""
+                Classify movie reviews as positive, neutral or negative. Return
+                valid JSON.
+                """)
+        .user("""
+                Review: "Her" is a disturbing study revealing the direction
+                humanity is headed if AI is allowed to keep evolving,
+                unchecked. It's so disturbing I couldn't watch it.
+
+                JSON Response:
+                """)
+        .call()
+        .entity(MovieReviews.class);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>System prompts are especially valuable for multi-turn conversations, ensuring consistent behavior across multiple queries, and for establishing format constraints like JSON output that should apply to all responses.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> OpenAI. (2022). "System Message." <a href="https://platform.openai.com/docs/guides/chat/introduction">https://platform.openai.com/docs/guides/chat/introduction</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_role_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_role_prompting"></a>Role Prompting</h4>
+<div class="paragraph">
+<p>Role prompting instructs the model to adopt a specific role or persona, which affects how it generates content. By assigning a particular identity, expertise, or perspective to the model, you can influence the style, tone, depth, and framing of its responses.</p>
+</div>
+<div class="paragraph">
+<p>Role prompting leverages the model&#8217;s ability to simulate different expertise domains and communication styles. Common roles include expert (e.g., "You are an experienced data scientist"), professional (e.g., "Act as a travel guide"), or stylistic character (e.g., "Explain like you&#8217;re Shakespeare").</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.3.2: Role prompting
+public void pt_role_prompting_1(ChatClient chatClient) {
+    String travelSuggestions = chatClient
+            .prompt()
+            .system("""
+                    I want you to act as a travel guide. I will write to you
+                    about my location and you will suggest 3 places to visit near
+                    me. In some cases, I will also give you the type of places I
+                    will visit.
+                    """)
+            .user("""
+                    My suggestion: "I am in Amsterdam and I want to visit only museums."
+                    Travel Suggestions:
+                    """)
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Role prompting can be enhanced with style instructions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.3.2: Role prompting with style instructions
+public void pt_role_prompting_2(ChatClient chatClient) {
+    String humorousTravelSuggestions = chatClient
+            .prompt()
+            .system("""
+                    I want you to act as a travel guide. I will write to you about
+                    my location and you will suggest 3 places to visit near me in
+                    a humorous style.
+                    """)
+            .user("""
+                    My suggestion: "I am in Amsterdam and I want to visit only museums."
+                    Travel Suggestions:
+                    """)
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This technique is particularly effective for specialized domain knowledge, achieving a consistent tone across responses, and creating more engaging, personalized interactions with users.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Shanahan, M., et al. (2023). "Role-Play with Large Language Models." arXiv:2305.16367. <a href="https://arxiv.org/abs/2305.16367">https://arxiv.org/abs/2305.16367</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_contextual_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_contextual_prompting"></a>Contextual Prompting</h4>
+<div class="paragraph">
+<p>Contextual prompting provides additional background information to the model by passing context parameters. This technique enriches the model&#8217;s understanding of the specific situation, enabling more relevant and tailored responses without cluttering the main instruction.</p>
+</div>
+<div class="paragraph">
+<p>By supplying contextual information, you help the model understand the specific domain, audience, constraints, or background facts relevant to the current query. This leads to more accurate, relevant, and appropriately framed responses.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.3.3: Contextual prompting
+public void pt_contextual_prompting(ChatClient chatClient) {
+    String articleSuggestions = chatClient
+            .prompt()
+            .user(u -&gt; u.text("""
+                    Suggest 3 topics to write an article about with a few lines of
+                    description of what this article should contain.
+
+                    Context: {context}
+                    """)
+                    .param("context", "You are writing for a blog about retro 80's arcade video games."))
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Spring AI makes contextual prompting clean with the param() method to inject context variables. This technique is particularly valuable when the model needs specific domain knowledge, when adapting responses to particular audiences or scenarios, and for ensuring responses are aligned with particular constraints or requirements.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Liu, P., et al. (2021). "What Makes Good In-Context Examples for GPT-3?" arXiv:2101.06804. <a href="https://arxiv.org/abs/2101.06804">https://arxiv.org/abs/2101.06804</a></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_4_step_back_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_2_4_step_back_prompting"></a>2.4 Step-Back Prompting</h3>
+<div class="paragraph">
+<p>Step-back prompting breaks complex requests into simpler steps by first acquiring background knowledge. This technique encourages the model to first "step back" from the immediate question to consider the broader context, fundamental principles, or general knowledge relevant to the problem before addressing the specific query.</p>
+</div>
+<div class="paragraph">
+<p>By decomposing complex problems into more manageable components and establishing foundational knowledge first, the model can provide more accurate responses to difficult questions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.4: Step-back prompting
+public void pt_step_back_prompting(ChatClient.Builder chatClientBuilder) {
+    // Set common options for the chat client
+    var chatClient = chatClientBuilder
+            .defaultOptions(ChatOptions.builder()
+                    .model("claude-3-7-sonnet-latest")
+                    .temperature(1.0)
+                    .topK(40)
+                    .topP(0.8)
+                    .maxTokens(1024)
+                    .build())
+            .build();
+
+    // First get high-level concepts
+    String stepBack = chatClient
+            .prompt("""
+                    Based on popular first-person shooter action games, what are
+                    5 fictional key settings that contribute to a challenging and
+                    engaging level storyline in a first-person shooter video game?
+                    """)
+            .call()
+            .content();
+
+    // Then use those concepts in the main task
+    String story = chatClient
+            .prompt()
+            .user(u -&gt; u.text("""
+                    Write a one paragraph storyline for a new level of a first-
+                    person shooter video game that is challenging and engaging.
+
+                    Context: {step-back}
+                    """)
+                    .param("step-back", stepBack))
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Step-back prompting is particularly effective for complex reasoning tasks, problems requiring specialized domain knowledge, and when you want more comprehensive and thoughtful responses rather than immediate answers.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Zheng, Z., et al. (2023). "Take a Step Back: Evoking Reasoning via Abstraction in Large Language Models." arXiv:2310.06117. <a href="https://arxiv.org/abs/2310.06117">https://arxiv.org/abs/2310.06117</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_5_chain_of_thought_cot"><a class="anchor" href="prompt-engineering-patterns.html#_2_5_chain_of_thought_cot"></a>2.5 Chain of Thought (CoT)</h3>
+<div class="paragraph">
+<p>Chain of Thought prompting encourages the model to reason step-by-step through a problem, which improves accuracy for complex reasoning tasks. By explicitly asking the model to show its work or think through a problem in logical steps, you can dramatically improve performance on tasks requiring multi-step reasoning.</p>
+</div>
+<div class="paragraph">
+<p>CoT works by encouraging the model to generate intermediate reasoning steps before producing a final answer, similar to how humans solve complex problems. This makes the model&#8217;s thinking process explicit and helps it arrive at more accurate conclusions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.5: Chain of Thought (CoT) - Zero-shot approach
+public void pt_chain_of_thought_zero_shot(ChatClient chatClient) {
+    String output = chatClient
+            .prompt("""
+                    When I was 3 years old, my partner was 3 times my age. Now,
+                    I am 20 years old. How old is my partner?
+
+                    Let's think step by step.
+                    """)
+            .call()
+            .content();
+}
+
+// Implementation of Section 2.5: Chain of Thought (CoT) - Few-shot approach
+public void pt_chain_of_thought_singleshot_fewshots(ChatClient chatClient) {
+    String output = chatClient
+            .prompt("""
+                    Q: When my brother was 2 years old, I was double his age. Now
+                    I am 40 years old. How old is my brother? Let's think step
+                    by step.
+                    A: When my brother was 2 years, I was 2 * 2 = 4 years old.
+                    That's an age difference of 2 years and I am older. Now I am 40
+                    years old, so my brother is 40 - 2 = 38 years old. The answer
+                    is 38.
+                    Q: When I was 3 years old, my partner was 3 times my age. Now,
+                    I am 20 years old. How old is my partner? Let's think step
+                    by step.
+                    A:
+                    """)
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The key phrase "Let&#8217;s think step by step" triggers the model to show its reasoning process. CoT is especially valuable for mathematical problems, logical reasoning tasks, and any question requiring multi-step reasoning. It helps reduce errors by making intermediate reasoning explicit.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Wei, J., et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." arXiv:2201.11903. <a href="https://arxiv.org/abs/2201.11903">https://arxiv.org/abs/2201.11903</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_6_self_consistency"><a class="anchor" href="prompt-engineering-patterns.html#_2_6_self_consistency"></a>2.6 Self-Consistency</h3>
+<div class="paragraph">
+<p>Self-consistency involves running the model multiple times and aggregating results for more reliable answers. This technique addresses the variability in LLM outputs by sampling diverse reasoning paths for the same problem and selecting the most consistent answer through majority voting.</p>
+</div>
+<div class="paragraph">
+<p>By generating multiple reasoning paths with different temperature or sampling settings, then aggregating the final answers, self-consistency improves accuracy on complex reasoning tasks. It&#8217;s essentially an ensemble method for LLM outputs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.6: Self-consistency
+public void pt_self_consistency(ChatClient chatClient) {
+    String email = """
+            Hi,
+            I have seen you use Wordpress for your website. A great open
+            source content management system. I have used it in the past
+            too. It comes with lots of great user plugins. And it's pretty
+            easy to set up.
+            I did notice a bug in the contact form, which happens when
+            you select the name field. See the attached screenshot of me
+            entering text in the name field. Notice the JavaScript alert
+            box that I inv0k3d.
+            But for the rest it's a great website. I enjoy reading it. Feel
+            free to leave the bug in the website, because it gives me more
+            interesting things to read.
+            Cheers,
+            Harry the Hacker.
+            """;
+
+    record EmailClassification(Classification classification, String reasoning) {
+        enum Classification {
+            IMPORTANT, NOT_IMPORTANT
+        }
+    }
+
+    int importantCount = 0;
+    int notImportantCount = 0;
+
+    // Run the model 5 times with the same input
+    for (int i = 0; i &lt; 5; i++) {
+        EmailClassification output = chatClient
+                .prompt()
+                .user(u -&gt; u.text("""
+                        Email: {email}
+                        Classify the above email as IMPORTANT or NOT IMPORTANT. Let's
+                        think step by step and explain why.
+                        """)
+                        .param("email", email))
+                .options(ChatOptions.builder()
+                        .temperature(1.0)  // Higher temperature for more variation
+                        .build())
+                .call()
+                .entity(EmailClassification.class);
+
+        // Count results
+        if (output.classification() == EmailClassification.Classification.IMPORTANT) {
+            importantCount++;
+        } else {
+            notImportantCount++;
+        }
+    }
+
+    // Determine the final classification by majority vote
+    String finalClassification = importantCount &gt; notImportantCount ?
+            "IMPORTANT" : "NOT IMPORTANT";
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Self-consistency is particularly valuable for high-stakes decisions, complex reasoning tasks, and when you need more confident answers than a single response can provide. The trade-off is increased computational cost and latency due to multiple API calls.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Wang, X., et al. (2022). "Self-Consistency Improves Chain of Thought Reasoning in Language Models." arXiv:2203.11171. <a href="https://arxiv.org/abs/2203.11171">https://arxiv.org/abs/2203.11171</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_7_tree_of_thoughts_tot"><a class="anchor" href="prompt-engineering-patterns.html#_2_7_tree_of_thoughts_tot"></a>2.7 Tree of Thoughts (ToT)</h3>
+<div class="paragraph">
+<p>Tree of Thoughts (ToT) is an advanced reasoning framework that extends Chain of Thought by exploring multiple reasoning paths simultaneously. It treats problem-solving as a search process where the model generates different intermediate steps, evaluates their promise, and explores the most promising paths.</p>
+</div>
+<div class="paragraph">
+<p>This technique is particularly powerful for complex problems with multiple possible approaches or when the solution requires exploring various alternatives before finding the optimal path.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The original "Prompt Engineering" guide doesn&#8217;t provide implementation examples for ToT, likely due to its complexity. Below is a simplified example that demonstrates the core concept.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Game Solving ToT Example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.7: Tree of Thoughts (ToT) - Game solving example
+public void pt_tree_of_thoughts_game(ChatClient chatClient) {
+    // Step 1: Generate multiple initial moves
+    String initialMoves = chatClient
+            .prompt("""
+                    You are playing a game of chess. The board is in the starting position.
+                    Generate 3 different possible opening moves. For each move:
+                    1. Describe the move in algebraic notation
+                    2. Explain the strategic thinking behind this move
+                    3. Rate the move's strength from 1-10
+                    """)
+            .options(ChatOptions.builder()
+                    .temperature(0.7)
+                    .build())
+            .call()
+            .content();
+
+    // Step 2: Evaluate and select the most promising move
+    String bestMove = chatClient
+            .prompt()
+            .user(u -&gt; u.text("""
+                    Analyze these opening moves and select the strongest one:
+                    {moves}
+
+                    Explain your reasoning step by step, considering:
+                    1. Position control
+                    2. Development potential
+                    3. Long-term strategic advantage
+
+                    Then select the single best move.
+                    """).param("moves", initialMoves))
+            .call()
+            .content();
+
+    // Step 3: Explore future game states from the best move
+    String gameProjection = chatClient
+            .prompt()
+            .user(u -&gt; u.text("""
+                    Based on this selected opening move:
+                    {best_move}
+
+                    Project the next 3 moves for both players. For each potential branch:
+                    1. Describe the move and counter-move
+                    2. Evaluate the resulting position
+                    3. Identify the most promising continuation
+
+                    Finally, determine the most advantageous sequence of moves.
+                    """).param("best_move", bestMove))
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Yao, S., et al. (2023). "Tree of Thoughts: Deliberate Problem Solving with Large Language Models." arXiv:2305.10601. <a href="https://arxiv.org/abs/2305.10601">https://arxiv.org/abs/2305.10601</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_8_automatic_prompt_engineering"><a class="anchor" href="prompt-engineering-patterns.html#_2_8_automatic_prompt_engineering"></a>2.8 Automatic Prompt Engineering</h3>
+<div class="paragraph">
+<p>Automatic Prompt Engineering uses the AI to generate and evaluate alternative prompts. This meta-technique leverages the language model itself to create, refine, and benchmark different prompt variations to find optimal formulations for specific tasks.</p>
+</div>
+<div class="paragraph">
+<p>By systematically generating and evaluating prompt variations, APE can find more effective prompts than manual engineering, especially for complex tasks. It&#8217;s a way of using AI to improve its own performance.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.8: Automatic Prompt Engineering
+public void pt_automatic_prompt_engineering(ChatClient chatClient) {
+    // Generate variants of the same request
+    String orderVariants = chatClient
+            .prompt("""
+                    We have a band merchandise t-shirt webshop, and to train a
+                    chatbot we need various ways to order: "One Metallica t-shirt
+                    size S". Generate 10 variants, with the same semantics but keep
+                    the same meaning.
+                    """)
+            .options(ChatOptions.builder()
+                    .temperature(1.0)  // High temperature for creativity
+                    .build())
+            .call()
+            .content();
+
+    // Evaluate and select the best variant
+    String output = chatClient
+            .prompt()
+            .user(u -&gt; u.text("""
+                    Please perform BLEU (Bilingual Evaluation Understudy) evaluation on the following variants:
+                    ----
+                    {variants}
+                    ----
+
+                    Select the instruction candidate with the highest evaluation score.
+                    """).param("variants", orderVariants))
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>APE is particularly valuable for optimizing prompts for production systems, addressing challenging tasks where manual prompt engineering has reached its limits, and for systematically improving prompt quality at scale.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Zhou, Y., et al. (2022). "Large Language Models Are Human-Level Prompt Engineers." arXiv:2211.01910. <a href="https://arxiv.org/abs/2211.01910">https://arxiv.org/abs/2211.01910</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_9_code_prompting"><a class="anchor" href="prompt-engineering-patterns.html#_2_9_code_prompting"></a>2.9 Code Prompting</h3>
+<div class="paragraph">
+<p>Code prompting refers to specialized techniques for code-related tasks. These techniques leverage LLMs' ability to understand and generate programming languages, enabling them to write new code, explain existing code, debug issues, and translate between languages.</p>
+</div>
+<div class="paragraph">
+<p>Effective code prompting typically involves clear specifications, appropriate context (libraries, frameworks, style guidelines), and sometimes examples of similar code. Temperature settings tend to be lower (0.1-0.3) for more deterministic outputs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Implementation of Section 2.9.1: Prompts for writing code
+public void pt_code_prompting_writing_code(ChatClient chatClient) {
+    String bashScript = chatClient
+            .prompt("""
+                    Write a code snippet in Bash, which asks for a folder name.
+                    Then it takes the contents of the folder and renames all the
+                    files inside by prepending the name draft to the file name.
+                    """)
+            .options(ChatOptions.builder()
+                    .temperature(0.1)  // Low temperature for deterministic code
+                    .build())
+            .call()
+            .content();
+}
+
+// Implementation of Section 2.9.2: Prompts for explaining code
+public void pt_code_prompting_explaining_code(ChatClient chatClient) {
+    String code = """
+            #!/bin/bash
+            echo "Enter the folder name: "
+            read folder_name
+            if [ ! -d "$folder_name" ]; then
+            echo "Folder does not exist."
+            exit 1
+            fi
+            files=( "$folder_name"/* )
+            for file in "${files[@]}"; do
+            new_file_name="draft_$(basename "$file")"
+            mv "$file" "$new_file_name"
+            done
+            echo "Files renamed successfully."
+            """;
+
+    String explanation = chatClient
+            .prompt()
+            .user(u -&gt; u.text("""
+                    Explain to me the below Bash code:
+                    ```
+                    {code}
+                    ```
+                    """).param("code", code))
+            .call()
+            .content();
+}
+
+// Implementation of Section 2.9.3: Prompts for translating code
+public void pt_code_prompting_translating_code(ChatClient chatClient) {
+    String bashCode = """
+            #!/bin/bash
+            echo "Enter the folder name: "
+            read folder_name
+            if [ ! -d "$folder_name" ]; then
+            echo "Folder does not exist."
+            exit 1
+            fi
+            files=( "$folder_name"/* )
+            for file in "${files[@]}"; do
+            new_file_name="draft_$(basename "$file")"
+            mv "$file" "$new_file_name"
+            done
+            echo "Files renamed successfully."
+            """;
+
+    String pythonCode = chatClient
+            .prompt()
+            .user(u -&gt; u.text("""
+                    Translate the below Bash code to a Python snippet:
+                    {code}
+                    """).param("code", bashCode))
+            .call()
+            .content();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Code prompting is especially valuable for automated code documentation, prototyping, learning programming concepts, and translating between programming languages. The effectiveness can be further enhanced by combining it with techniques like few-shot prompting or chain-of-thought.</p>
+</div>
+<div class="paragraph">
+<p><strong>Reference:</strong> Chen, M., et al. (2021). "Evaluating Large Language Models Trained on Code." arXiv:2107.03374. <a href="https://arxiv.org/abs/2107.03374">https://arxiv.org/abs/2107.03374</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion"><a class="anchor" href="prompt-engineering-patterns.html#_conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring AI provides an elegant Java API for implementing all major prompt engineering techniques. By combining these techniques with Spring&#8217;s powerful entity mapping and fluent API, developers can build sophisticated AI-powered applications with clean, maintainable code.</p>
+</div>
+<div class="paragraph">
+<p>The most effective approach often involves combining multiple techniques - for example, using system prompts with few-shot examples, or chain-of-thought with role prompting. Spring AI&#8217;s flexible API makes these combinations straightforward to implement.</p>
+</div>
+<div class="paragraph">
+<p>For production applications, remember to:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Test prompts with different parameters (temperature, top-k, top-p)</p>
+</li>
+<li>
+<p>Consider using self-consistency for critical decision-making</p>
+</li>
+<li>
+<p>Leverage Spring AI&#8217;s entity mapping for type-safe responses</p>
+</li>
+<li>
+<p>Use contextual prompting to provide application-specific knowledge</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>With these techniques and Spring AI&#8217;s powerful abstractions, you can create robust AI-powered applications that deliver consistent, high-quality results.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references"><a class="anchor" href="prompt-engineering-patterns.html#_references"></a>References</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Brown, T. B., et al. (2020). "Language Models are Few-Shot Learners." arXiv:2005.14165.</p>
+</li>
+<li>
+<p>Wei, J., et al. (2022). "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models." arXiv:2201.11903.</p>
+</li>
+<li>
+<p>Wang, X., et al. (2022). "Self-Consistency Improves Chain of Thought Reasoning in Language Models." arXiv:2203.11171.</p>
+</li>
+<li>
+<p>Yao, S., et al. (2023). "Tree of Thoughts: Deliberate Problem Solving with Large Language Models." arXiv:2305.10601.</p>
+</li>
+<li>
+<p>Zhou, Y., et al. (2022). "Large Language Models Are Human-Level Prompt Engineers." arXiv:2211.01910.</p>
+</li>
+<li>
+<p>Zheng, Z., et al. (2023). "Take a Step Back: Evoking Reasoning via Abstraction in Large Language Models." arXiv:2310.06117.</p>
+</li>
+<li>
+<p>Liu, P., et al. (2021). "What Makes Good In-Context Examples for GPT-3?" arXiv:2101.06804.</p>
+</li>
+<li>
+<p>Shanahan, M., et al. (2023). "Role-Play with Large Language Models." arXiv:2305.16367.</p>
+</li>
+<li>
+<p>Chen, M., et al. (2021). "Evaluating Large Language Models Trained on Code." arXiv:2107.03374.</p>
+</li>
+<li>
+<p><a href="../../index.html">Spring AI Documentation</a></p>
+</li>
+<li>
+<p><a href="../chatclient.html">ChatClient API Reference</a></p>
+</li>
+<li>
+<p><a href="https://www.kaggle.com/whitepaper-prompt-engineering">Google&#8217;s Prompt Engineering Guide</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../testcontainers.html">Testcontainers</a></span>
+  <span class="next"><a href="../effective-agents.html">Building Effective Agents</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../index.html">Spring AI</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../index.html">
+      1.0.0
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Snapshot
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../1.1-SNAPSHOT/index.html">
+      1.1.0-SNAPSHOT
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+                <div class="col-right">
+                  <ul class="projects">
+  <li>
+    Related Spring Documentation
+    <ul class="projects-list">
+        <li>
+<a href="https://docs.spring.io/spring-boot/">
+  Spring Boot
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-framework/reference/">
+  Spring Framework
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Cloud
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-build/reference/">
+  Spring Cloud Build
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-bus/reference/">
+  Spring Cloud Bus
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-circuitbreaker/reference/">
+  Spring Cloud Circuit Breaker
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-commons/reference/">
+  Spring Cloud Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-config/reference/">
+  Spring Cloud Config
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-consul/reference/">
+  Spring Cloud Consul
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-contract/reference/">
+  Spring Cloud Contract
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-function/reference/">
+  Spring Cloud Function
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-gateway/reference/">
+  Spring Cloud Gateway
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-kubernetes/reference/">
+  Spring Cloud Kubernetes
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-netflix/reference/">
+  Spring Cloud Netflix
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-openfeign/reference/">
+  Spring Cloud OpenFeign
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-stream/reference/">
+  Spring Cloud Stream
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-task/reference/">
+  Spring Cloud Task
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-vault/reference/">
+  Spring Cloud Vault
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-zookeeper/reference/">
+  Spring Cloud Zookeeper
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Data
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-data/cassandra/reference/">
+  Spring Data Cassandra
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/commons/reference/">
+  Spring Data Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/couchbase/reference/">
+  Spring Data Couchbase
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/elasticsearch/reference/">
+  Spring Data Elasticsearch
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/jpa/reference/">
+  Spring Data JPA
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/keyvalue/reference/">
+  Spring Data KeyValue
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/ldap/reference/">
+  Spring Data LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/mongodb/reference/">
+  Spring Data MongoDB
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/neo4j/reference/">
+  Spring Data Neo4j
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/redis/reference/">
+  Spring Data Redis
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/relational/reference/">
+  Spring Data JDBC &amp; R2DBC
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/rest/reference/">
+  Spring Data REST
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-integration/reference/">
+  Spring Integration
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-batch/reference/">
+  Spring Batch
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+<a href="https://docs.spring.io/spring-security/reference/">
+  Spring Security
+</a>
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-authorization-server/reference/">
+  Spring Authorization Server
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-ldap/reference/">
+  Spring LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-security-kerberos/reference/">
+  Spring Security Kerberos
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-session/reference/">
+  Spring Session
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-vault/reference/">
+  Spring Vault
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="../../index.html">
+  Spring AI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-amqp/reference/">
+  Spring AMQP
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-cli/reference/">
+  Spring CLI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-graphql/reference/">
+  Spring GraphQL
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-kafka/reference/">
+  Spring for Apache Kafka
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-modulith/reference/">
+  Spring Modulith
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-pulsar/reference/">
+  Spring for Apache Pulsar
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-shell/reference/">
+  Spring Shell
+</a>
+</li>
+    </ul>
+  </li
+  <li><a href="../../spring-projects.html">All Docs...</a></li>
+</ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="https://docs.spring.io/spring-ai/reference/_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">Copyright © 2005 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> Broadcom. All Rights Reserved. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.<br/><a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="GitHub"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/vendor/import.js"></script>
+<script src="https://docs.spring.io/spring-ai/reference/_/js/site.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/highlight.js"></script>
+<script async src="https://docs.spring.io/spring-ai/reference/_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-link-box">
+                    <a class="search-link" href="../../search.html">Search in all Spring Docs</a>
+                </div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-light.svg"/>
+                        <img class="dark" width="140" src="https://docs.spring.io/spring-ai/reference/_/img/algolia-dark.svg"/>
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="https://docs.spring.io/spring-ai/reference/_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="c2e84f15fa630d534f1c62b1c413bb77" data-index-name="springdocs" data-stylesheet="../../_/css/vendor/search.css" data-page-version="1.0.0" data-page-component="ai"></script>
+  <script>if (window.parent == window) {(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-2728886-23', 'auto', {'siteSpeedSampleRate': 100});ga('send', 'pageview');}</script></body>
+</html>
