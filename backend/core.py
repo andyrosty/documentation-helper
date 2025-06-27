@@ -12,8 +12,9 @@ from langchain import hub
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.history_aware_retriever import create_history_aware_retriever
 from langchain.chains.retrieval import create_retrieval_chain
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_pinecone import PineconeVectorStore
+from langchain_community.chat_models import ChatOpenAI
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import Pinecone
 
 from consts import INDEX_NAME
 
@@ -28,7 +29,7 @@ def run_llm(query: str, chat_history: List[Dict[str, Any]] = []):
     """
     # Initialize embeddings and vector store
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-    docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
+    docsearch = Pinecone.from_existing_index(INDEX_NAME, embeddings)
     chat = ChatOpenAI(verbose=True, temperature=0)
 
     rephrase_prompt = hub.pull("langchain-ai/chat-langchain-rephrase")
@@ -67,7 +68,7 @@ def run_llm2(query: str, chat_history: List[Dict[str, Any]] = []):
     """
     # Initialize embeddings and vector store
     embeddings = OpenAIEmbeddings()
-    docsearch = PineconeVectorStore(index_name=INDEX_NAME, embedding=embeddings)
+    docsearch = Pinecone.from_existing_index(INDEX_NAME, embeddings)
     chat = ChatOpenAI(model_name="gpt-4o", verbose=True, temperature=0)
 
     rephrase_prompt = hub.pull("langchain-ai/chat-langchain-rephrase")
